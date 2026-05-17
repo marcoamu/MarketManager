@@ -1,0 +1,37 @@
+# Configuración para TSLA
+# Convertido de: ParamTSLA_5min_01.py
+
+description: "TSLA - Configuraci\xF3n"
+name: TSLA
+parameters:
+  accumulate: 1
+  angleDown: 2
+  angleUp: 2
+  blgDistPercent: 30
+  bollinger: 10
+  bollingerClose: 3
+  bollingerDst: 4
+  controlWin: true
+  difference: 0
+  draw: false
+  emaMinDst: 0
+  enableBollingerClose: true
+  hourOffset: -4
+  ima1: 5
+  ima2: 15
+  ima3: 20
+  ima4: 30
+  minimunCloseAmount: 5
+  operate: true
+  rangehours:
+  - 16
+  - 9
+  reevaluateAction: false
+  round: 2
+  tele_group: -915224083
+  tendence_distance: 3
+  tendence_measure: 0
+  unit: 0
+  verifyMarketOpen: true
+  weekMindiff: 0
+  weekend: false

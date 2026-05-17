@@ -1,0 +1,303 @@
+INDICADORES
+------------------------------------------------
+INDICATOR
+    si m20 > curreval
+        si ma5 > curraval
+            sellX
+        sell
+    si m20 < currval
+        si ma5 < currval
+            buyX
+        buy
+INDICATOR_TENDENCE
+    angulo
+
+IMA_NEW
+    si currval > imaNew
+        buy
+    else
+        sell
+
+MARKET_TENDENCE
+    ma20Value > ma5Value:
+        down
+    ma20 z ma5
+        up
+
+INDICATOR_MED
+    media aritmetica de x posiciones atras
+
+INDICATOR_MED_MOMENT
+    media aritmetica de Y donde Y es mas grande que X
+INDICATOR_STD
+    desviacion estandar de X posiciones atras
+
+INDICATOR_MED_STD
+    junta indicator_med mas indicator_STD tomando que tanto se ha desviado
+
+RELATIVE
+    utiliza el valor mas pequeño y el mas grande del dia o del dia anterior si es que existe,
+    en base a la diferencia de distancia indica si estamos cerca del maximo( bajara) o cerca del minimo ( subira)
+
+DIRECTION
+    evalua el minimo y maximo mas alto desde la ultima accion, y en base a las diferencias indica que direccion tomara
+    similar a relative pero en pequeña escala
+
+
+WEEK_FLOW_MED
+    indicador media aritmetica tomando 7 dias atras ademas de sacar la media (50) y evalua 120 valores atras
+    para determinar el angulo
+WEEK_FLOW_ABSVAL
+    desviacion estandar tomando 7 dias atras ademas de sacar la media (50) y evalua 120 valores atras
+    para determinar el angulo
+WEEK_FLOW
+    evalua weej flow med y absval
+WEEK_FLOW_MED_LEVEL
+    indica que tan fuerte es el angulo detectado en week flow.
+
+
+
+
+
+
+
+
+
+--------------------------------------------------
+
+AAPL
+    Evaluator01
+        evaluador para aapl
+    Evaluator03
+        basado en evaluator1
+
+BTC
+    Evaluator02
+        evaluador para btc evalua solo subidas
+
+    EvaluatorDistance03
+        solo para subida usado para btx eth
+
+
+historia:
+EvaluatorDistance01
+    nuevo evaluador
+EvaluatorDistance02
+    entradas para estado change
+EvaluatorDistance03 (15052023)
+    Entrada directa cuando detecta punto de entrada sin acumulado
+
+
+EvaluatorDistIndicatorTendence
+----------------------------------------------
+    EvaluatorDistIndicatorTendence01 (15052023)
+        Entrada directa cuando detecta punto de entrada sin acumulado y usando indicator tendence
+    EvaluatorDistIndicatorTendence02 (15052023)
+        se toma como entradas nuevos evaluadores tendence wait
+    EvaluatorDistIndicatorTendence03
+        se basa en indicator 1 ordenamos los flujos
+
+
+---------------------------------------------------
+EvaluatorOnlyUp01
+    adaptado solo para trabajar con subidas
+EvaluatorOnlyUp02
+    se elimina la restriccion para acumulado inicia apenas detecta direccion
+EvaluatorOnlyUp03
+    se elimina restriccion de indicador de mercado
+EvaluatorOnlyUp04
+    se utiliza como indicador market tendence
+EvaluatorOnlyUp05
+    basado en 02 mas controles para solo comprar en subida y con acumulado minimo
+EvaluatorOnlyUp06
+    basado en 04 abre con pre_up y change
+
+EvaluatorDistMarketTendence
+----------------------------------------
+    EvaluatorDistMarketTendence01
+        se añadio para que cierre con poco si hay diferencia perdidas differencia/2
+    EvaluatorDistMarketTendence02
+        no cierra con la diferencia difference/2
+    EvaluatorDistMarketTendence03
+        inicia si el markettendence es contrario pero ya hay un acumulado grande
+    EvaluatorDistMarketTendence04
+        control si esta en direccion wait para iniciar en buy o sell cuando esta con esa direccion
+
+    EvaluatorDistMarketTendence05
+        se añade preup y predown en las evaluaciones de inicio
+        tambien evalua en market tendence undefined
+    EvaluatorDistMarketTendence06
+        basado en 05 y cierra rapido si va en direccion contraria
+    EvaluatorDistMarketTendence07
+        basado en 06 no abre si ya hay mucho acumulado
+    EvaluatorDistMarketTendence08
+        basado en 07 se reducen los indicadores y se parmetriza multiplicador subida y bajada
+     EvaluatorDistMarketTendence09
+        basado en 08 se inicia en preup y predown en cada sentido
+    EvaluatorDistMarketTendence10
+        basado en 09 se elimina la verificacion de acumulado*2 al abrir
+    EvaluatorDistMarketTendence11
+        basado en 10 utiliza division para cerrar cuando llega a negativo
+
+
+
+
+EvaluatorMEDSTDOptimiz
+------------------------------
+    EvaluatorMEDSTDOptimiz01
+        utiliza el indicador INDICATOR_MED_STD como apertura, no hace nada en wait
+    EvaluatorMEDSTDOptimiz02
+        basado en 1 utiliza wait
+    EvaluatorMEDSTDOptimiz03
+        basado en 1 con algunas mejoras ( no terminado)
+    EvaluatorMEDSTDOptimiz04
+        basado en EvaluatorMEDSTDOptimiz03 mas controles de motion y PREVIOUS_DIST se incluye WEEK DIST
+     EvaluatorMEDSTDOptimiz05
+        basado en EvaluatorMEDSTDOptimiz04 mas control sobre week values toma en cuenta un rango para up y down
+        ademas de considerar los estados wait
+        se utilizar *up para acumulado en las aperturas
+     EvaluatorMEDSTDOptimiz06
+        basado en 5, menos wait
+     EvaluatorMEDSTDOptimiz07
+        basado em 5, reable inverse para UP
+     EvaluatorMEDSTDOptimiz08
+     basado em 4,
+
+
+EvaluatorMEDSTDRelative
+-------------------------
+    utiliza como indicadores principales INDICATOR_MED_STD (NO TERMINADO)
+    EvaluatorMEDSTDRelative01
+
+    EvaluatorMEDSTDRelative02
+        basado en 1 mas controles relative estrictos en change (NO TERMINADO)
+    EvaluatorMEDSTDRelative03
+        basado en 2 se optimizan los cierres y se elimina wait
+
+    EvaluatorMEDSTDRelative04
+            basado en 3 ojo se reparan up and down_change
+
+EvaluatorMEDSTDWEEK
+------------------------
+    EvaluatorMEDSTDWEEK01
+        basado en EvaluatorMEDSTDOptimiz07 añade los controles relative
+
+EvaluatorRELATIVE_MEDSTD
+--------------------------
+    usa relative como principal y medstd como secundario
+    EvaluatorRELATIVE_MEDSTD_01
+        solo abre en indicadores directos no utiliza los inversos
+    EvaluatorRELATIVE_MEDSTD_02
+        basado en 01 utiliza los indicadores inversos
+
+EvaluatorDistMarketTenOptimiz
+   --------------------------------------
+   EvaluatorDistMarketTenOptimiz01
+        es una copia de algo que ya existi
+   EvaluatorDistMarketTenOptimiz02
+        mejoras con indicadores personalizados
+   EvaluatorDistMarketTenOptimiz03
+        copia de 2 pero el indicador /2 aun no esta terminado...
+        tiene enable controlOpen y se parametrizan los indicadores apertura
+
+EvaluatorDirectionMEDSTD
+------------------------------------------
+utiliza como base el indicador
+    EvaluatorDirectionMEDSTD01
+        basado en EvaluatorDistMarketTenOptimiz03
+
+    EvaluatorDirectionMEDSTD02
+        utiliza wait
+
+    EvaluatorDirectionMEDSTD03
+        basado en 2 y se mejora con relative min max
+
+
+EvaluatorDIRECTION_MEDSTD
+----------------------------------
+    DIRECTION y segundo MEDSTD
+    EvaluatorDIRECTION_MEDSTD_01
+        basado en EvaluatorRELATIVE_MEDSTD_02, utiliza como base direction y segudo medstd.
+    EvaluatorDIRECTION_MEDSTD_02
+        basado en EvaluatorDIRECTION_MEDSTD_01, añade controles relative
+
+
+
+
+
+EvaluatorSTDMarketOptimiz
+-----------------------------
+    EvaluatorSTDMarketOptimiz01
+        utiliza el indicador INDICATOR_MED como apertura.
+    EvaluatorSTDMarketOptimiz02
+        utiliza como base EvaluatorSTDMarketOptimiz01
+        utiliza direction para las aperturas cuando el acumulado no esta dentro del rango
+
+EvaluatorIMA1_CLEAN_Optimiz
+-------------------------------
+    basado en IMA1 y acumulado
+    EvaluatorIMA1_CLEAN_Optimiz01
+        basado en IMA1 y acumulado
+    EvaluatorIMA1_CLEAN_Optimiz02
+        basado en EvaluatorIMA1_CLEAN_Optimiz01
+        inclute apertura wait
+    EvaluatorIMA1_CLEAN_Optimiz03
+        basado en EvaluatorIMA1_CLEAN_Optimiz02
+        elimina enableControlOpen y añade control previous
+
+EvaluatorDIRECTION_CLEAN_Opt
+---------------------------------
+       DIRECTION CLEAN
+       EvaluatorDIRECTION_CLEAN_Opt01
+            basado en EvaluatorDistance03 utiliza control de acumulado en apertura y venta, tambien usa FLUJO
+
+       EvaluatorDIRECTION_CLEAN_Opt02
+            basado en EvaluatorDIRECTION_CLEAN_Opt01
+            no utiliza ni acumulado ni dereccion.
+       EvaluatorDIRECTION_CLEAN_Opt03
+            basado en EvaluatorDIRECTION_CLEAN_Opt02
+            añade controles relative en algunos casos
+
+EvaluatorMEDSTD_WEEK_Optimiz
+------------------------------------------------------
+     Basado en MEDSTD y WEEK
+     EvaluatorMEDSTD_WEEK_Optimiz01
+        basado en EvaluatorMEDSTDOptimiz07
+
+     EvaluatorMEDSTD_WEEK_Optimiz02
+        basado en EvaluatorMEDSTD_WEEK_Optimiz01
+        se mejoran los cierres y se calibran aperturas
+
+
+EvaluatorMED_WEEK_Optimiz01
+--------------------------------------------------
+    basado en MED y WEEK
+    EvaluatorMED_WEEK_Optimiz01
+        basado en EvaluatorMEDSTD_WEEK_Optimiz02
+        usa el indicador MED
+
+
+EvaluatorDIRECTION_MEDSTD
+----------------------------------
+    DIRECTION y segundo MEDSTD
+    EvaluatorDIRECTION_MEDSTD_01
+        basado en EvaluatorRELATIVE_MEDSTD_02, utiliza como base direction y segudo medstd.
+    EvaluatorDIRECTION_MEDSTD_02
+        basado en EvaluatorDIRECTION_MEDSTD_01, añade controles relative
+
+
+EvaluatorPROBMEDSTD_CLEAN
+--------------------------------
+    utiliza el nuevo indicador PROB_FLOW
+    EvaluatorPROBMEDSTD_CLEAN_Opt01
+        basado en EvaluatorDIRECTION_CLEAN_Opt05
+
+EvaluatorMEDMOMENT_CLEAN_Optimiz
+-----------------------------------
+    utiliza MED_moment como indicador principal
+    EvaluatorMEDMOMENT_CLEAN_Optimiz01
+        no recuerdo de donde viene
+    EvaluatorMEDMOMENT_CLEAN_Optimiz03
+        mejoras con controles de acumulado y contador de flujo en aperturas largas, con controla apertura con mismo flujo
+    EvaluatorMEDMOMENT_CLEAN_Optimiz04
+        controla apertura con mismo flujo

@@ -1,0 +1,81 @@
+# Configuración para BTC
+# Convertido de: ParamBTC06.py
+
+description: "BTC - Configuraci\xF3n"
+name: BTC
+parameters:
+  MinMaxDistance: 3
+  accumulate: 120
+  angleDown: 2
+  angleUp: 2
+  blgDistPercent: 15
+  blg_max_min_value: 10
+  blgma_dst: 4
+  blgma_min_diff: 20
+  bollinger: 10
+  bollingerClose: 300
+  bollingerDst: 15
+  closeAcumvalue: 50
+  closeAngleDiff: 1
+  closeProfit: 550
+  closeWeekDiffNew: 1
+  continueFlow: true
+  controlWin: true
+  difference: 45
+  draw: false
+  ema10: 5
+  ema20: 10
+  emaDst: 100
+  emaMinDst: 0
+  ema_change_dst: 0
+  enableBollingerClose: true
+  hourOffset: -4
+  hourlyAngleDiff: 25
+  ignoreProb: false
+  ima1: 3
+  ima1EmaMinValue: 50
+  ima1maxDistance: 0
+  ima1minDistance: 0
+  ima2: 10
+  ima3: 15
+  ima3minDistance: 0
+  ima4: 1
+  maxAngleDown: 88
+  maxAngleUp: 88
+  maxMEDNormal: 0
+  maxOpenCount: 7
+  maxSTDNormal: 0
+  maxWeekBootDist: 70
+  medstdmaxDiff: 300
+  medstdminDiff: 40
+  minAngleFlow: 20
+  minAngleFlowCounter: 3
+  minAngleIma1: 10
+  minMEDNormal: 0
+  minSTDNormal: 0
+  min_ema_dst: 150
+  minimunCloseAmount: 5
+  operate: true
+  percent_distance: 6
+  percent_min_distance: 1
+  rangehours:
+  - 16
+  - 9
+  reevaluateAction: false
+  relativeDistance: 600
+  relativeDistanceMultiplicator: 0
+  round: 5
+  tendence_distance: 4
+  tendence_distance_moment: 12
+  tendence_measure: 0
+  unit: 5
+  valueIndDIST: 1
+  verifyMarketOpen: false
+  weekDistanceMedDistance: 1
+  weekDistanceSTDDistance: 0
+  weekFlowMinDiff: 2
+  weekInterval: 10
+  weekMEDMinLevel: 10
+  weekMindiff: 600
+  weekNewMinFlow: 2
+  weekend: true

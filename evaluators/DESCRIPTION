@@ -1,0 +1,11 @@
+EvaluatorIMA1_ANGLE_01
+    OPEN: BUY : evaluateUpOpen_Ima1_01, SELL: evaluateDownOpen_IMA1_01
+    CLOSE: BUY: control_BUY_START_CLOSE_01, SELL: control_SELL_START_CLOSE_01
+
+EvaluatorIMA1_ANGLE_02
+    OPEN: BUY : evaluateUpOpen_Ima1_01, SELL: evaluateDownOpen_IMA1_01
+    CLOSE: BUY: control_BUY_BLG_LONG_02, SELL: control_SELL_BLG_LONG_02
+
+EvaluatorIMA1_ANGLE_03
+    OPEN: BUY : evaluateUpOpen_Ima1_01, SELL: evaluateDownOpen_IMA1_02
+    CLOSE: BUY: control_BUY_BLG_LONG_02, SELL: control_SELL_BLG_LONG_04

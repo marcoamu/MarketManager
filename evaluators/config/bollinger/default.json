@@ -1,0 +1,18 @@
+{
+  "name": "BOLLINGER_DEFAULT",
+  "base_strategy": "bollinger",
+  "params": {
+    "only_up": false,
+    "blg_dist_percent": 70,
+    "medstd_min_diff": 0.5,
+    "enable_control_open": true
+  },
+  "conditions": {
+    "open": [
+      {"indicator": "blg_upper_dst_percent", "op": ">", "value": 10}
+    ],
+    "close": [
+      {"indicator": "blg_middle_dst_percent", "op": "<", "value": 5}
+    ]
+  }
+}

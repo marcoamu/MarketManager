@@ -1,0 +1,427 @@
+"""
+MarketPublicAPI
+===============
+Servicio REST independiente basado en FastAPI que expone información clave
+de cada activo almacenado en la BD de MarketManager.
+
+Permite a otros servicios externos consultar:
+  - Lista de activos disponibles
+  - Resumen actual con señales de decisión (BUY/SELL/WAIT, tendencia, ángulos, etc.)
+  - Histórico reciente de N días
+
+Arrancar con:
+    python MarketPublicAPI.py
+    uvicorn MarketPublicAPI:app --host 0.0.0.0 --port 8765 --reload
+
+Swagger UI disponible en: http://localhost:8765/docs
+"""
+
+import datetime
+import uvicorn
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from typing import Optional, List, Dict, Any
+
+from service.MarketSQLManager import MarketSQLManager
+from service.trading_service import TradingService
+
+# ─────────────────────────────────────────────
+# Trading service (para operaciones reales)
+# ─────────────────────────────────────────────
+
+_trading = TradingService(paper_mode=True)  # Paper trading por defecto
+
+
+# ─────────────────────────────────────────────
+# Modelos de respuesta (tipado como dict para
+
+app = FastAPI(
+    title="MarketManager Public API",
+    description=(
+        "API REST pública que expone el estado actual y el histórico de activos "
+        "gestionados por MarketManager. Diseñada para ser consumida por bots, "
+        "dashboards u otros servicios externos."
+    ),
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
+
+# Permitir acceso desde cualquier origen (ajustar en producción si es necesario)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["*"],
+)
+
+# Instancia global del gestor de BD (sin simulación)
+_db = MarketSQLManager(simulation=False)
+
+
+# ─────────────────────────────────────────────
+# Modelos de respuesta (tipado como dict para
+# compatibilidad con diferentes versiones de pydantic)
+# ─────────────────────────────────────────────
+
+def _format_asset_summary(raw: dict) -> dict:
+    """
+    Normaliza y enriquece el diccionario crudo devuelto por MarketSQLManager
+    con campos de utilidad para la toma de decisiones.
+    """
+    if not raw:
+        return {}
+
+    # Calcular señal de dirección simplificada
+    action = raw.get("action") or "WAIT"
+    week_flow = raw.get("week_flow") or ""
+    direction = raw.get("direction") or ""
+    angle = raw.get("angle")
+    rel_fcst = raw.get("rel_fcst") or ""
+
+    bias = "NEUTRAL"
+    if action in ("BUY",):
+        bias = "BULLISH"
+    elif action in ("SELL",):
+        bias = "BEARISH"
+    elif "UP" in week_flow:
+        bias = "BULLISH_WEAK"
+    elif "DOWN" in week_flow:
+        bias = "BEARISH_WEAK"
+
+    # Rango esperado de precio
+    close_up = raw.get("close_nxt_up")
+    close_down = raw.get("close_nxt_down")
+    close_mid = raw.get("close_nxt_middle")
+    price = raw.get("price")
+    expected_range_pct = None
+    if price and close_up and close_down and float(price) > 0:
+        span = abs(float(close_up) - float(close_down))
+        expected_range_pct = round(span / float(price) * 100, 4)
+
+    return {
+        # ---- Identificación ----
+        "name":               raw.get("name"),
+        "timestamp":          raw.get("timestamp"),
+        "retrieved_at":       datetime.datetime.utcnow().isoformat() + "Z",
+
+        # ---- Precio actual ----
+        "price":              raw.get("price"),
+        "open_value":         raw.get("open_value"),
+        "last_dif":           raw.get("last_dif"),
+        "acumulate":          raw.get("acumulate"),
+
+        # ---- Señales de acción ----
+        "action":             action,
+        "action_count":       raw.get("action_count"),
+        "action_acum":        raw.get("action_acum"),
+        "bias":               bias,
+
+        # ---- Tendencia y flujo ----
+        "tendence":           raw.get("tendence"),
+        "direction":          direction,
+        "week_flow":          week_flow,
+        "week_dir":           raw.get("week_dir"),
+
+        # ---- Previsiones de cierre ----
+        "close_nxt_up":       close_up,
+        "close_nxt_down":     close_down,
+        "close_nxt_middle":   close_mid,
+        "expected_range_pct": expected_range_pct,
+
+        # ---- Indicadores de volatilidad/flujo semanal ----
+        "rel_fcst":           rel_fcst,
+        "rel_fcst_percent":   raw.get("rel_fcst_percent"),
+        "rel_fcst_std":       raw.get("rel_fcst_std"),
+        "rel_fcst_med":       raw.get("rel_fcst_med"),
+        "week_flow_med":      raw.get("week_flow_med"),
+        "week_flow_std":      raw.get("week_flow_std"),
+
+        # ---- Ángulos (momentum angular) ----
+        "angle":              angle,
+        "angle_ima":          raw.get("angle_ima"),
+        "angle_counter":      raw.get("angle_counter"),
+
+        # ---- Rangos de precio ----
+        "global_min":         raw.get("global_min"),
+        "global_max":         raw.get("global_max"),
+        "motion_min":         raw.get("motion_min"),
+        "motion_max":         raw.get("motion_max"),
+        "week_dir_bot_dst":   raw.get("week_dir_bot_dst"),
+        "month_dir_bot_dst":  raw.get("month_dir_bot_dst"),
+
+        # ---- P&L / Riesgo ----
+        "profit":             raw.get("profit"),
+        "protect":            raw.get("protect"),
+    }
+
+
+# ─────────────────────────────────────────────
+# Endpoints
+# ─────────────────────────────────────────────
+
+@app.get(
+    "/health",
+    summary="Health check",
+    description="Verifica que el servicio está activo y la BD es accesible.",
+    tags=["Sistema"],
+)
+def health_check():
+    """Comprueba que la API y la BD están operativas."""
+    try:
+        assets = _db.get_active_assets()
+        return {
+            "status": "ok",
+            "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+            "db": "connected",
+            "assets_count": len(assets),
+        }
+    except Exception as e:
+        return JSONResponse(
+            status_code=503,
+            content={"status": "error", "detail": str(e)},
+        )
+
+
+@app.get(
+    "/assets",
+    summary="Lista de activos",
+    description="Devuelve todos los nombres de activos presentes en la BD.",
+    tags=["Activos"],
+    response_model=List[str],
+)
+def list_assets():
+    """Lista todos los activos disponibles en la base de datos."""
+    try:
+        return _db.get_active_assets()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/asset/{name}",
+    summary="Estado actual de un activo",
+    description=(
+        "Devuelve el estado más reciente de un activo con todos los indicadores "
+        "relevantes para la toma de decisiones: acción, tendencia, flujo semanal, "
+        "ángulos, previsiones de cierre, rangos de precio y P&L."
+    ),
+    tags=["Activos"],
+    response_model=Dict[str, Any],
+)
+def get_asset(name: str):
+    """
+    Retorna un resumen completo del activo `name` con las señales actuales.
+
+    Campos clave:
+    - **action**: BUY / SELL / WAIT / CLOSE
+    - **bias**: BULLISH / BEARISH / BULLISH_WEAK / BEARISH_WEAK / NEUTRAL
+    - **week_flow**: flujo semanal dominante
+    - **close_nxt_up / close_nxt_down**: nivel esperado de precio la próxima sesión
+    - **rel_fcst / rel_fcst_percent**: forecast relativo y porcentaje
+    - **angle / angle_ima**: momento angular del precio
+    - **profit / protect**: beneficio acumulado y nivel de protección
+    """
+    raw = _db.get_asset_summary(name.upper())
+    if not raw:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Activo '{name}' no encontrado en la base de datos.",
+        )
+    return _format_asset_summary(raw)
+
+
+@app.get(
+    "/asset/{name}/history",
+    summary="Histórico reciente de un activo",
+    description=(
+        "Devuelve los registros diarios de los últimos N días para el activo indicado. "
+        "Incluye precio, acción, tendencia, flujo, ángulo y P&L."
+    ),
+    tags=["Activos"],
+    response_model=List[Dict[str, Any]],
+)
+def get_asset_history(
+    name: str,
+    days: int = Query(default=5, ge=1, le=90, description="Número de días hacia atrás"),
+):
+    """
+    Devuelve el histórico reciente del activo `name` para los últimos `days` días.
+    Útil para analizar la evolución de señales, tendencia y acumulados.
+    """
+    try:
+        history = _db.get_asset_history(name.upper(), days)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    if not history:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No se encontraron datos para '{name}' en los últimos {days} días.",
+        )
+    return history
+
+
+@app.get(
+    "/assets/summary",
+    summary="Resumen de todos los activos",
+    description=(
+        "Devuelve el estado actual de TODOS los activos disponibles en un solo request. "
+        "Ideal para dashboards o servicios que necesitan un snapshot global del mercado."
+    ),
+    tags=["Activos"],
+    response_model=List[Dict[str, Any]],
+)
+def get_all_assets_summary():
+    """
+    Snapshot completo del mercado: devuelve el estado actual de cada activo.
+    La lista está ordenada por nombre de activo.
+    """
+    try:
+        asset_names = _db.get_active_assets()
+        summaries = []
+        for asset_name in asset_names:
+            raw = _db.get_asset_summary(asset_name)
+            if raw:
+                summaries.append(_format_asset_summary(raw))
+        return summaries
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ─────────────────────────────────────────────
+# Endpoints de Trading
+# ─────────────────────────────────────────────
+
+@app.post(
+    "/trade/buy",
+    summary="Abrir posición de compra",
+    description="Abre una posición de compra (BUY) para el símbolo indicado.",
+    tags=["Trading"],
+)
+def trade_buy(
+    symbol: str = Query(..., description="Símbolo del activo (ej: AAPL)"),
+    amount_usd: float = Query(default=100.0, description="Cantidad en USD"),
+    stop_loss: Optional[float] = Query(default=None, description="Stop loss opcional"),
+):
+    """
+    Abre una posición de compra para el símbolo especificado.
+    Cantidad en USD determina el tamaño de la posición.
+    """
+    try:
+        result = _trading.buy_with_money_stop(symbol.upper(), amount_usd, stop_loss or 0)
+        return {
+            "status": "success",
+            "action": "BUY",
+            "symbol": symbol.upper(),
+            "amount_usd": amount_usd,
+            "result": result,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post(
+    "/trade/sell",
+    summary="Abrir posición de venta",
+    description="Abre una posición de venta (SELL) para el símbolo indicado.",
+    tags=["Trading"],
+)
+def trade_sell(
+    symbol: str = Query(..., description="Símbolo del activo (ej: AAPL)"),
+    amount_usd: float = Query(default=100.0, description="Cantidad en USD"),
+    stop_loss: Optional[float] = Query(default=None, description="Stop loss opcional"),
+):
+    """
+    Abre una posición de venta para el símbolo especificado.
+    Cantidad en USD determina el tamaño de la posición.
+    """
+    try:
+        result = _trading.execute_target_position(symbol.upper(), 'sell', amount_usd)
+        return {
+            "status": "success",
+            "action": "SELL",
+            "symbol": symbol.upper(),
+            "amount_usd": amount_usd,
+            "result": result,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post(
+    "/trade/close",
+    summary="Cerrar posición",
+    description="Cierra la posición abierta para el símbolo indicado.",
+    tags=["Trading"],
+)
+def trade_close(
+    symbol: str = Query(..., description="Símbolo del activo (ej: AAPL)"),
+):
+    """
+    Cierra cualquier posición abierta para el símbolo especificado.
+    """
+    try:
+        result = _trading.execute_target_position(symbol.upper(), 'sell', 0)
+        return {
+            "status": "success",
+            "action": "CLOSE",
+            "symbol": symbol.upper(),
+            "result": result,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/trade/position/{symbol}",
+    summary="Estado de posición",
+    description="Devuelve el estado de la posición actual para el símbolo.",
+    tags=["Trading"],
+)
+def get_position(symbol: str):
+    """Retorna información de la posición actual para el símbolo."""
+    try:
+        position = _trading.get_position(symbol.upper())
+        if position:
+            return {
+                "symbol": symbol.upper(),
+                "qty": float(position.qty),
+                "avg_entry_price": float(position.avg_entry_price),
+                "current_price": float(position.current_price),
+                "unrealized_pl": float(position.unrealized_pl),
+                "side": position.side,
+            }
+        return {"symbol": symbol.upper(), "position": None, "message": "No hay posición abierta"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/trade/account",
+    summary="Estado de la cuenta",
+    description="Devuelve el estado actual de la cuenta de trading.",
+    tags=["Trading"],
+)
+def get_account():
+    """Retorna información de la cuenta de trading."""
+    try:
+        return _trading.accountInfo()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ─────────────────────────────────────────────
+# Entrada principal
+# ─────────────────────────────────────────────
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "MarketPublicAPI:app",
+        host="0.0.0.0",
+        port=8765,
+        reload=False,
+        log_level="info",
+    )

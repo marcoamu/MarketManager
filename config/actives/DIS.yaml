@@ -1,0 +1,57 @@
+# Configuración para DIS
+# Convertido de: ParamDIS09.py
+
+description: "DIS - Configuraci\xF3n"
+name: DIS
+parameters:
+  accumulate: 0
+  angleDown: 2
+  angleUp: 2
+  blgDistPercent: 30
+  bollinger: 10
+  bollingerClose: 3
+  bollingerDst: 4
+  closeAcumvalue: 0
+  closeProfit: 1
+  controlWin: true
+  difference: 0
+  draw: false
+  emaMinDst: 0
+  enableBollingerClose: true
+  hourOffset: -4
+  ignoreProb: false
+  ima1: 3
+  ima1maxDistance: 0
+  ima1minDistance: 0
+  ima2: 10
+  ima3: 15
+  ima3minDistance: 0
+  ima4: 1
+  maxMEDNormal: 0
+  maxSTDNormal: 0
+  medstdmaxDiff: 0
+  medstdminDiff: 0
+  minMEDNormal: 0
+  minSTDNormal: 0
+  minimunCloseAmount: 5
+  operate: true
+  percent_distance: 6
+  percent_min_distance: 1
+  rangehours:
+  - 16
+  - 9
+  reevaluateAction: true
+  relativeDistance: 1
+  relativeDistanceMultiplicator: 0
+  round: 2
+  tendence_distance: 3
+  tendence_distance_moment: 6
+  tendence_measure: 0
+  unit: 0
+  valueIndDIST: 1
+  verifyMarketOpen: true
+  weekDistanceMedDistance: 1
+  weekDistanceSTDDistance: 0
+  weekMEDMinLevel: 0
+  weekMindiff: 0
+  weekend: false

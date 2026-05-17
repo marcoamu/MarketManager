@@ -1,0 +1,19 @@
+{
+  "name": "EMA_LONG_03",
+  "base_strategy": "ema",
+  "params": {
+    "only_up": true,
+    "ema_short": 10,
+    "ema_long": 20,
+    "use_angle": false,
+    "angle_threshold": 2.0
+  },
+  "conditions": {
+    "open": [
+      {"indicator": "EMA10", "op": ">", "value": "EMA20"}
+    ],
+    "close": [
+      {"indicator": "EMA10", "op": "<", "value": "EMA20"}
+    ]
+  }
+}

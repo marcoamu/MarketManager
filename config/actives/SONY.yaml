@@ -1,0 +1,65 @@
+# Configuración para SONY
+# Convertido de: ParamSONY03.py
+
+description: "SONY - Configuraci\xF3n"
+name: SONY
+parameters:
+  accumulate: 0
+  angleDown: 5
+  angleUp: 5
+  blgDistPercent: 10
+  bollinger: 20
+  bollingerClose: 0
+  bollingerDst: 3
+  closeAcumvalue: 0
+  closeProfit: 0
+  continueFlow: true
+  controlWin: true
+  difference: 0
+  draw: false
+  emaMinDst: 0
+  enableBollingerClose: true
+  hourOffset: -4
+  ignoreProb: false
+  ima1: 3
+  ima1EmaMinValue: 0
+  ima1maxDistance: 0
+  ima1minDistance: 0
+  ima2: 8
+  ima3: 15
+  ima3minDistance: 0
+  ima4: 2
+  maxAngleDown: 68
+  maxAngleUp: 60
+  maxMEDNormal: 0
+  maxSTDNormal: 0
+  medstdmaxDiff: 0
+  medstdminDiff: 0
+  minAngleFlow: 10
+  minAngleFlowCounter: 3
+  minAngleIma1: 10
+  minMEDNormal: 0
+  minSTDNormal: 0
+  minimunCloseAmount: 5
+  operate: true
+  percent_distance: 6
+  percent_min_distance: 1
+  rangehours:
+  - 16
+  - 9
+  reevaluateAction: false
+  relativeDistance: 4
+  relativeDistanceMultiplicator: 0
+  round: 2
+  tendence_distance: 4
+  tendence_distance_moment: 6
+  tendence_measure: 0
+  unit: 0
+  valueIndDIST: 1
+  verifyMarketOpen: true
+  weekDistanceMedDistance: 1
+  weekDistanceSTDDistance: 0
+  weekInterval: 10
+  weekMEDMinLevel: 2
+  weekMindiff: 0
+  weekend: false

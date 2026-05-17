@@ -1,0 +1,19 @@
+{
+  "name": "DIRECTION_MEDSTD_03",
+  "base_strategy": "direction",
+  "params": {
+    "use_medstd": true,
+    "medstd_min_diff": 0.5,
+    "use_probability": false,
+    "direction_threshold": 0.0
+  },
+  "conditions": {
+    "open": [
+      {"indicator": "direction", "op": ">", "value": 0},
+      {"indicator": "medstd", "op": ">", "value": 0.5}
+    ],
+    "close": [
+      {"indicator": "direction", "op": "<", "value": 0}
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+# Configuración para AMD
+# Convertido de: ParamAMD05.py
+
+description: "AMD - Configuraci\xF3n"
+name: AMD
+parameters:
+  MinMaxDistance: 4
+  accumulate: 0
+  angleDown: 2
+  angleUp: 2
+  blgDistPercent: 10
+  blgma_min_diff: 0
+  bollinger: 20
+  bollingerClose: 2
+  bollingerDst: 5
+  closeAcumvalue: 0
+  closeAngleDiff: 1
+  closeProfit: 0
+  closeWeekDiffNew: 0
+  continueFlow: true
+  controlWin: true
+  difference: 0
+  draw: false
+  ema10: 10
+  ema20: 20
+  emaMinDst: 0
+  ema_change_dst: 0
+  enableBollingerClose: true
+  hourOffset: -4
+  hourlyAngleDiff: 25
+  ignoreProb: false
+  ima1: 3
+  ima1EmaMinValue: 0
+  ima1maxDistance: 0
+  ima1minDistance: 0
+  ima2: 8
+  ima3: 15
+  ima3minDistance: 0
+  ima4: 1
+  maxAngleDown: 68
+  maxAngleUp: 60
+  maxMEDNormal: 0
+  maxSTDNormal: 0
+  medstdmaxDiff: 2
+  medstdminDiff: 0
+  minAngleFlow: 10
+  minAngleFlowCounter: 3
+  minAngleIma1: 5
+  minMEDNormal: 0
+  minSTDNormal: 0
+  min_ema_dst: 2
+  minimunCloseAmount: 5
+  operate: true
+  percent_distance: 6
+  percent_min_distance: 1
+  rangehours:
+  - 16
+  - 9
+  reevaluateAction: false
+  relativeDistance: 4
+  relativeDistanceMultiplicator: 0
+  round: 2
+  tendence_distance: 4
+  tendence_distance_moment: 6
+  tendence_measure: 0
+  unit: 0
+  valueIndDIST: 1
+  verifyMarketOpen: true
+  weekDistanceMedDistance: 1
+  weekDistanceSTDDistance: 0
+  weekInterval: 10
+  weekMEDMinLevel: 2
+  weekMindiff: 0
+  weekend: false
