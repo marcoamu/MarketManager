@@ -25,6 +25,7 @@ from typing import Optional, List, Dict, Any
 
 from service.MarketSQLManager import MarketSQLManager
 from service.AlpacaServiceBot import AlpacaServiceBot
+from service.AlpacaServiceBot import AlpacaServiceBot as AlpacaBot
 
 # ─────────────────────────────────────────────
 # Inicialización de la app y del acceso a datos
@@ -361,6 +362,142 @@ def set_smart_stop_loss(
             )
             
         return {"status": "success", "detail": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/trading/positions",
+    summary="Posiciones abiertas en Alpaca",
+    description="Devuelve todas las posiciones abiertas actuales con P&L no realizado.",
+    tags=["Trading"],
+)
+def get_alpaca_positions():
+    try:
+        positions = _alpaca.listPositions()
+        result = []
+        for p in positions:
+            result.append({
+                "symbol": p.symbol,
+                "qty": float(p.qty),
+                "side": p.side,
+                "avg_entry_price": float(p.avg_entry_price),
+                "current_price": float(p.current_price),
+                "unrealized_pl": float(p.unrealized_pl),
+                "unrealized_plpc": float(p.unrealized_plpc),
+                "market_value": float(p.market_value),
+            })
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/trading/orders",
+    summary="Órdenes abiertas en Alpaca",
+    description="Devuelve todas las órdenes abiertas (pending, partially_filled, etc).",
+    tags=["Trading"],
+)
+def get_alpaca_orders(
+    symbol: Optional[str] = Query(default=None, description="Filtrar por símbolo (opcional)"),
+):
+    try:
+        from alpaca.trading.requests import GetOrdersRequest
+        from alpaca.trading.enums import QueryOrderStatus
+        
+        req = GetOrdersRequest(
+            status=QueryOrderStatus.OPEN,
+            symbols=[symbol.upper()] if symbol else None,
+        )
+        orders = _alpaca.api.get_orders(req)
+        
+        result = []
+        for o in orders:
+            result.append({
+                "id": str(o.id),
+                "symbol": o.symbol,
+                "side": o.side.value,
+                "type": o.type.value,
+                "qty": float(o.qty),
+                "filled_qty": float(o.filled_qty),
+                "status": o.status.value,
+                "limit_price": float(o.limit_price) if o.limit_price else None,
+                "stop_price": float(o.stop_price) if o.stop_price else None,
+                "created_at": str(o.created_at),
+            })
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete(
+    "/trading/orders/{order_id}",
+    summary="Cancelar una orden",
+    description="Cancela una orden abierta por su ID. Devuelve error si ya estaba cancelada o completada.",
+    tags=["Trading"],
+)
+def cancel_order(order_id: str):
+    try:
+        _alpaca.api.cancel_order_by_id(order_id)
+        return {"status": "success", "detail": f"Orden {order_id} cancelada"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post(
+    "/trading/close-all",
+    summary="Cerrar todas las posiciones",
+    description="Cierra todas las posiciones abiertas y cancela todas las órdenes.",
+    tags=["Trading"],
+)
+def close_all_positions():
+    try:
+        # Cancelar todas las órdenes primero
+        _alpaca.api.cancel_orders()
+        
+        # Cerrar todas las posiciones
+        _alpaca.api.close_all_positions()
+        
+        return {"status": "success", "detail": "Todas las posiciones y órdenes cerradas"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post(
+    "/trading/daily-loss-limit",
+    summary="Límite de pérdida diaria",
+    description="Cierra todas las posiciones si el P&L del día supera la pérdida máxima permitida. Protege el capital.",
+    tags=["Trading"],
+)
+def set_daily_loss_limit(
+    max_loss_usd: float = Query(..., description="Pérdida máxima diaria en USD (ej. 50.0)"),
+):
+    try:
+        # Obtener P&L del día
+        pnl_data = _alpaca.get_daily_pnl_by_asset()
+        
+        if pnl_data.empty:
+            return {"status": "success", "detail": "No hay posiciones abiertas", "daily_pnl": 0}
+        
+        total_pnl = pnl_data['pnl'].sum()
+        
+        if total_pnl < 0 and abs(total_pnl) >= max_loss_usd:
+            # Pérdida supera el límite → cerrar todo
+            _alpaca.api.cancel_orders()
+            _alpaca.api.close_all_positions()
+            return {
+                "status": "limit_reached",
+                "detail": f"Límite de pérdida alcanzado: ${total_pnl:.2f} >= ${max_loss_usd:.2f}. Todo cerrado.",
+                "daily_pnl": total_pnl,
+                "closed": True,
+            }
+        else:
+            return {
+                "status": "ok",
+                "detail": f"P&L del día: ${total_pnl:.2f} (límite: ${max_loss_usd:.2f})",
+                "daily_pnl": total_pnl,
+                "closed": False,
+            }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

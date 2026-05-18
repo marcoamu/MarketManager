@@ -174,8 +174,8 @@ class AlpacaServiceBot:
             self.log.error(f"error {str(e)}")
         return False, ganancia, open, qty
     def listPositions(self):
-        res = self.api.list_positions()
-        print(res)
+        res = self.api.get_all_positions()
+        return res
     def allPositions(self):
         positions = self.api.get_all_positions()
         for position in positions:

@@ -40,7 +40,7 @@ class MarketSQLManager:
 
         else:
             path = "/home/MarketManager/market.db"
-            simpath = "/home/MarketManager/arketSimulation.db"
+            simpath = "/home/MarketManager/marketSimulation.db"
             if simulation:
                 path = "/home/MarketManager/marketSimulation.db"
 
