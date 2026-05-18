@@ -1,0 +1,831 @@
+# AUTO-GENERATED — NO EDITAR A MANO
+# Run: python3 prepare_evaluators.py to regenerate
+
+    def prepareActivesEvaluators4(self, active):
+        activeList = list()
+
+        active1 = copy.deepcopy(active)
+        active1.evaluator = EvaluatorBOLLINGER_00()
+        activeList.append(active1)
+
+        active2 = copy.deepcopy(active)
+        active2.evaluator = EvaluatorBOLLINGER_01()
+        activeList.append(active2)
+
+        active3 = copy.deepcopy(active)
+        active3.evaluator = EvaluatorBOLLINGER_02()
+        activeList.append(active3)
+
+        active4 = copy.deepcopy(active)
+        active4.evaluator = EvaluatorBOLLINGER_03()
+        activeList.append(active4)
+
+        active5 = copy.deepcopy(active)
+        active5.evaluator = EvaluatorBOLLINGER_04()
+        activeList.append(active5)
+
+        active6 = copy.deepcopy(active)
+        active6.evaluator = EvaluatorBOLLINGER_05()
+        activeList.append(active6)
+
+        active7 = copy.deepcopy(active)
+        active7.evaluator = EvaluatorBOLLINGER_05_IMP_01()
+        activeList.append(active7)
+
+        active8 = copy.deepcopy(active)
+        active8.evaluator = EvaluatorBOLLINGER_06()
+        activeList.append(active8)
+
+        active9 = copy.deepcopy(active)
+        active9.evaluator = EvaluatorBOLLINGER_07()
+        activeList.append(active9)
+
+        active10 = copy.deepcopy(active)
+        active10.evaluator = EvaluatorBOLLINGER_08()
+        activeList.append(active10)
+
+        active11 = copy.deepcopy(active)
+        active11.evaluator = EvaluatorBOLLINGER_09()
+        activeList.append(active11)
+
+        active12 = copy.deepcopy(active)
+        active12.evaluator = EvaluatorBOLLINGER_LARGE_01()
+        activeList.append(active12)
+
+        active13 = copy.deepcopy(active)
+        active13.evaluator = EvaluatorBOLLINGER_LARGE_02()
+        activeList.append(active13)
+
+        active14 = copy.deepcopy(active)
+        active14.evaluator = EvaluatorBOLLINGER_LARGE_03()
+        activeList.append(active14)
+
+        active15 = copy.deepcopy(active)
+        active15.evaluator = EvaluatorBase()
+        activeList.append(active15)
+
+        active16 = copy.deepcopy(active)
+        active16.evaluator = EvaluatorDIRECTION_CLEAN_Opt01()
+        activeList.append(active16)
+
+        active17 = copy.deepcopy(active)
+        active17.evaluator = EvaluatorDIRECTION_CLEAN_Opt02()
+        activeList.append(active17)
+
+        active18 = copy.deepcopy(active)
+        active18.evaluator = EvaluatorDIRECTION_CLEAN_Opt03()
+        activeList.append(active18)
+
+        active19 = copy.deepcopy(active)
+        active19.evaluator = EvaluatorDIRECTION_CLEAN_Opt03_MEDDIFF_01()
+        activeList.append(active19)
+
+        active20 = copy.deepcopy(active)
+        active20.evaluator = EvaluatorDIRECTION_CLEAN_Opt04()
+        activeList.append(active20)
+
+        active21 = copy.deepcopy(active)
+        active21.evaluator = EvaluatorDIRECTION_CLEAN_Opt05()
+        activeList.append(active21)
+
+        active22 = copy.deepcopy(active)
+        active22.evaluator = EvaluatorDIRECTION_MEDSTD_01()
+        activeList.append(active22)
+
+        active23 = copy.deepcopy(active)
+        active23.evaluator = EvaluatorDIRECTION_MEDSTD_02()
+        activeList.append(active23)
+
+        active24 = copy.deepcopy(active)
+        active24.evaluator = EvaluatorDIRECTION_MEDSTD_03()
+        activeList.append(active24)
+
+        active25 = copy.deepcopy(active)
+        active25.evaluator = EvaluatorDIRECTION_MEDSTD_03_MEDDIFF()
+        activeList.append(active25)
+
+        active26 = copy.deepcopy(active)
+        active26.evaluator = EvaluatorDIRECTION_MEDSTD_03_MEDDIFF_01()
+        activeList.append(active26)
+
+        active27 = copy.deepcopy(active)
+        active27.evaluator = EvaluatorDIRECTION_MEDSTD_03_MEDDIFF_02()
+        activeList.append(active27)
+
+        active28 = copy.deepcopy(active)
+        active28.evaluator = EvaluatorDIRECTION_MEDSTD_04()
+        activeList.append(active28)
+
+        active29 = copy.deepcopy(active)
+        active29.evaluator = EvaluatorDIRECTION_PROB_Opt01()
+        activeList.append(active29)
+
+        active30 = copy.deepcopy(active)
+        active30.evaluator = EvaluatorDIRECTION_PROB_Opt02()
+        activeList.append(active30)
+
+        active31 = copy.deepcopy(active)
+        active31.evaluator = EvaluatorDirectionMEDSTD01()
+        activeList.append(active31)
+
+        active32 = copy.deepcopy(active)
+        active32.evaluator = EvaluatorDirectionMEDSTD02()
+        activeList.append(active32)
+
+        active33 = copy.deepcopy(active)
+        active33.evaluator = EvaluatorDirectionMEDSTD03()
+        activeList.append(active33)
+
+        active34 = copy.deepcopy(active)
+        active34.evaluator = EvaluatorDirectionMEDSTD03_01()
+        activeList.append(active34)
+
+        active35 = copy.deepcopy(active)
+        active35.evaluator = EvaluatorDirectionMEDSTD04()
+        activeList.append(active35)
+
+        active36 = copy.deepcopy(active)
+        active36.evaluator = EvaluatorDirectionMEDSTD_MEDDIFF_01()
+        activeList.append(active36)
+
+        active37 = copy.deepcopy(active)
+        active37.evaluator = EvaluatorDistIndicatorTenOnlyUp01()
+        activeList.append(active37)
+
+        active38 = copy.deepcopy(active)
+        active38.evaluator = EvaluatorDistIndicatorTendence01()
+        activeList.append(active38)
+
+        active39 = copy.deepcopy(active)
+        active39.evaluator = EvaluatorDistIndicatorTendence02()
+        activeList.append(active39)
+
+        active40 = copy.deepcopy(active)
+        active40.evaluator = EvaluatorDistIndicatorTendence03()
+        activeList.append(active40)
+
+        active41 = copy.deepcopy(active)
+        active41.evaluator = EvaluatorDistMarketTenOnlyUp01()
+        activeList.append(active41)
+
+        active42 = copy.deepcopy(active)
+        active42.evaluator = EvaluatorDistMarketTenOptimiz00()
+        activeList.append(active42)
+
+        active43 = copy.deepcopy(active)
+        active43.evaluator = EvaluatorDistMarketTenOptimiz01()
+        activeList.append(active43)
+
+        active44 = copy.deepcopy(active)
+        active44.evaluator = EvaluatorDistMarketTenOptimiz02()
+        activeList.append(active44)
+
+        active45 = copy.deepcopy(active)
+        active45.evaluator = EvaluatorDistMarketTenOptimiz03()
+        activeList.append(active45)
+
+        active46 = copy.deepcopy(active)
+        active46.evaluator = EvaluatorDistMarketTendence01()
+        activeList.append(active46)
+
+        active47 = copy.deepcopy(active)
+        active47.evaluator = EvaluatorDistMarketTendence02()
+        activeList.append(active47)
+
+        active48 = copy.deepcopy(active)
+        active48.evaluator = EvaluatorDistMarketTendence03()
+        activeList.append(active48)
+
+        active49 = copy.deepcopy(active)
+        active49.evaluator = EvaluatorDistMarketTendence04()
+        activeList.append(active49)
+
+        active50 = copy.deepcopy(active)
+        active50.evaluator = EvaluatorDistMarketTendence05()
+        activeList.append(active50)
+
+        active51 = copy.deepcopy(active)
+        active51.evaluator = EvaluatorDistMarketTendence06()
+        activeList.append(active51)
+
+        active52 = copy.deepcopy(active)
+        active52.evaluator = EvaluatorDistMarketTendence07()
+        activeList.append(active52)
+
+        active53 = copy.deepcopy(active)
+        active53.evaluator = EvaluatorDistMarketTendence08()
+        activeList.append(active53)
+
+        active54 = copy.deepcopy(active)
+        active54.evaluator = EvaluatorDistMarketTendence09()
+        activeList.append(active54)
+
+        active55 = copy.deepcopy(active)
+        active55.evaluator = EvaluatorDistMarketTendence10()
+        activeList.append(active55)
+
+        active56 = copy.deepcopy(active)
+        active56.evaluator = EvaluatorDistMarketTendence11()
+        activeList.append(active56)
+
+        active57 = copy.deepcopy(active)
+        active57.evaluator = EvaluatorDistMarketTendence12()
+        activeList.append(active57)
+
+        active58 = copy.deepcopy(active)
+        active58.evaluator = EvaluatorDistance01()
+        activeList.append(active58)
+
+        active59 = copy.deepcopy(active)
+        active59.evaluator = EvaluatorDistance02()
+        activeList.append(active59)
+
+        active60 = copy.deepcopy(active)
+        active60.evaluator = EvaluatorDistance03()
+        activeList.append(active60)
+
+        active61 = copy.deepcopy(active)
+        active61.evaluator = EvaluatorEMA_01()
+        activeList.append(active61)
+
+        active62 = copy.deepcopy(active)
+        active62.evaluator = EvaluatorEMA_02()
+        activeList.append(active62)
+
+        active63 = copy.deepcopy(active)
+        active63.evaluator = EvaluatorEMA_03()
+        activeList.append(active63)
+
+        active64 = copy.deepcopy(active)
+        active64.evaluator = EvaluatorEMA_04()
+        activeList.append(active64)
+
+        active65 = copy.deepcopy(active)
+        active65.evaluator = EvaluatorEMA_IA_01()
+        activeList.append(active65)
+
+        active66 = copy.deepcopy(active)
+        active66.evaluator = EvaluatorEMA_IA_02()
+        activeList.append(active66)
+
+        active67 = copy.deepcopy(active)
+        active67.evaluator = EvaluatorEMA_IA_LONG()
+        activeList.append(active67)
+
+        active68 = copy.deepcopy(active)
+        active68.evaluator = EvaluatorEMA_IA_LONG_01()
+        activeList.append(active68)
+
+        active69 = copy.deepcopy(active)
+        active69.evaluator = EvaluatorEMA_IA_LONG_02()
+        activeList.append(active69)
+
+        active70 = copy.deepcopy(active)
+        active70.evaluator = EvaluatorEMA_LONG_01()
+        activeList.append(active70)
+
+        active71 = copy.deepcopy(active)
+        active71.evaluator = EvaluatorEMA_LONG_02()
+        activeList.append(active71)
+
+        active72 = copy.deepcopy(active)
+        active72.evaluator = EvaluatorEMA_LONG_02_01()
+        activeList.append(active72)
+
+        active73 = copy.deepcopy(active)
+        active73.evaluator = EvaluatorEMA_LONG_02_02()
+        activeList.append(active73)
+
+        active74 = copy.deepcopy(active)
+        active74.evaluator = EvaluatorEMA_LONG_03()
+        activeList.append(active74)
+
+        active75 = copy.deepcopy(active)
+        active75.evaluator = EvaluatorEMA_LONG_03_01()
+        activeList.append(active75)
+
+        active76 = copy.deepcopy(active)
+        active76.evaluator = EvaluatorEMA_LONG_03_02()
+        activeList.append(active76)
+
+        active77 = copy.deepcopy(active)
+        active77.evaluator = EvaluatorEMA_LONG_03_03()
+        activeList.append(active77)
+
+        active78 = copy.deepcopy(active)
+        active78.evaluator = EvaluatorEMA_LONG_03_04()
+        activeList.append(active78)
+
+        active79 = copy.deepcopy(active)
+        active79.evaluator = EvaluatorEMA_LONG_03_05()
+        activeList.append(active79)
+
+        active80 = copy.deepcopy(active)
+        active80.evaluator = EvaluatorEMA_LONG_03_06()
+        activeList.append(active80)
+
+        active81 = copy.deepcopy(active)
+        active81.evaluator = EvaluatorEMA_LONG_03_06_01()
+        activeList.append(active81)
+
+        active82 = copy.deepcopy(active)
+        active82.evaluator = EvaluatorEMA_LONG_03_06_02()
+        activeList.append(active82)
+
+        active83 = copy.deepcopy(active)
+        active83.evaluator = EvaluatorEMA_LONG_03_07()
+        activeList.append(active83)
+
+        active84 = copy.deepcopy(active)
+        active84.evaluator = EvaluatorEMA_LONG_03_08()
+        activeList.append(active84)
+
+        active85 = copy.deepcopy(active)
+        active85.evaluator = EvaluatorEMA_LONG_03_09()
+        activeList.append(active85)
+
+        active86 = copy.deepcopy(active)
+        active86.evaluator = EvaluatorIBLG_ANGLE_FLOW_01()
+        activeList.append(active86)
+
+        active87 = copy.deepcopy(active)
+        active87.evaluator = EvaluatorIBLG_ANGLE_FLOW_02()
+        activeList.append(active87)
+
+        active88 = copy.deepcopy(active)
+        active88.evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_01()
+        activeList.append(active88)
+
+        active89 = copy.deepcopy(active)
+        active89.evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_02()
+        activeList.append(active89)
+
+        active90 = copy.deepcopy(active)
+        active90.evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_03()
+        activeList.append(active90)
+
+        active91 = copy.deepcopy(active)
+        active91.evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_04()
+        activeList.append(active91)
+
+        active92 = copy.deepcopy(active)
+        active92.evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_05()
+        activeList.append(active92)
+
+        active93 = copy.deepcopy(active)
+        active93.evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_06()
+        activeList.append(active93)
+
+        active94 = copy.deepcopy(active)
+        active94.evaluator = EvaluatorIBLG_LONG_00()
+        activeList.append(active94)
+
+        active95 = copy.deepcopy(active)
+        active95.evaluator = EvaluatorIBLG_LONG_01()
+        activeList.append(active95)
+
+        active96 = copy.deepcopy(active)
+        active96.evaluator = EvaluatorIBLG_LONG_02()
+        activeList.append(active96)
+
+        active97 = copy.deepcopy(active)
+        active97.evaluator = EvaluatorIBLG_LONG_03()
+        activeList.append(active97)
+
+        active98 = copy.deepcopy(active)
+        active98.evaluator = EvaluatorIBLG_LONG_04()
+        activeList.append(active98)
+
+        active99 = copy.deepcopy(active)
+        active99.evaluator = EvaluatorIBLG_LONG_05()
+        activeList.append(active99)
+
+        active100 = copy.deepcopy(active)
+        active100.evaluator = EvaluatorIBLG_LONG_06()
+        activeList.append(active100)
+
+        active101 = copy.deepcopy(active)
+        active101.evaluator = EvaluatorIBLG_LONG_07()
+        activeList.append(active101)
+
+        active102 = copy.deepcopy(active)
+        active102.evaluator = EvaluatorIBLG_LONG_08()
+        activeList.append(active102)
+
+        active103 = copy.deepcopy(active)
+        active103.evaluator = EvaluatorIBLG_LONG_09()
+        activeList.append(active103)
+
+        active104 = copy.deepcopy(active)
+        active104.evaluator = EvaluatorIBLG_MID_LONG_01()
+        activeList.append(active104)
+
+        active105 = copy.deepcopy(active)
+        active105.evaluator = EvaluatorIBLG_MID_LONG_02()
+        activeList.append(active105)
+
+        active106 = copy.deepcopy(active)
+        active106.evaluator = EvaluatorIBLG_PROB_FLOW_01()
+        activeList.append(active106)
+
+        active107 = copy.deepcopy(active)
+        active107.evaluator = EvaluatorIBLG_PROB_FLOW_02()
+        activeList.append(active107)
+
+        active108 = copy.deepcopy(active)
+        active108.evaluator = EvaluatorIBLG_START_CLOSE_01()
+        activeList.append(active108)
+
+        active109 = copy.deepcopy(active)
+        active109.evaluator = EvaluatorIBLG_START_CLOSE_02()
+        activeList.append(active109)
+
+        active110 = copy.deepcopy(active)
+        active110.evaluator = EvaluatorIBLG_START_CLOSE_03()
+        activeList.append(active110)
+
+        active111 = copy.deepcopy(active)
+        active111.evaluator = EvaluatorIBLG_START_CLOSE_03_01()
+        activeList.append(active111)
+
+        active112 = copy.deepcopy(active)
+        active112.evaluator = EvaluatorIBLG_START_CLOSE_03_BCKUP()
+        activeList.append(active112)
+
+        active113 = copy.deepcopy(active)
+        active113.evaluator = EvaluatorIBLG_START_CLOSE_04()
+        activeList.append(active113)
+
+        active114 = copy.deepcopy(active)
+        active114.evaluator = EvaluatorIBLG_START_CLOSE_05()
+        activeList.append(active114)
+
+        active115 = copy.deepcopy(active)
+        active115.evaluator = EvaluatorIBLG_WEEK_FLOW_01()
+        activeList.append(active115)
+
+        active116 = copy.deepcopy(active)
+        active116.evaluator = EvaluatorIBLG_WEEK_FLOW_02()
+        activeList.append(active116)
+
+        active117 = copy.deepcopy(active)
+        active117.evaluator = EvaluatorIBLG_WEEK_FLOW_03()
+        activeList.append(active117)
+
+        active118 = copy.deepcopy(active)
+        active118.evaluator = EvaluatorIMA1Optimiz_MEDDIFF_01()
+        activeList.append(active118)
+
+        active119 = copy.deepcopy(active)
+        active119.evaluator = EvaluatorIMA1Optimiz_MEDDIFF_02()
+        activeList.append(active119)
+
+        active120 = copy.deepcopy(active)
+        active120.evaluator = EvaluatorIMA1_ANGLE_01()
+        activeList.append(active120)
+
+        active121 = copy.deepcopy(active)
+        active121.evaluator = EvaluatorIMA1_ANGLE_02()
+        activeList.append(active121)
+
+        active122 = copy.deepcopy(active)
+        active122.evaluator = EvaluatorIMA1_ANGLE_03()
+        activeList.append(active122)
+
+        active123 = copy.deepcopy(active)
+        active123.evaluator = EvaluatorIMA1_CLEAN_BLG_01()
+        activeList.append(active123)
+
+        active124 = copy.deepcopy(active)
+        active124.evaluator = EvaluatorIMA1_CLEAN_BLG_02()
+        activeList.append(active124)
+
+        active125 = copy.deepcopy(active)
+        active125.evaluator = EvaluatorIMA1_CLEAN_BLG_03()
+        activeList.append(active125)
+
+        active126 = copy.deepcopy(active)
+        active126.evaluator = EvaluatorIMA1_CLEAN_BLG_04()
+        activeList.append(active126)
+
+        active127 = copy.deepcopy(active)
+        active127.evaluator = EvaluatorIMA1_CLEAN_BLG_04_ONLY_DOWN_01()
+        activeList.append(active127)
+
+        active128 = copy.deepcopy(active)
+        active128.evaluator = EvaluatorIMA1_CLEAN_BLG_05()
+        activeList.append(active128)
+
+        active129 = copy.deepcopy(active)
+        active129.evaluator = EvaluatorIMA1_CLEAN_BLG_06()
+        activeList.append(active129)
+
+        active130 = copy.deepcopy(active)
+        active130.evaluator = EvaluatorIMA1_CLEAN_BLG_EXTREMES_01()
+        activeList.append(active130)
+
+        active131 = copy.deepcopy(active)
+        active131.evaluator = EvaluatorIMA1_CLEAN_Optimiz01()
+        activeList.append(active131)
+
+        active132 = copy.deepcopy(active)
+        active132.evaluator = EvaluatorIMA1_CLEAN_Optimiz02()
+        activeList.append(active132)
+
+        active133 = copy.deepcopy(active)
+        active133.evaluator = EvaluatorIMA1_CLEAN_Optimiz03()
+        activeList.append(active133)
+
+        active134 = copy.deepcopy(active)
+        active134.evaluator = EvaluatorIMA1_CLEAN_Optimiz04()
+        activeList.append(active134)
+
+        active135 = copy.deepcopy(active)
+        active135.evaluator = EvaluatorIMA1_INDICATOR_MEDDIFF_01()
+        activeList.append(active135)
+
+        active136 = copy.deepcopy(active)
+        active136.evaluator = EvaluatorIMA1_STDMED_Optimiz01()
+        activeList.append(active136)
+
+        active137 = copy.deepcopy(active)
+        active137.evaluator = EvaluatorIWEEK_DIRECTION_01()
+        activeList.append(active137)
+
+        active138 = copy.deepcopy(active)
+        active138.evaluator = EvaluatorMARKETTENDENCE_STDMED_01()
+        activeList.append(active138)
+
+        active139 = copy.deepcopy(active)
+        active139.evaluator = EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_01()
+        activeList.append(active139)
+
+        active140 = copy.deepcopy(active)
+        active140.evaluator = EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_01_ONLYUP()
+        activeList.append(active140)
+
+        active141 = copy.deepcopy(active)
+        active141.evaluator = EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_02()
+        activeList.append(active141)
+
+        active142 = copy.deepcopy(active)
+        active142.evaluator = EvaluatorMEDMOMENT_01_MEDDIFF_INDDIST_01()
+        activeList.append(active142)
+
+        active143 = copy.deepcopy(active)
+        active143.evaluator = EvaluatorMEDMOMENT_CLEAN_MEDDIFF_01()
+        activeList.append(active143)
+
+        active144 = copy.deepcopy(active)
+        active144.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz01()
+        activeList.append(active144)
+
+        active145 = copy.deepcopy(active)
+        active145.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz02()
+        activeList.append(active145)
+
+        active146 = copy.deepcopy(active)
+        active146.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz03()
+        activeList.append(active146)
+
+        active147 = copy.deepcopy(active)
+        active147.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz03_MEDDIFF()
+        activeList.append(active147)
+
+        active148 = copy.deepcopy(active)
+        active148.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz03_MEDDIFF01()
+        activeList.append(active148)
+
+        active149 = copy.deepcopy(active)
+        active149.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz04()
+        activeList.append(active149)
+
+        active150 = copy.deepcopy(active)
+        active150.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz05()
+        activeList.append(active150)
+
+        active151 = copy.deepcopy(active)
+        active151.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz06()
+        activeList.append(active151)
+
+        active152 = copy.deepcopy(active)
+        active152.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz06_MEDDIFF_01()
+        activeList.append(active152)
+
+        active153 = copy.deepcopy(active)
+        active153.evaluator = EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT()
+        activeList.append(active153)
+
+        active154 = copy.deepcopy(active)
+        active154.evaluator = EvaluatorMEDSTDOptimiz01()
+        activeList.append(active154)
+
+        active155 = copy.deepcopy(active)
+        active155.evaluator = EvaluatorMEDSTDOptimiz02()
+        activeList.append(active155)
+
+        active156 = copy.deepcopy(active)
+        active156.evaluator = EvaluatorMEDSTDOptimiz03()
+        activeList.append(active156)
+
+        active157 = copy.deepcopy(active)
+        active157.evaluator = EvaluatorMEDSTDOptimiz04()
+        activeList.append(active157)
+
+        active158 = copy.deepcopy(active)
+        active158.evaluator = EvaluatorMEDSTDOptimiz04OnlyUp()
+        activeList.append(active158)
+
+        active159 = copy.deepcopy(active)
+        active159.evaluator = EvaluatorMEDSTDOptimiz04OnlyUp01()
+        activeList.append(active159)
+
+        active160 = copy.deepcopy(active)
+        active160.evaluator = EvaluatorMEDSTDOptimiz05()
+        activeList.append(active160)
+
+        active161 = copy.deepcopy(active)
+        active161.evaluator = EvaluatorMEDSTDOptimiz06()
+        activeList.append(active161)
+
+        active162 = copy.deepcopy(active)
+        active162.evaluator = EvaluatorMEDSTDOptimiz07()
+        activeList.append(active162)
+
+        active163 = copy.deepcopy(active)
+        active163.evaluator = EvaluatorMEDSTDOptimiz08()
+        activeList.append(active163)
+
+        active164 = copy.deepcopy(active)
+        active164.evaluator = EvaluatorMEDSTDOptimiz09()
+        activeList.append(active164)
+
+        active165 = copy.deepcopy(active)
+        active165.evaluator = EvaluatorMEDSTDOptimiz10()
+        activeList.append(active165)
+
+        active166 = copy.deepcopy(active)
+        active166.evaluator = EvaluatorMEDSTDOptimiz_MEDDIFF_07()
+        activeList.append(active166)
+
+        active167 = copy.deepcopy(active)
+        active167.evaluator = EvaluatorMEDSTDRelative01()
+        activeList.append(active167)
+
+        active168 = copy.deepcopy(active)
+        active168.evaluator = EvaluatorMEDSTDRelative02()
+        activeList.append(active168)
+
+        active169 = copy.deepcopy(active)
+        active169.evaluator = EvaluatorMEDSTDRelative03()
+        activeList.append(active169)
+
+        active170 = copy.deepcopy(active)
+        active170.evaluator = EvaluatorMEDSTDRelative04()
+        activeList.append(active170)
+
+        active171 = copy.deepcopy(active)
+        active171.evaluator = EvaluatorMEDSTDRelative04OnlyUP()
+        activeList.append(active171)
+
+        active172 = copy.deepcopy(active)
+        active172.evaluator = EvaluatorMEDSTD_WEEK_MEDDIFF_01()
+        activeList.append(active172)
+
+        active173 = copy.deepcopy(active)
+        active173.evaluator = EvaluatorMEDSTD_WEEK_Optimiz01()
+        activeList.append(active173)
+
+        active174 = copy.deepcopy(active)
+        active174.evaluator = EvaluatorMEDSTD_WEEK_Optimiz02()
+        activeList.append(active174)
+
+        active175 = copy.deepcopy(active)
+        active175.evaluator = EvaluatorMEDSTD_WEEK_Optimiz03()
+        activeList.append(active175)
+
+        active176 = copy.deepcopy(active)
+        active176.evaluator = EvaluatorMED_MOMENTOptimiz01OnlyUp()
+        activeList.append(active176)
+
+        active177 = copy.deepcopy(active)
+        active177.evaluator = EvaluatorMED_WEEK_Optimiz01()
+        activeList.append(active177)
+
+        active178 = copy.deepcopy(active)
+        active178.evaluator = EvaluatorMED_WEEK_Optimiz02()
+        activeList.append(active178)
+
+        active179 = copy.deepcopy(active)
+        active179.evaluator = EvaluatorOnlyUp01()
+        activeList.append(active179)
+
+        active180 = copy.deepcopy(active)
+        active180.evaluator = EvaluatorOnlyUp02()
+        activeList.append(active180)
+
+        active181 = copy.deepcopy(active)
+        active181.evaluator = EvaluatorOnlyUp03()
+        activeList.append(active181)
+
+        active182 = copy.deepcopy(active)
+        active182.evaluator = EvaluatorOnlyUp04()
+        activeList.append(active182)
+
+        active183 = copy.deepcopy(active)
+        active183.evaluator = EvaluatorOnlyUp05()
+        activeList.append(active183)
+
+        active184 = copy.deepcopy(active)
+        active184.evaluator = EvaluatorOnlyUp06()
+        activeList.append(active184)
+
+        active185 = copy.deepcopy(active)
+        active185.evaluator = EvaluatorOnlyUp07()
+        activeList.append(active185)
+
+        active186 = copy.deepcopy(active)
+        active186.evaluator = EvaluatorOnlyUp08()
+        activeList.append(active186)
+
+        active187 = copy.deepcopy(active)
+        active187.evaluator = EvaluatorOnlyUp09()
+        activeList.append(active187)
+
+        active188 = copy.deepcopy(active)
+        active188.evaluator = EvaluatorOnlyUpMARKET01()
+        activeList.append(active188)
+
+        active189 = copy.deepcopy(active)
+        active189.evaluator = EvaluatorPROBMEDSTD_CLEAN_Opt01()
+        activeList.append(active189)
+
+        active190 = copy.deepcopy(active)
+        active190.evaluator = EvaluatorPROBMEDSTD_CLEAN_Opt02()
+        activeList.append(active190)
+
+        active191 = copy.deepcopy(active)
+        active191.evaluator = EvaluatorPROBMEDSTD_CLEAN_Opt03()
+        activeList.append(active191)
+
+        active192 = copy.deepcopy(active)
+        active192.evaluator = EvaluatorPROBMEDSTD_CLEAN_Opt03_MEDDIFF_01()
+        activeList.append(active192)
+
+        active193 = copy.deepcopy(active)
+        active193.evaluator = EvaluatorPROBMEDSTD_MEDDIFF_BLG_01()
+        activeList.append(active193)
+
+        active194 = copy.deepcopy(active)
+        active194.evaluator = EvaluatorPROBMEDSTD_MEDDIFF_BLG_02()
+        activeList.append(active194)
+
+        active195 = copy.deepcopy(active)
+        active195.evaluator = EvaluatorRELATIVE_MEDSTD_01()
+        activeList.append(active195)
+
+        active196 = copy.deepcopy(active)
+        active196.evaluator = EvaluatorRELATIVE_MEDSTD_02()
+        activeList.append(active196)
+
+        active197 = copy.deepcopy(active)
+        active197.evaluator = EvaluatorRELATIVE_MEDSTD_03()
+        activeList.append(active197)
+
+        active198 = copy.deepcopy(active)
+        active198.evaluator = EvaluatorRELATIVE_MEDSTD_03_MEDDIFF_01()
+        activeList.append(active198)
+
+        active199 = copy.deepcopy(active)
+        active199.evaluator = EvaluatorRELATIVE_MEDSTD_03_MEDDIFF_02()
+        activeList.append(active199)
+
+        active200 = copy.deepcopy(active)
+        active200.evaluator = EvaluatorRELATIVE_MEDSTD_ONLYUP_01()
+        activeList.append(active200)
+
+        active201 = copy.deepcopy(active)
+        active201.evaluator = EvaluatorRSI_01()
+        activeList.append(active201)
+
+        active202 = copy.deepcopy(active)
+        active202.evaluator = EvaluatorRSI_ONLYUP_01()
+        activeList.append(active202)
+
+        active203 = copy.deepcopy(active)
+        active203.evaluator = EvaluatorSTDMarketOptimiz01()
+        activeList.append(active203)
+
+        active204 = copy.deepcopy(active)
+        active204.evaluator = EvaluatorSTDMarketOptimiz02()
+        activeList.append(active204)
+
+        active205 = copy.deepcopy(active)
+        active205.evaluator = EvaluatorSUPERBOT_ALPHA_01()
+        activeList.append(active205)
+
+        active206 = copy.deepcopy(active)
+        active206.evaluator = factory()
+        activeList.append(active206)
+
+        return activeList

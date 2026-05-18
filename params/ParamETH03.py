@@ -21,7 +21,7 @@ class ParamETH03(Parameters):
         self.ima3 = 13
         self.ima4 = 2
         self.weekend = True
-        self.operate = True
+        self.operate = False
         self.reevaluateAction = False
         self.minimunCloseAmount = 5
         self.hourOffset = 0

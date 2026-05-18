@@ -21,7 +21,7 @@ class ParamBTC06(Parameters):
         self.ima3 = 15
         self.ima4 = 1
         self.weekend = True
-        self.operate = True
+        self.operate = False
         self.reevaluateAction = False
         self.minimunCloseAmount = 5
         self.hourOffset = 0

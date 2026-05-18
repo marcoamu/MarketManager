@@ -36,3 +36,7 @@ F:/.env
 config/config.ini
 market.db
 *.db
+core/config.ini
+linux/config.ini
+params/__pycache__
+*.pyc
