@@ -33,3 +33,4 @@ Thumbs.db
 
 # Windows/Linux specific
 F:/.env
+config/config.ini
