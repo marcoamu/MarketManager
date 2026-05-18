@@ -231,7 +231,7 @@ def main():
 
     start = (datetime.now() - timedelta(days=args.days)).strftime('%Y-%m-%d')
     end = datetime.now().strftime('%Y-%m-%d')
-    mm_path = "/home/MarketManager/MarketManager.py"
+    mm_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'MarketManager.py')
 
     sim_flags = {
         'disableInitPROB': args.disable_init_prob,
