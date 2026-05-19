@@ -4,13 +4,13 @@ from evaluators.AperturaBase import AperturaBase
 from service.Constants import Constants
 
 
-class EvaluatorWEEK_DIRECTION_01(EvaluatorBase,AperturaBase,CierreBase):
+class EvaluatorIWEEK_DIRECTION_01(EvaluatorBase,AperturaBase,CierreBase):
 
     #tiene EMA MIN DST
 
     def __init__(self):
         #se añade cierre mas permisivo
-        self.name = "EvaluatorWEEK_DIRECTION_01"
+        self.name = "EvaluatorIWEEK_DIRECTION_01"
         # self.name = "EvaluatorIBLG_LONG_04"
 
 

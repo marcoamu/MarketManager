@@ -4,13 +4,13 @@ from evaluators.AperturaBase import AperturaBase
 from service.Constants import Constants
 
 
-class EvaluatorIBLG_START_CLOSE_03(EvaluatorBase,AperturaBase,CierreBase):
+class EvaluatorIBLG_START_CLOSE_03_BCKUP(EvaluatorBase,AperturaBase,CierreBase):
 
     #tiene EMA MIN DST
 
     def __init__(self):
         #se añade cierre mas permisivo
-        self.name = "EvaluatorIBLG_START_CLOSE_03"
+        self.name = "EvaluatorIBLG_START_CLOSE_03_BCKUP"
         # self.name = "EvaluatorIBLG_START_CLOSE_02"
         # self.name = "EvaluatorIBLG_START_CLOSE_01"
         # self.name = "EvaluatorIBLG_LONG_04"

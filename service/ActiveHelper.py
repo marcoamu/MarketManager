@@ -134,6 +134,7 @@ from evaluators.EvaluatorIBLG_LONG_03 import EvaluatorIBLG_LONG_03
 from evaluators.EvaluatorIBLG_LONG_04 import EvaluatorIBLG_LONG_04
 from evaluators.EvaluatorIBLG_LONG_05 import EvaluatorIBLG_LONG_05
 from evaluators.EvaluatorIBLG_LONG_06 import EvaluatorIBLG_LONG_06
+from evaluators.EvaluatorIBLG_LONG_07 import EvaluatorIBLG_LONG_07
 from evaluators.EvaluatorIBLG_LONG_08 import EvaluatorIBLG_LONG_08
 from evaluators.EvaluatorIBLG_LONG_09 import EvaluatorIBLG_LONG_09
 from evaluators.EvaluatorIBLG_LONG_ANGLE_ONLY_UP_01 import EvaluatorIBLG_LONG_ANGLE_ONLY_UP_01
@@ -159,6 +160,7 @@ from evaluators.EvaluatorIBLG_START_CLOSE_03_01 import EvaluatorIBLG_START_CLOSE
 from evaluators.EvaluatorIBLG_START_CLOSE_04 import EvaluatorIBLG_START_CLOSE_04
 from evaluators.EvaluatorIBLG_START_CLOSE_05 import EvaluatorIBLG_START_CLOSE_05
 from evaluators.EvaluatorIBLG_WEEK_FLOW_01 import EvaluatorIBLG_WEEK_FLOW_01
+from evaluators.EvaluatorIBLG_WEEK_FLOW_02 import EvaluatorIBLG_WEEK_FLOW_02
 from evaluators.EvaluatorIBLG_WEEK_FLOW_03 import EvaluatorIBLG_WEEK_FLOW_03
 from evaluators.EvaluatorIBLG_WEEK_FLOW_ONLY_UP_01 import EvaluatorIBLG_WEEK_FLOW_ONLY_UP_01
 from evaluators.EvaluatorIBLG_WEEK_FLOW_ONLY_UP_02 import EvaluatorIBLG_WEEK_FLOW_ONLY_UP_02
@@ -178,6 +180,7 @@ from evaluators.EvaluatorIMA1_CLEAN_BLG_04 import EvaluatorIMA1_CLEAN_BLG_04
 from evaluators.EvaluatorIMA1_CLEAN_BLG_04_ONLY_DOWN_01 import EvaluatorIMA1_CLEAN_BLG_04_ONLY_DOWN_01
 from evaluators.EvaluatorIMA1_CLEAN_BLG_04_ONLY_UP_01 import EvaluatorIMA1_CLEAN_BLG_04_ONLY_UP_01
 from evaluators.EvaluatorIMA1_CLEAN_BLG_05 import EvaluatorIMA1_CLEAN_BLG_05
+from evaluators.EvaluatorIMA1_CLEAN_BLG_06 import EvaluatorIMA1_CLEAN_BLG_06
 from evaluators.EvaluatorIMA1_CLEAN_BLG_EXTREMES_01 import EvaluatorIMA1_CLEAN_BLG_EXTREMES_01
 from evaluators.EvaluatorIMA1_CLEAN_Optimiz01 import EvaluatorIMA1_CLEAN_Optimiz01
 
@@ -185,12 +188,15 @@ from evaluators.EvaluatorIMA1_CLEAN_Optimiz02 import EvaluatorIMA1_CLEAN_Optimiz
 from evaluators.EvaluatorIMA1_CLEAN_Optimiz03 import EvaluatorIMA1_CLEAN_Optimiz03
 from evaluators.EvaluatorIMA1_CLEAN_Optimiz04 import EvaluatorIMA1_CLEAN_Optimiz04
 from evaluators.EvaluatorIMA1_INDICATOR_MEDDIFF_01 import EvaluatorIMA1_INDICATOR_MEDDIFF_01
+from evaluators.EvaluatorIMA1_STDMED_Optimiz01 import EvaluatorIMA1_STDMED_Optimiz01
 from evaluators.EvaluatorIPROB_FLOW_ONLY_UP_01 import EvaluatorIPROB_FLOW_ONLY_UP_01
+from evaluators.EvaluatorIWEEK_DIRECTION_01 import EvaluatorIWEEK_DIRECTION_01
 from evaluators.EvaluatorMARKETTENDENCE_STDMED_01 import EvaluatorMARKETTENDENCE_STDMED_01
 from evaluators.EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_01 import EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_01
 from evaluators.EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_01_ONLYUP import EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_01_ONLYUP
 from evaluators.EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_02 import EvaluatorMARKETTENDENCE_STDMED_MEDDIFF_02
 from evaluators.EvaluatorMEDMOMENT_01_MEDDIFF_INDDIST_01 import EvaluatorMEDMOMENT_01_MEDDIFF_INDDIST_01
+from evaluators.EvaluatorMEDMOMENT_CLEAN_MEDDIFF_01 import EvaluatorMEDMOMENT_CLEAN_MEDDIFF_01
 
 from evaluators.EvaluatorMEDMOMENT_CLEAN_Optimiz01 import EvaluatorMEDMOMENT_CLEAN_Optimiz01
 from evaluators.EvaluatorMEDMOMENT_CLEAN_Optimiz02 import EvaluatorMEDMOMENT_CLEAN_Optimiz02
@@ -212,15 +218,18 @@ from evaluators.EvaluatorMEDSTDOptimiz05 import EvaluatorMEDSTDOptimiz05
 from evaluators.EvaluatorMEDSTDOptimiz06 import EvaluatorMEDSTDOptimiz06
 from evaluators.EvaluatorMEDSTDOptimiz07 import EvaluatorMEDSTDOptimiz07
 from evaluators.EvaluatorMEDSTDOptimiz08 import EvaluatorMEDSTDOptimiz08
+from evaluators.EvaluatorMEDSTDOptimiz09 import EvaluatorMEDSTDOptimiz09
 from evaluators.EvaluatorMEDSTDOptimiz10 import EvaluatorMEDSTDOptimiz10
 from evaluators.EvaluatorMEDSTDOptimiz_MEDDIFF_07 import EvaluatorMEDSTDOptimiz_MEDDIFF_07
 from evaluators.EvaluatorMEDSTDRelative01 import EvaluatorMEDSTDRelative01
 from evaluators.EvaluatorMEDSTDRelative02 import EvaluatorMEDSTDRelative02
 from evaluators.EvaluatorMEDSTDRelative03 import EvaluatorMEDSTDRelative03
 from evaluators.EvaluatorMEDSTDRelative04 import EvaluatorMEDSTDRelative04
+from evaluators.EvaluatorMEDSTDRelative04OnlyUP import EvaluatorMEDSTDRelative04OnlyUP
 from evaluators.EvaluatorMEDSTD_WEEK_MEDDIFF_01 import EvaluatorMEDSTD_WEEK_MEDDIFF_01
 from evaluators.EvaluatorMEDSTD_WEEK_Optimiz01 import EvaluatorMEDSTD_WEEK_Optimiz01
 from evaluators.EvaluatorMEDSTD_WEEK_Optimiz02 import EvaluatorMEDSTD_WEEK_Optimiz02
+from evaluators.EvaluatorMEDSTD_WEEK_Optimiz03 import EvaluatorMEDSTD_WEEK_Optimiz03
 from evaluators.EvaluatorMED_MOMENTOptimiz01OnlyUp import EvaluatorMED_MOMENTOptimiz01OnlyUp
 from evaluators.EvaluatorMED_WEEK_Optimiz01 import EvaluatorMED_WEEK_Optimiz01
 from evaluators.EvaluatorMED_WEEK_Optimiz02 import EvaluatorMED_WEEK_Optimiz02
@@ -3109,6 +3118,108 @@ class ActiveHelper:
 
         return activeList
 
+    def prepareActivesEvaluators4Old(self, active):
+        activeList = list()
+
+        active1 = copy.deepcopy(active)
+        active1.evaluator = EvaluatorIMA1_ANGLE_01()
+        activeList.append(active1)
+
+
+        active2 = copy.deepcopy(active)
+        active2.evaluator = EvaluatorIBLG_LONG_03()
+        activeList.append(active2)
+
+        active3 = copy.deepcopy(active)
+        active3.evaluator = EvaluatorIBLG_START_CLOSE_03()
+        activeList.append(active3)
+
+        active4 = copy.deepcopy(active)
+        active4.evaluator = EvaluatorIBLG_LONG_08()
+        activeList.append(active4)
+
+        active5 = copy.deepcopy(active)
+        active5.evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_01()
+        activeList.append(active5)
+
+        active6 = copy.deepcopy(active)
+        active6.evaluator = EvaluatorBOLLINGER_05()
+        activeList.append(active6)
+
+        active7 = copy.deepcopy(active)
+        active7.evaluator = EvaluatorIMA1Optimiz_MEDDIFF_01()
+        activeList.append(active7)
+
+        active8 = copy.deepcopy(active)
+        active8.evaluator = EvaluatorBOLLINGER_05_IMP_01()
+        activeList.append(active8)
+
+        active9 = copy.deepcopy(active)
+        active9.evaluator = EvaluatorIMA1_ANGLE_02()
+        activeList.append(active9)
+
+        active10 = copy.deepcopy(active)
+        active10.evaluator = EvaluatorEMA_LONG_02()
+        activeList.append(active10)
+
+        active11 = copy.deepcopy(active)
+        active11.evaluator = EvaluatorEMA_LONG_03()
+        activeList.append(active11)
+
+        active12 = copy.deepcopy(active)
+        active12.evaluator = EvaluatorEMA_LONG_02_01()
+        activeList.append(active12)
+
+        active13 = copy.deepcopy(active)
+        active13.evaluator = EvaluatorEMA_LONG_03_04()
+        activeList.append(active13)
+
+        active14 = copy.deepcopy(active)
+        active14.evaluator = EvaluatorEMA_LONG_03_05()
+        activeList.append(active14)
+
+        active15 = copy.deepcopy(active)
+        active15.evaluator = EvaluatorEMA_LONG_03_06()
+        activeList.append(active15)
+
+        active16 = copy.deepcopy(active)
+        active16.evaluator = EvaluatorEMA_LONG_03_06_01()
+        activeList.append(active16)
+
+        active17 = copy.deepcopy(active)
+        active17.evaluator = EvaluatorIBLG_START_CLOSE_03_01()
+        activeList.append(active17)
+
+        active18 = copy.deepcopy(active)
+        active18.evaluator = EvaluatorRSI_01()
+        activeList.append(active18)
+
+        active19 = copy.deepcopy(active)
+        active19.evaluator = EvaluatorSUPERBOT_ALPHA_01()
+        activeList.append(active19)
+
+        active20 = copy.deepcopy(active)
+        active20.evaluator = EvaluatorEMA_IA_02()
+        activeList.append(active20)
+
+        active21 = copy.deepcopy(active)
+        active21.evaluator = EvaluatorEMA_IA_01()
+        activeList.append(active21)
+
+        active22 = copy.deepcopy(active)
+        active22.evaluator = EvaluatorEMA_IA_LONG()
+        activeList.append(active22)
+
+        active23 = copy.deepcopy(active)
+        active23.evaluator = EvaluatorEMA_IA_LONG_01()
+        activeList.append(active23)
+
+        active24 = copy.deepcopy(active)
+        active24.evaluator = EvaluatorEMA_LONG_02_02()
+        activeList.append(active24)
+
+        return activeList
+
 # AUTO-GENERATED — NO EDITAR A MANO
 # Run: python3 prepare_evaluators.py to regenerate
 
@@ -3171,9 +3282,9 @@ class ActiveHelper:
         active14.evaluator = EvaluatorBOLLINGER_LARGE_03()
         activeList.append(active14)
 
-        active15 = copy.deepcopy(active)
-        active15.evaluator = EvaluatorBase()
-        activeList.append(active15)
+        # active15 = copy.deepcopy(active)
+        # active15.evaluator = EvaluatorBase()
+        # activeList.append(active15)
 
         active16 = copy.deepcopy(active)
         active16.evaluator = EvaluatorDIRECTION_CLEAN_Opt01()
@@ -3559,9 +3670,9 @@ class ActiveHelper:
         active111.evaluator = EvaluatorIBLG_START_CLOSE_03_01()
         activeList.append(active111)
 
-        active112 = copy.deepcopy(active)
-        active112.evaluator = EvaluatorIBLG_START_CLOSE_03_BCKUP()
-        activeList.append(active112)
+        # active112 = copy.deepcopy(active)
+        # active112.evaluator = EvaluatorIBLG_START_CLOSE_03_BCKUP()
+        # activeList.append(active112)
 
         active113 = copy.deepcopy(active)
         active113.evaluator = EvaluatorIBLG_START_CLOSE_04()
@@ -3935,9 +4046,9 @@ class ActiveHelper:
         active205.evaluator = EvaluatorSUPERBOT_ALPHA_01()
         activeList.append(active205)
 
-        active206 = copy.deepcopy(active)
-        active206.evaluator = factory()
-        activeList.append(active206)
+        # active206 = copy.deepcopy(active)
+        # active206.evaluator = factory()
+        # activeList.append(active206)
 
         return activeList
 

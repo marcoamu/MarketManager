@@ -4,10 +4,10 @@ from evaluators.AperturaBase import AperturaBase
 from service.Constants import Constants
 
 
-class EvaluatorMEDSTD_WEEK_Optimiz02(EvaluatorBase,AperturaBase,CierreBase):
+class EvaluatorMEDSTD_WEEK_Optimiz03(EvaluatorBase,AperturaBase,CierreBase):
 
     def __init__(self):
-        self.name = "EvaluatorMEDSTD_WEEK_Optimiz02"
+        self.name = "EvaluatorMEDSTD_WEEK_Optimiz03"
 
 
     def evaluate(self, results, activeParam):
