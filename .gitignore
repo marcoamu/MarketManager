@@ -40,3 +40,4 @@ core/config.ini
 linux/config.ini
 params/__pycache__
 *.pyc
+.idea

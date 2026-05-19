@@ -33,10 +33,10 @@ class MarketSQLManager:
         print(f"Active env : {self.env}")
         path = "/home/MarketManager/market.db"
         if "WINDOWS" in self.env:
-            path = "F:\WORK\MarketManager2026\market.db"
-            simpath = "F:\WORK\MarketManager2026\marketSimulation.db"
+            path = "F:\\WORK\\2026\\MarketManager\\market.db"
+            simpath = "F:\WORK\2026\MarketManager\marketSimulation.db"
             if simulation:
-                path = "F:\WORK\MarketManager2026\marketSimulation.db"
+                path = "F:\WORK\2026\MarketManager\marketSimulation.db"
 
         else:
             path = "/home/MarketManager/market.db"

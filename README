@@ -1,0 +1,50 @@
+# 30 días, todos los assets, paralelo (usa todos los cores)
+python3 rank_evaluators.py --all --days 30 --parallel
+
+# Solo crypto (BTC/ETH) - LONG only
+python3 rank_evaluators.py --asset BTC --days 30 --parallel
+
+# Un asset específico
+python3 rank_evaluators.py --asset AAPL --days 30 --parallel
+
+# Con 8 workers específicos
+python3 rank_evaluators.py --all --days 30 --parallel --workers 8
+
+# Output en un fichero concreto
+python3 rank_evaluators.py --all --days 30 --output ranking_30d.json
+Lo que hace:
+
+• BTC/ETH → prepareActivesEvaluatorsONLYUPNEW (11 evaluadores, LONG only)
+• Stocks → prepareActivesEvaluators4 (24 evaluadores, LONG + SHORT)
+• Paralelo → un proceso por evaluador, aprovecha los 60GB RAM
+• Ranking separado → uno global + uno crypto
+
+
+BcDC123456|@#
+
+
+Hay dos scripts:
+
+| Script                 | Qué hace                                                            |
+| ---------------------- | ------------------------------------------------------------------- |
+| rank_evaluators.py     | El antiguo — usa prepareAAPL, prepareTSLA, etc. individualmente     |
+| rank_all_evaluators.py | El nuevo — usa prepareActivesEvaluators4 (206 evaluadores de golpe) |
+Uso rápido:
+
+shell
+
+# Un asset, 15 días
+python3 rank_all_evaluators.py --asset AAPL --days 15
+
+# Todos los assets, 15 días, 8 workers
+python3 rank_all_evaluators.py --all --days 15 --parallel --workers 8
+
+# Un solo evaluador (para debug)
+python3 rank_all_evaluators.py --asset AAPL --evaluator EvaluatorDistMarketTenOptimiz01 --days 5
+Output típico:
+
+Ranking for AAPL (15 days):
+  1. EvaluatorRSI_ONLYUP_01     +$12.34
+  2. EvaluatorEMA_LONG_ONLY_UP  +$8.50
+  3. ...
+El nuevo usa marketService.process() en vez de simulateFlowConfigReview() directamente, que es más lento pero más completo.

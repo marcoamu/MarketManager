@@ -1,0 +1,61 @@
+RANKING GLOBAL (478 simulaciones)
+======================================================================
+
+Rank Evaluator                                               Total    W    L Assets
+---- -------------------------------------------------- ---------- ---- ---- ----------
+1    EvaluatorEMA_LONG_02_02                                +50.80    7    6 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+2    EvaluatorEMA_IA_LONG_01                                +25.90    5    6 11 (AAPL, DIS, GLD, GOOG, INTC, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+3    EvaluatorEMA_IA_LONG                                   +20.82    4    6 10 (AAPL, DIS, GLD, INTC, KO, MCD, NFLX, NVDA, SBUX, TSLA)
+4    EvaluatorEMA_LONG_03                                    +0.48    4    7 11 (AAPL, AMZN, GLD, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+5    EvaluatorEMA_LONG_02                                    -0.29    7    6 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+6    EvaluatorIBLG_ANGLE_FLOW_LONG_01                       -21.63    4    8 12 (AAPL, AMZN, DIS, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+7    EvaluatorEMA_IA_02                                     -38.29    4    7 11 (AAPL, AMZN, GLD, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+8    EvaluatorBOLLINGER_05                                  -68.93    4    9 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+9    EvaluatorEMA_LONG_03_04                                -84.52    5    6 11 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, NVDA, SBUX, TSLA)
+10   EvaluatorSUPERBOT_ALPHA_01                             -87.13    4    9 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+11   EvaluatorEMA_IA_01                                     -95.24    4    9 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+12   EvaluatorEMA_LONG_03_05                                -96.10    6    7 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+13   EvaluatorEMA_LONG_03_06                                -99.04    3   10 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+14   EvaluatorBOLLINGER_05_IMP_01                          -103.87    4    8 12 (AAPL, AMZN, DIS, GLD, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+15   EvaluatorIBLG_START_CLOSE_03_01                       -105.50    3    9 12 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, NFLX, NVDA, SBUX, TSLA)
+16   EvaluatorIMA1Optimiz_MEDDIFF_01                       -106.44    3    8 11 (AAPL, AMZN, DIS, GLD, INTC, KO, MCD, MSFT, NFLX, SBUX, TSLA)
+17   EvaluatorIBLG_LONG_03                                 -111.54    2   10 12 (AAPL, AMZN, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+18   EvaluatorIBLG_START_CLOSE_03                          -111.67    5    8 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+19   EvaluatorRSI_01                                       -112.26    5    8 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+20   EvaluatorIBLG_LONG_08                                 -115.51    3   10 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+21   EvaluatorEMA_LONG_03_06_01                            -126.26    2   10 12 (AAPL, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+22   EvaluatorEMA_LONG_02_01                               -141.10    2    9 11 (AAPL, AMZN, GLD, GOOG, INTC, KO, MCD, NFLX, NVDA, SBUX, TSLA)
+23   EvaluatorIMA1_ANGLE_01                                -153.60    5    8 13 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MCD, MSFT, NFLX, NVDA, SBUX, TSLA)
+24   EvaluatorIMA1_ANGLE_02                                -163.00    5    7 12 (AAPL, AMZN, DIS, GLD, GOOG, INTC, KO, MSFT, NFLX, NVDA, SBUX, TSLA)
+25   EvaluatorEMA_IA_ONLY_UP_02                            -194.21    0    1 2 (BTC, ETH)
+26   EvaluatorEMA_IA_LONG_ONLY_UP_CROSS                    -382.80    0    2 2 (BTC, ETH)
+27   EvaluatorEMA_IA_ONLY_UP_01                           -2344.18    0    2 2 (BTC, ETH)
+28   EvaluatorETHUSD_ONLY_BUY_01                          -3159.79    0    2 2 (BTC, ETH)
+29   EvaluatorBTCUSD_ONLY_BUY_01                          -4048.24    0    2 2 (BTC, ETH)
+30   EvaluatorEMA_LONG_ONLY_UP_04_01                      -4864.15    0    2 2 (BTC, ETH)
+31   EvaluatorEMA_LONG_ONLY_UP_04                         -6979.73    0    2 2 (BTC, ETH)
+32   EvaluatorEMA_LONG_ONLY_UP_03_01                      -7245.51    0    1 2 (BTC, ETH)
+33   EvaluatorEMA_IA_LONG_ONLY_UP                         -8535.91    0    2 2 (BTC, ETH)
+34   EvaluatorEMA_LONG_ONLY_UP_01                        -11379.55    0    2 2 (BTC, ETH)
+35   EvaluatorRSI_ONLYUP_01                              -21826.33    0    2 2 (BTC, ETH)
+
+======================================================================
+📈 RANKING CRYPTO (LONG only — BTC/ETH)
+---- -------------------------------------------------- ---------- ---- ----
+1    EvaluatorEMA_IA_ONLY_UP_02                            -194.21    0    1
+2    EvaluatorEMA_IA_LONG_ONLY_UP_CROSS                    -382.80    0    2
+3    EvaluatorEMA_IA_ONLY_UP_01                           -2344.18    0    2
+4    EvaluatorETHUSD_ONLY_BUY_01                          -3159.79    0    2
+5    EvaluatorBTCUSD_ONLY_BUY_01                          -4048.24    0    2
+6    EvaluatorEMA_LONG_ONLY_UP_04_01                      -4864.15    0    2
+7    EvaluatorEMA_LONG_ONLY_UP_04                         -6979.73    0    2
+8    EvaluatorEMA_LONG_ONLY_UP_03_01                      -7245.51    0    1
+9    EvaluatorEMA_IA_LONG_ONLY_UP                         -8535.91    0    2
+10   EvaluatorEMA_LONG_ONLY_UP_01                        -11379.55    0    2
+11   EvaluatorRSI_ONLYUP_01                              -21826.33    0    2
+Traceback (most recent call last):
+  File "F:\WORK\2026\MarketManager\rank_evaluators.py", line 261, in <module>
+    main()
+  File "F:\WORK\2026\MarketManager\rank_evaluators.py", line 254, in main
+    with open(args.output, 'w') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/evaluator_ranking.json'

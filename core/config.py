@@ -11,7 +11,7 @@ import platform
 class TradingConfig(BaseSettings):
     """Trading configuration combining both Alpaca services."""
     model_config = SettingsConfigDict(
-        env_file="/home/MarketManager/.env",
+        env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
         env_prefix=""
@@ -33,7 +33,7 @@ class TradingConfig(BaseSettings):
 class TelegramConfig(BaseSettings):
     """Telegram service configuration."""
     model_config = SettingsConfigDict(
-        env_file="/home/MarketManager/.env",
+        env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
         env_prefix=""
@@ -51,7 +51,7 @@ class TelegramConfig(BaseSettings):
 class DatabaseConfig(BaseSettings):
     """Database configuration."""
     model_config = SettingsConfigDict(
-        env_file="/home/MarketManager/.env",
+        env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
         env_prefix=""
@@ -64,7 +64,7 @@ class DatabaseConfig(BaseSettings):
 class AppConfig(BaseSettings):
     """Main application configuration."""
     model_config = SettingsConfigDict(
-        env_file="/home/MarketManager/.env",
+        env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
         env_prefix=""
@@ -91,7 +91,7 @@ class AppConfig(BaseSettings):
     def get_config_path(self) -> str:
         """Get the appropriate config path based on environment."""
         if self.app_env == "WINDOWS":
-            return r"F:\WORK\MarketManager2026\config\config.ini"
+            return r"F:\WORK\2026\MarketManager\config\config.ini"
         return "/home/MarketManager/config/config.ini"
 
 

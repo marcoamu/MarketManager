@@ -27,13 +27,13 @@ def run_single_evaluator(args):
 
         activeHelper = mm.ActiveHelper(simulation=True, isDBData=True)
         prepare_map = {
-            'AAPL': 'prepareAAPL', 'TSLA': 'prepareTSLA', 'INTC': 'prepareINTC',
-            'AMZN': 'prepareAMZN', 'MSFT': 'prepareMSFT', 'NVDA': 'prepareNVDA',
-            'NFLX': 'prepareNFLX', 'GOOG': 'prepareGOOG', 'BTC': 'prepareBTC',
-            'ETH': 'prepareETH', 'AMD': 'prepareAMD', 'MCD': 'prepareMCD',
-            'KO': 'prepareKO', 'DIS': 'prepareDIS', 'BABA': 'prepareBABA',
-            'VTI': 'prepareVTI', 'HD': 'prepareHD', 'SBUX': 'prepareSBUX',
-            'META': 'prepareMETA', 'SONY': 'prepareSONY', 'GLD': 'prepareGLD',
+            'AAPL': 'prepareAAPL7', 'TSLA': 'prepareTSLA02', 'INTC': 'prepareINTC',
+            'AMZN': 'prepareAMZN4', 'MSFT': 'prepareMSFT04', 'NVDA': 'prepareNVDA06',
+            'NFLX': 'prepareNFLX5', 'GOOG': 'prepareGOOG5', 'BTC': 'prepareBTC3',
+            'ETH': 'prepareETH2', 'AMD': 'prepareAMD06', 'MCD': 'prepareMCD02',
+            'KO': 'prepareKO3', 'DIS': 'prepareDIS08', 'BABA': 'prepareBABA02',
+            'VTI': 'prepareVTI02', 'HD': 'prepareHD01', 'SBUX': 'prepareSBUX',
+            'META': 'prepareMETA02', 'SONY': 'prepareSONY03', 'GLD': 'prepareGLD',
         }
 
         norm = asset_name.upper()
@@ -130,13 +130,13 @@ def main():
     spec.loader.exec_module(mm)
     activeHelper = mm.ActiveHelper(simulation=True, isDBData=True)
     prepare_map = {
-        'AAPL': 'prepareAAPL', 'TSLA': 'prepareTSLA', 'INTC': 'prepareINTC',
-        'AMZN': 'prepareAMZN', 'MSFT': 'prepareMSFT', 'NVDA': 'prepareNVDA',
-        'NFLX': 'prepareNFLX', 'GOOG': 'prepareGOOG', 'BTC': 'prepareBTC',
-        'ETH': 'prepareETH', 'AMD': 'prepareAMD', 'MCD': 'prepareMCD',
-        'KO': 'prepareKO', 'DIS': 'prepareDIS', 'BABA': 'prepareBABA',
-        'VTI': 'prepareVTI', 'HD': 'prepareHD', 'SBUX': 'prepareSBUX',
-        'META': 'prepareMETA', 'SONY': 'prepareSONY', 'GLD': 'prepareGLD',
+        'AAPL': 'prepareAAPL7', 'TSLA': 'prepareTSLA02', 'INTC': 'prepareINTC',
+        'AMZN': 'prepareAMZN4', 'MSFT': 'prepareMSFT04', 'NVDA': 'prepareNVDA06',
+        'NFLX': 'prepareNFLX5', 'GOOG': 'prepareGOOG5', 'BTC': 'prepareBTC3',
+        'ETH': 'prepareETH2', 'AMD': 'prepareAMD06', 'MCD': 'prepareMCD02',
+        'KO': 'prepareKO3', 'DIS': 'prepareDIS08', 'BABA': 'prepareBABA02',
+        'VTI': 'prepareVTI02', 'HD': 'prepareHD01', 'SBUX': 'prepareSBUX',
+        'META': 'prepareMETA02', 'SONY': 'prepareSONY03', 'GLD': 'prepareGLD',
     }
 
     tasks = []

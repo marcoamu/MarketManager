@@ -40,7 +40,7 @@ class ConfigManager:
     def _get_default_config_path(self) -> str:
         """Retorna el path por defecto según el SO."""
         if "WINDOWS" in self.env:
-            return r"F:\WORK\MarketManager2026\config\config.ini"
+            return r"F:\WORK\2026\MarketManager\config\config.ini"
         else:
             return "/home/MarketManager/config/config.ini"
 

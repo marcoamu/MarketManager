@@ -107,7 +107,7 @@ class MarketManager:
         print(f"Active env : {self.env}")
 
         if "WINDOWS" in self.env:
-            self.configPath = "F:\WORK\MarketManager2026\config\config.ini"
+            self.configPath = "F:\\WORK\\2026\\MarketManager\\config\\config.ini"
         else:
             self.configPath = "/home/MarketManager/config/config.ini"
         self.alpaca = AlpacaServiceBot()
@@ -6924,9 +6924,9 @@ def simulateIndicatorDates():
     # # end = '2025-04-04'
     # end = '2025-03-31'
 
-    start = '2026-04-20'
+    start = '2026-05-14'
     # end = '2025-04-11'
-    end = '2026-04-25'
+    end = '2026-05-18'
 
     # start = '2025-01-17'
     # end = '2025-01-21'
