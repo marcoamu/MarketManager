@@ -10,6 +10,8 @@ from core.pure.math_utils import (
     getProMEDSTD_MID,
     determinePercentDistance,
     determinarRelativePercent,
+    calculate_rsi,
+    mide_tiempo,
 )
 
 from core.pure.evaluation_utils import (
@@ -42,6 +44,8 @@ __all__ = [
     'getProMEDSTD_MID',
     'determinePercentDistance',
     'determinarRelativePercent',
+    'calculate_rsi',
+    'mide_tiempo',
     # evaluation_utils
     'isHour',
     'postcalculation',

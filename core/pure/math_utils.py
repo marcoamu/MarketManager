@@ -542,3 +542,42 @@ def determinarRelativePercent(self, data, results, active):
 
 
 
+
+
+def calculate_rsi(data, period=14):
+    """
+    Calcula el RSI (Relative Strength Index) para los datos proporcionados.
+    data: Lista de precios de cierre en orden ascendente de tiempo.
+    period: Periodo de tiempo para el calculo del RSI.
+    """
+    deltas = [data[i] - data[i - 1] for i in range(1, len(data))]
+    up_values = [delta if delta > 0 else 0 for delta in deltas]
+    down_values = [abs(delta) if delta < 0 else 0 for delta in deltas]
+    avg_gain = sum(up_values[:period]) / period
+    avg_loss = sum(down_values[:period]) / period
+    rsi = 0
+    if avg_loss > 0:
+        rs = avg_gain / avg_loss
+        rsi = 100 - (100 / (1 + rs))
+    for i in range(period, len(data)):
+        delta = deltas[i - 1]
+        up = delta if delta > 0 else 0
+        down = abs(delta) if delta < 0 else 0
+        avg_gain = (avg_gain * (period - 1) + up) / period
+        avg_loss = (avg_loss * (period - 1) + down) / period
+        if avg_loss > 0:
+            rs = avg_gain / avg_loss
+            rsi = 100 - (100 / (1 + rs))
+        else:
+            rsi = 100
+    return rsi
+
+
+def mide_tiempo(funcion):
+    def funcion_medida(*args, **kwargs):
+        import time
+        inicio = time.time()
+        c = funcion(*args, **kwargs)
+        print(f"Tiempo para {str(funcion)} es : {time.time() - inicio}")
+        return c
+    return funcion_medida
