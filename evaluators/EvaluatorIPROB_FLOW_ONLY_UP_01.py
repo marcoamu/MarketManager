@@ -81,7 +81,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
             nada=""
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 
@@ -166,7 +166,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                                 results[Constants.NEW_ACTION] = Constants.ACTION_BUY
                                 name = "DOWN_SELL_1"
                                 nameCount+=1
-                                print(
+#                                 print(
                                     f" INICIO MERCADO {name} {results[Constants.DATE].values[0]} \tACUMULADO_ABS: {results[Constants.ACUMULADO_ABS]} \tMEDSTDDIFF {results[Constants.MEDSTDDIFF]} \tINDICATOR_EMA: {results[Constants.INDICATOR_EMA]}   angle: {results[Constants.ANGLE]}   ANGLE_EMA: {results[Constants.ANGLE_EMA]} \tDIRECTION {results[Constants.DIRECTION]} \tINDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
                             # results[Constants.CLOSE_NXT_DOWN] = 0
@@ -225,7 +225,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                         if 'DOWN' not in results[Constants.WEEK_DIR_FLOW]:
                             if results[Constants.ANGLE] >= self.angleUp:
                                 results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                print(
+#                                 print(
                                     f" INICIO MERCADO DOWN_LOWER_DST_01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} INDICATOR_EMA: {results[Constants.INDICATOR_EMA]}   angle: {results[Constants.ANGLE]}   ANGLE_EMA: {results[Constants.ANGLE_EMA]}  direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
                     # if (results[Constants.ANGLE] < 0 and abs(results[Constants.ANGLE]) > 1) or results[
@@ -279,7 +279,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                         results[Constants.NEW_ACTION] = Constants.ACTION_BUY
                         name = "NXT_UP_01"
                         nameCount += 1
-                        print(
+#                         print(
                             f" INICIO MERCADO {name} {results[Constants.DATE].values[0]} \tACUMULADO_ABS: {results[Constants.ACUMULADO_ABS]} \tMEDSTDDIFF {results[Constants.MEDSTDDIFF]} \tINDICATOR_EMA: {results[Constants.INDICATOR_EMA]}   angle: {results[Constants.ANGLE]}   ANGLE_EMA: {results[Constants.ANGLE_EMA]} \tDIRECTION {results[Constants.DIRECTION]} \tINDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                         return
         if results[Constants.CLOSE_NXT_DOWN] == 1:
@@ -294,7 +294,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
                     name = "UP_BUY_1"
                     nameCount += 1
-                    print(
+#                     print(
                         f" INICIO MERCADO {name} {results[Constants.DATE].values[0]} \tACUMULADO_ABS: {results[Constants.ACUMULADO_ABS]} \tMEDSTDDIFF {results[Constants.MEDSTDDIFF]} \tINDICATOR_EMA: {results[Constants.INDICATOR_EMA]}   angle: {results[Constants.ANGLE]}   ANGLE_EMA: {results[Constants.ANGLE_EMA]} \tDIRECTION {results[Constants.DIRECTION]} \tINDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
             else:
@@ -308,7 +308,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
                                     name = "UP_ANGLE_UP_01"
                                     nameCount += 1
-                                    print(
+#                                     print(
                                         f" INICIO MERCADO {name} {results[Constants.DATE].values[0]} \tACUMULADO_ABS: {results[Constants.ACUMULADO_ABS]} \tMEDSTDDIFF {results[Constants.MEDSTDDIFF]} \tINDICATOR_EMA: {results[Constants.INDICATOR_EMA]}   angle: {results[Constants.ANGLE]}   ANGLE_EMA: {results[Constants.ANGLE_EMA]} \tDIRECTION {results[Constants.DIRECTION]} \tINDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                             elif results[Constants.WEEK_DIR_TOP_DST] <0:
                                 nada = ""
@@ -322,7 +322,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                             if results[Constants.ANGLE] > self.angleUp:
                                 # if results[Constants.WEEK_FLOW] == Constants.WEEK_FLOW_UP:
                                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                    print(
+#                                     print(
                                                 f" INICIO MERCADO UP_UP_BUY_UPPPER_01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} INDICATOR_EMA: {results[Constants.INDICATOR_EMA]}   angle: {results[Constants.ANGLE]}   ANGLE_EMA: {results[Constants.ANGLE_EMA]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
                                 #abrimos una venta
@@ -368,7 +368,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                 controlUP = None
                 if results[Constants.INDICATOR] == Constants.INDICATOR_BUY:
                     if flujo_count > 2:
-                        print(f"CORRECTION BUY DOWN COUNT")
+#                         print(f"CORRECTION BUY DOWN COUNT")
                         unit_diff = activeParam.unit * (flujo_count)
                         unit_diff = unit_diff * -1
             elif results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_DOWN:
@@ -391,7 +391,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
         difference_optimized = activeParam.difference
         # difference_optimized, unit_diff = self.evaluarDifferenceBUY(results, activeParam, flujo_count)
 
-        print(
+#         print(
             f"DIFFERENCE_OPTIMIZED  evaluarFlujoBUY {difference_optimized} original {activeParam.difference} closeDifference: {self.closeDifference} close ACUM: {self.closeAcumValue} close acum sot: {self.closeAcumValueShort} unit_diffb {unit_diff}")
         self.control_BUY_START_CLOSE_03(results,activeParam,self.closeAcumValue,self.closeDifference)
         # if results[Constants.IND_BLG]== Constants.IND_BLG_MED_SELL:
@@ -462,7 +462,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                 difference_optimized = activeParam.difference + (activeParam.difference / 5)
         else:
             difference_optimized = activeParam.difference - (activeParam.difference / 4)
-            print(f"estamos en WAIT no hay indicadores de diferencia")
+#             print(f"estamos en WAIT no hay indicadores de diferencia")
 
         if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
             if results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_UP:
@@ -473,7 +473,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                 if results[Constants.INDICATOR] == Constants.INDICATOR_SELL:
                     # intentar cerrar si sube y esta en sell ( no sellX)
                     if flujo_count > 2:
-                        print(f"CORRECTION SELL UP COUNT")
+#                         print(f"CORRECTION SELL UP COUNT")
                         unit_diff = activeParam.unit * (flujo_count) * 1.2
                         unit_diff = unit_diff * -1
             else:
@@ -490,12 +490,12 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
 
         difference_optimized, unit_diff = self.evaluarDifferenceBUY(results, activeParam, flujo_count)
 
-        print(
+#         print(
             f"DIFFERENCE_OPTIMIZED  evaluarFlujoSELL {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         if results[Constants.IND_BLG]== Constants.IND_BLG_MED_BUY:
             if results[Constants.ACTION_COUNT] > 5:
-                print(
+#                 print(
                     f"CERRAMOS MERCADO SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY 01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -503,7 +503,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
         # # #CERRAMOS SI SUBIO mucho
         if results[Constants.ACTION_ACUM] > 0:
             if abs(results[Constants.ACTION_ACUM]) >= (self.closeAcumValue):
-                print(
+#                 print(
                     f"CERRAMOS MERCADO {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST02 {results[Constants.ACUMULADO]} profit:{self.closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -512,7 +512,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
         if results[Constants.IND_BLG_LOWER_DST_PERCENT] < 0:
             # HA pASADO EL LOWER HAY GANANCIAS
             if abs(results[Constants.IND_BLG_LOWER_DST_PERCENT]) > 2:
-                print(
+#                 print(
                     f"CERRAMOS MERCADO {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_MAXIMO_01 {results[Constants.ACUMULADO]} profit:{self.closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -525,7 +525,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
 
         difference_optimized, unit_diff = self.evaluarDifferenceSELL(results, activeParam, flujo_count)
 
-        print(
+#         print(
             f"DIFFERENCE_OPTIMIZED  evaluarFlujoSELL {difference_optimized} original {activeParam.difference} close difference {self.closeDifference} unit_diffb {unit_diff}")
         if results[Constants.CLOSE_NXT_UP] == 1:
             if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
@@ -534,10 +534,10 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                                 difference_optimized * self.multiplicadorUP)):
                     # results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
 
-                    print(
+#                     print(
                         f" CERRAMOS MERCADO SELL_UP_BLG_01 acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} percentSTD: {results[Constants.IND_REL_PERCENT_STD]}")
 
-                print(f"EVALUO CLOSE_NXT_UP")
+#                 print(f"EVALUO CLOSE_NXT_UP")
                 results[Constants.CLOSE_NXT_DOWN] = 0
                 results[Constants.CLOSE_NXT_UP] = 0
                 # return
@@ -545,7 +545,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
             if results[Constants.ACTION_ACUM] > 0:
                 # esta en perdidas
                 if results[Constants.ACUMULADO] >= self.closeDifference:
-                    print(
+#                     print(
                         f"CERRAMOS MERCADO SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -553,7 +553,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
                 # paso por med esta bajando tiene ganancias pero subio ya mucho
                 nada = ""
                 if results[Constants.ACTION_MIN_DIST] >= self.closeDifference:
-                    print(
+#                     print(
                         f"CERRAMOS MERCADO SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -562,7 +562,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
             # es negativo
             # vericicar si bajo mas de lo esperado
             if abs(results[Constants.ACTION_ACUM]) >= self.closeAcumValue:
-                print(
+#                 print(
                     f"CERRAMOS MERCADO SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -570,7 +570,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
         # # #CERRAMOS SI BAJO mucho
         if results[Constants.ACUMULADO] > 0:
             if results[Constants.ACTION_MIN_DIST] >= (self.closeAcumValue):
-                print(
+#                 print(
                     f"CERRAMOS MERCADO SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_ACTION_DIST01 {results[Constants.ACUMULADO]} profit:{self.closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -580,7 +580,7 @@ class EvaluatorIPROB_FLOW_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
             if abs(results[Constants.ACTION_ACUM]) >= self.closeAcumValue:
                 if results[Constants.ACUMULADO] > 0:
                     if results[Constants.ACTION_MIN_DIST] >= (difference_optimized):
-                        print(
+#                         print(
                             f"CERRAMOS MERCADO SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_ACTION_PROFIT_DIST01 {results[Constants.ACTION_ACUM]} profit:{self.closeAcumValue}")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return

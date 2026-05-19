@@ -75,7 +75,7 @@ class EvaluatorIBLG_ANGLE_FLOW_LONG_03(EvaluatorBase,AperturaBase,CierreBase):
                 # self.evaluarApertura(results, activeParam)
                 self.evaluarAperturaBLG(results, activeParam)
             else:
-                print(f"FUERA DE HORARIO")
+#                 print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             # self.evaluarFlujoBUY(results, activeParam)
             self.evaluarFlujoBUY_LONG(results, activeParam)

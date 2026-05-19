@@ -94,7 +94,7 @@ class EvaluatorEMA_IA_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
             # self.evaluarApertura(results, activeParam)
                 self.evaluarAperturaEMA(results, activeParam)
             else:
-                print(f"FUERA DE HORARIO")
+#                 print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -111,9 +111,9 @@ class EvaluatorEMA_IA_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
         elif results[Constants.IND_BLG] == Constants.IND_BLG_MED_SELL:
             self.evaluarAperturaDOWN(results, activeParam, flujo_count)
         elif results[Constants.IND_BLG] == Constants.IND_BLG_MED_WAIT:
-            print("EMA WAIT")
+#             print("EMA WAIT")
         else:
-            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
     # def evaluarAperturaEMA(self, results, activeParam):
     #     #
     #     # valores
@@ -185,7 +185,7 @@ class EvaluatorEMA_IA_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
 
             # Confirmación: cerca banda baja + tendencia positiva
             # if blg_lower < activeParam.bollingerLowThreshold: #and ema_angle > 0:
-                print("Entro a evaluar")
+#                 print("Entro a evaluar")
                 self.evaluarAperturaUP(results, activeParam, flujo_count)
 
         # 🔻 SHORT
@@ -199,7 +199,7 @@ class EvaluatorEMA_IA_ONLY_UP_01(EvaluatorBase,AperturaBase,CierreBase):
             return
 
         else:
-            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 

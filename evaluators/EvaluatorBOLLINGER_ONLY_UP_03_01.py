@@ -104,7 +104,7 @@ class EvaluatorBOLLINGER_ONLY_UP_03_01(EvaluatorBase,AperturaBase,CierreBase):
             # self.evaluarApertura(results, activeParam)
                 self.evaluarAperturaEMA(results, activeParam)
             else:
-                print(f"FUERA DE HORARIO")
+#                 print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -122,10 +122,10 @@ class EvaluatorBOLLINGER_ONLY_UP_03_01(EvaluatorBase,AperturaBase,CierreBase):
         elif results[Constants.INDICATOR_EMA] == Constants.INDICATOR_EMA_SELL:
             self.evaluarAperturaDOWN(results, activeParam, flujo_count)
         elif results[Constants.INDICATOR_EMA] == Constants.INDICATOR_EMA_WAIT:
-            print("EMA WAIT")
+#             print("EMA WAIT")
             self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 
@@ -211,7 +211,7 @@ class EvaluatorBOLLINGER_ONLY_UP_03_01(EvaluatorBase,AperturaBase,CierreBase):
         self.printDifference("evaluarAperturaUP", difference_optimized, self.closeAcumValue, self.closeDifference)
 
         if results[Constants.CLOSE_NXT_UP]==1:
-            print(f"ENTRO CLOSE_NXT_UP")
+#             print(f"ENTRO CLOSE_NXT_UP")
             if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
                 if results[Constants.INDICATOR_MED] == Constants.INDICATOR_TM_DOWN:
                     if results[Constants.INDICATOR_EMA]==Constants.INDICATOR_EMA_BUY:
@@ -239,12 +239,12 @@ class EvaluatorBOLLINGER_ONLY_UP_03_01(EvaluatorBase,AperturaBase,CierreBase):
                 results[Constants.CLOSE_NXT_UP] = 0
                 if results[Constants.INDICATOR_MED_MOMENT] == Constants.INDICATOR_TM_UP:
                     multiplicator = self.multiplicadorUP * self.multiplicatorNXT
-                    print(f"multiplicator {self.multiplicatorNXT}")
+#                     print(f"multiplicator {self.multiplicatorNXT}")
                 else:
                     multiplicator = self.multiplicadorUP
-                    print(f"multiplicator 1")
+#                     print(f"multiplicator 1")
 
-                print(f"new difference {difference_optimized * multiplicator}")
+#                 print(f"new difference {difference_optimized * multiplicator}")
 
                 if (results[Constants.ACUMULADO_ABS] >= (difference_optimized * multiplicator) or
                         results[Constants.ACTION_MAX_DIST] >= (

@@ -72,7 +72,7 @@ class EvaluatorIMA1Optimiz_MEDDIFF_01(EvaluatorBase,AperturaBase,CierreBase):
                 self.evaluarApertura(results, activeParam)
                 # self.evaluarAperturaOPT(results, activeParam)
             else:
-                print(f"FUERA DE HORARIO")
+#                 print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -91,7 +91,7 @@ class EvaluatorIMA1Optimiz_MEDDIFF_01(EvaluatorBase,AperturaBase,CierreBase):
             # nada = ""
             self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
     def evaluarAperturaOPT(self, results, activeParam):
 

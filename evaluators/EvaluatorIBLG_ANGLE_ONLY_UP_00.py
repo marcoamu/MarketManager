@@ -68,7 +68,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_00(EvaluatorBase,AperturaBase,CierreBase):
             nada=""
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 
@@ -265,7 +265,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_00(EvaluatorBase,AperturaBase,CierreBase):
                 controlUP = None
                 if results[Constants.INDICATOR] == Constants.INDICATOR_BUY:
                     if flujo_count > 2:
-                        print(f"CORRECTION BUY DOWN COUNT")
+#                         print(f"CORRECTION BUY DOWN COUNT")
                         unit_diff = activeParam.unit * (flujo_count)
                         unit_diff = unit_diff * -1
             elif results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_DOWN:
@@ -312,7 +312,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_00(EvaluatorBase,AperturaBase,CierreBase):
                 difference_optimized = activeParam.difference + (activeParam.difference / 5)
         else:
             difference_optimized = activeParam.difference - (activeParam.difference / 4)
-            print(f"estamos en WAIT no hay indicadores de diferencia")
+#             print(f"estamos en WAIT no hay indicadores de diferencia")
 
         if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
             if results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_UP:
@@ -323,7 +323,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_00(EvaluatorBase,AperturaBase,CierreBase):
                 if results[Constants.INDICATOR] == Constants.INDICATOR_SELL:
                     # intentar cerrar si sube y esta en sell ( no sellX)
                     if flujo_count > 2:
-                        print(f"CORRECTION SELL UP COUNT")
+#                         print(f"CORRECTION SELL UP COUNT")
                         unit_diff = activeParam.unit * (flujo_count) * 1.2
                         unit_diff = unit_diff * -1
             else:
@@ -342,7 +342,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_00(EvaluatorBase,AperturaBase,CierreBase):
 
         if results[Constants.IND_BLG]== Constants.IND_BLG_MED_BUY:
             if results[Constants.ACTION_COUNT] > 5:
-                print(
+#                 print(
                     f"CERRAMOS MERCADO SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY 01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return

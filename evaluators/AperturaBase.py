@@ -6,10 +6,10 @@ from datetime import datetime
 class AperturaBase:
 
     def __init__(self):
-        print("iniciando")
+#         print("iniciando")
 
     def printInicioLog(self, name, results, activeparameters):
-        print(
+#         print(
             f" INICIO MERCADO {name} {results[Constants.DATE].values[0]} \tACUMULADO_ABS: {results[Constants.ACUMULADO_ABS]} \tWEEK_DIR_FLOW {results[Constants.WEEK_DIR_FLOW]} \tANGLE_EMA20: {results[Constants.ANGLE_EMA20]} \tANGLE: {results[Constants.ANGLE]}  \tANGLE_IMA1: {results[Constants.ANGLE_IMA1]} \tANGLE_IMA1_COUNTER: {results[Constants.ANGLE_IMA1_COUNTER]}  \tWEEK_DIR_BOT_DST {results[Constants.WEEK_DIR_BOT_DST]} \tIND_BLG_LOWER_DST_PERCENT {results[Constants.IND_BLG_LOWER_DST_PERCENT]} \tANGLE_EMA: {results[Constants.ANGLE_EMA]} \tWEEK_DIR_FLOW_DIFF {results[Constants.WEEK_DIR_FLOW_DIFF]} \tWEEK_DIR_FLOW_PREV {results[Constants.WEEK_DIR_FLOW_PREV]}  \tMEDSTDDIFF {results[Constants.MEDSTDDIFF]} \tINDICATOR_EMA: {results[Constants.INDICATOR_EMA]}  \tDIRECTION {results[Constants.DIRECTION]} \tINDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
         results[Constants.INICIO_NAME] = name
 
@@ -848,7 +848,7 @@ class AperturaBase:
                                     res = True, "BUY", 1
         else:
             #inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff < 0 and (abs(angleDiff) > closeWeekDiffNew):
                 if results[Constants.IND_BLG_LOWER_DST_PERCENT] >= blgLowerDistPercent or results[
                     Constants.IND_BLG_LOWER_DST_PERCENT] < 0:
@@ -1055,7 +1055,7 @@ class AperturaBase:
         isRising, angleDiff = self.isRisingFromMonth(results)
         # isRising, angleDiff = self.isRisingFromWEEK(results)
         if not isRising:
-            print(f" isrising: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising: {isRising} angleDiff: {angleDiff}")
             if angleDiff <0 and (abs(angleDiff) > closeWeekDiffNew / 2):
 
                 if results[Constants.IND_BLG_LOWER_DST_PERCENT] >= blgLowerDistPercent or results[
@@ -1069,7 +1069,7 @@ class AperturaBase:
                                 res = True, "SELL", 1
         else:
             #inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff > 0 and (abs(angleDiff) > closeWeekDiffNew):
                 if blg_mid_dst_perc <0 or (blg_mid_dst_perc >0 and blg_mid_dst_perc < 10):
                     if results[Constants.IND_BLG_LOWER_DST_PERCENT] >= blgLowerDistPercent or results[
@@ -1104,7 +1104,7 @@ class AperturaBase:
         isRising, angleDiff = self.isRisingFromMonth(results)
         # isRising, angleDiff = self.isRisingFromWEEK(results)
         if not isRising:
-            print(f" isrising: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising: {isRising} angleDiff: {angleDiff}")
             if angleDiff < 0 and (abs(angleDiff) > closeWeekDiffNew / 2):
                 if ima5ma20 == Constants.INDICATOR_EMA_SELL:
                     if (results[Constants.IND_BLG_LOWER_DST_PERCENT] >= blgLowerDistPercent)  and results[
@@ -1118,7 +1118,7 @@ class AperturaBase:
                                 res = True, "SELL", 1
         else:
             # inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff > 0 and (abs(angleDiff) > closeWeekDiffNew):
                 # if blg_mid_dst_perc < 0 or (blg_mid_dst_perc > 0 and blg_mid_dst_perc < 10):
                     if (results[Constants.IND_BLG_LOWER_DST_PERCENT] < blgLowerInvMaxDistPercent) or ima5ma20 == Constants.INDICATOR_EMA_BUY:
@@ -1166,7 +1166,7 @@ class AperturaBase:
                                 res = True, "SELL", 1
         else:
             # inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff > 0 and (abs(angleDiff) > closeWeekDiffNew):
                 # if blg_mid_dst_perc < 0 or (blg_mid_dst_perc > 0 and blg_mid_dst_perc < 10):
                     if (results[Constants.IND_BLG_LOWER_DST_PERCENT] < blgLowerInvMaxDistPercent) or ima5ma20 == Constants.INDICATOR_EMA_BUY:
@@ -1214,7 +1214,7 @@ class AperturaBase:
                                 res = True, "SELL", 1
         else:
             # inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff > 0 and (abs(angleDiff) > closeWeekDiffNew):
                 # if blg_mid_dst_perc < 0 or (blg_mid_dst_perc > 0 and blg_mid_dst_perc < 10):
                 if (results[Constants.IND_BLG_LOWER_DST_PERCENT] < blgLowerInvMaxDistPercent):  # or ima5ma20 == Constants.INDICATOR_EMA_BUY:
@@ -1762,7 +1762,7 @@ class AperturaBase:
                                     res = True, "BUY", 1
         else:
             #inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff < 0 and (abs(angleDiff) > closeWeekDiffNew):
                 if results[Constants.IND_BLG_LOWER_DST_PERCENT] >= blgLowerDistPercent or results[
                     Constants.IND_BLG_LOWER_DST_PERCENT] < 0:
@@ -1809,7 +1809,7 @@ class AperturaBase:
                                         res = True, "BUY", 1
         else:
             #inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff < 0 and (abs(angleDiff) > closeWeekDiffNew):
                 # if ima5ma20 == Constants.INDICATOR_EMA_SELL:
                     if results[Constants.IND_BLG_LOWER_DST_PERCENT] >= blgLowerDistPercent or results[
@@ -1858,7 +1858,7 @@ class AperturaBase:
                                         res = True, "BUY", 1
         else:
             #inversa
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff < 0 and (abs(angleDiff) > closeWeekDiffNew):
                 # if ima5ma20 == Constants.INDICATOR_EMA_SELL:
                     if results[Constants.IND_BLG_LOWER_DST_PERCENT] >= blgLowerDistPercent or results[
@@ -1908,7 +1908,7 @@ class AperturaBase:
         else:
             #inversa
             invSellCond = False
-            print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
+#             print(f" isrising INV: {isRising} angleDiff: {angleDiff}")
             if angleDiff < 0 and (abs(angleDiff) > closeWeekDiffNew):
                 if blgmaMean < 0 and abs(blgmaMean) > blgma_min_diff:
                     invSellCond = True

@@ -99,7 +99,7 @@ class EvaluatorSUPERBOT_ALPHA_01(EvaluatorBase, AperturaBase, CierreBase):
             if intime:
                 self.evaluarAperturaEMA_SUPER(results, activeParam)
             else:
-                print(f"FUERA DE HORARIO")
+#                 print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY_SUPER(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -119,7 +119,7 @@ class EvaluatorSUPERBOT_ALPHA_01(EvaluatorBase, AperturaBase, CierreBase):
             # En WAIT también evaluamos si hay señales fuertes de otros indicadores
             self.evaluarAperturaWAIT_SUPER(results, activeParam, flujo_count)
         else:
-            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
     # ══════════════════════════════════════════════════════════════════════════
     # APERTURA EN TENDENCIA BAJISTA (EMA SELL)
