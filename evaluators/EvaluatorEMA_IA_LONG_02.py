@@ -94,7 +94,7 @@ class EvaluatorEMA_IA_LONG_02(EvaluatorBase,AperturaBase,CierreBase):
                 self.evaluarApertura(results, activeParam)
                 # self.evaluarAperturaEMA(results, activeParam)
             else:
-#                 print(f"FUERA DE HORARIO")
+                print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -123,10 +123,10 @@ class EvaluatorEMA_IA_LONG_02(EvaluatorBase,AperturaBase,CierreBase):
         elif results[Constants.INDICATOR_EMA50] == Constants.INDICATOR_EMA_SELL:
             self.evaluarAperturaDOWN(results, activeParam, flujo_count)
         elif results[Constants.INDICATOR_EMA50] == Constants.INDICATOR_EMA_WAIT:
-#             print("EMA WAIT")
+            print("EMA WAIT")
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
     def evaluarApertura(self, results, activeParam):
 
@@ -267,14 +267,14 @@ class EvaluatorEMA_IA_LONG_02(EvaluatorBase,AperturaBase,CierreBase):
         ema20_slope = float(results.get(Constants.EMA20_SLOPE))
         is_lateral = False
         # if cross_count >= 2 or ema20_slope < 0.0010:  # or bandwidth < 0.01:
-#         print("ema20_slope :"+str(ema20_slope))
+        print("ema20_slope :"+str(ema20_slope))
         if abs(ema20_slope) < 0.0010:  # or bandwidth < 0.01:
             is_lateral = True
 
         res, action, num = self.evaluateDownOpen_EMA_02(results, activeParam)
         if res:
             if is_lateral:
-#                 print(f"[{self.name}] Mercado lateral u operacion riesgosa detectada. Apertura DOWN omitida.")
+                print(f"[{self.name}] Mercado lateral u operacion riesgosa detectada. Apertura DOWN omitida.")
                 return
             if "BUY" in action:
                 results[Constants.NEW_ACTION] = Constants.ACTION_BUY
@@ -355,7 +355,7 @@ class EvaluatorEMA_IA_LONG_02(EvaluatorBase,AperturaBase,CierreBase):
         price_range = results.get(Constants.PRICE_RANGE_PERCENT, 100)
         bandwidth = results.get(Constants.BLG_BANDWIDTH, 100)
         ema20_slope = results.get(Constants.EMA20_SLOPE, 100)
-#         print("ema20_slope :" + str(ema20_slope))
+        print("ema20_slope :" + str(ema20_slope))
         is_lateral = False
         if abs(ema20_slope) < 0.0010:  # or bandwidth < 0.01:
             is_lateral = True
@@ -363,7 +363,7 @@ class EvaluatorEMA_IA_LONG_02(EvaluatorBase,AperturaBase,CierreBase):
         res, action, num = self.evaluateUpOpen_EMA_03(results, activeParam)
         if res:
             if is_lateral:
-#                 print(f"[{self.name}] Mercado lateral u operacion riesgosa detectada. Apertura UP omitida.")
+                print(f"[{self.name}] Mercado lateral u operacion riesgosa detectada. Apertura UP omitida.")
                 return
             if "BUY" in action:
                 results[Constants.NEW_ACTION] = Constants.ACTION_BUY

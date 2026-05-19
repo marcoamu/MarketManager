@@ -102,7 +102,7 @@ class EvaluatorBTCUSD_ONLY_BUY_01(EvaluatorBase, AperturaBase, CierreBase):
         # ─── CONTROL DE HORARIO ───────────────────────────────────────────
         currentTime = self.gettime(results)
         intime = False
-#         print(f'[BTCUSD_ONLY_BUY] EVALUATOR {self.name}  PARAM: {activeParam.name}')
+        print(f'[BTCUSD_ONLY_BUY] EVALUATOR {self.name}  PARAM: {activeParam.name}')
 
         if currentTime >= int(self.iniStart) and currentTime < int(self.iniEnd):
             intime = True
@@ -119,7 +119,7 @@ class EvaluatorBTCUSD_ONLY_BUY_01(EvaluatorBase, AperturaBase, CierreBase):
             if intime:
                 self.evaluarAperturaEMA_BTCUSD(results, activeParam)
             else:
-#                 print(f"[BTCUSD_ONLY_BUY] FUERA DE HORARIO")
+                print(f"[BTCUSD_ONLY_BUY] FUERA DE HORARIO")
         elif current == Constants.ACTION_BUY:
             self.evaluarFlujoBUY_BTCUSD(results, activeParam)
         elif current == Constants.ACTION_SELL:
@@ -143,7 +143,7 @@ class EvaluatorBTCUSD_ONLY_BUY_01(EvaluatorBase, AperturaBase, CierreBase):
             # En WAIT también evaluamos señales fuertes de compra
             self.evaluarAperturaWAIT_BTCUSD(results, activeParam, flujo_count)
         else:
-#             print(f"[BTCUSD_ONLY_BUY] EMA sin definir — esperando señal")
+            print(f"[BTCUSD_ONLY_BUY] EMA sin definir — esperando señal")
 
     # ══════════════════════════════════════════════════════════════════════════
     # APERTURA EN TENDENCIA ALCISTA (EMA BUY) — máxima prioridad de compra
@@ -378,7 +378,7 @@ class EvaluatorBTCUSD_ONLY_BUY_01(EvaluatorBase, AperturaBase, CierreBase):
         Si por algún motivo externo hay una posición SELL abierta,
         la cerramos en el siguiente tick sin importar el resultado.
         """
-#         print(f"[BTCUSD_ONLY_BUY] ⚠️  POSICIÓN SELL DETECTADA — cerrando inmediatamente")
+        print(f"[BTCUSD_ONLY_BUY] ⚠️  POSICIÓN SELL DETECTADA — cerrando inmediatamente")
         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
 
     # ══════════════════════════════════════════════════════════════════════════

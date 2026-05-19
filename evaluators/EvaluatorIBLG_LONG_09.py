@@ -70,7 +70,7 @@ class EvaluatorIBLG_LONG_09(EvaluatorBase,AperturaBase,CierreBase):
             if intime:
                 self.evaluarApertura(results, activeParam)
             else:
-#                 print(f"FUERA DE HORARIO")
+                print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             # self.evaluarFlujoBUY(results, activeParam)
             self.evaluarFlujoBUY_LONG(results, activeParam)
@@ -91,7 +91,7 @@ class EvaluatorIBLG_LONG_09(EvaluatorBase,AperturaBase,CierreBase):
             nada=""
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 

@@ -6,7 +6,7 @@ from datetime import datetime
 class CierreBase:
 
     def __init__(self):
-#         print("iniciando")
+        print("iniciando")
 
 
     def gettime(self, results):
@@ -58,7 +58,7 @@ class CierreBase:
 
 
     def printFinLog(self, name, methodName, results, activeparameters):
-#         print(
+        print(
             f" CERRAMOS MERCADO {name} metod: {methodName} {results[Constants.DATE].values[0]} \tACUMULADO_ABS: {results[Constants.ACUMULADO_ABS]} \tACTION_ACUM: {results[Constants.ACTION_ACUM]} \tWEEK_DIR_FLOW {results[Constants.WEEK_DIR_FLOW]} \tANGLE_EMA20: {results[Constants.ANGLE_EMA20]} \tANGLE: {results[Constants.ANGLE]}  \tANGLE_IMA1: {results[Constants.ANGLE_IMA1]} \tANGLE_IMA1_COUNTER: {results[Constants.ANGLE_IMA1_COUNTER]}  \tWEEK_DIR_BOT_DST {results[Constants.WEEK_DIR_BOT_DST]} \tIND_BLG_LOWER_DST_PERCENT {results[Constants.IND_BLG_LOWER_DST_PERCENT]} \tANGLE_EMA: {results[Constants.ANGLE_EMA]} \tWEEK_DIR_FLOW_DIFF {results[Constants.WEEK_DIR_FLOW_DIFF]} \tWEEK_DIR_FLOW_PREV {results[Constants.WEEK_DIR_FLOW_PREV]}  \tMEDSTDDIFF {results[Constants.MEDSTDDIFF]} \tINDICATOR_EMA: {results[Constants.INDICATOR_EMA]}  \tDIRECTION {results[Constants.DIRECTION]} \tINDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
         results[Constants.INICIO_NAME] = name
 
@@ -182,13 +182,13 @@ class CierreBase:
         if rising:
             if angleDiff < 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew/2:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -210,7 +210,7 @@ class CierreBase:
         if rising:
             if angleDiff < 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -238,13 +238,13 @@ class CierreBase:
         if rising:
             if angleDiff < 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew/2:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -269,14 +269,14 @@ class CierreBase:
         if rising:
             if angleDiff > 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
             else:
                 nada = ""
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -302,13 +302,13 @@ class CierreBase:
         if rising:
             if angleDiff > 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -388,13 +388,13 @@ class CierreBase:
         if rising:
             if angleDiff > 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f" SELL: {angleDiff}")
+                    print(f" SELL: {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -433,13 +433,13 @@ class CierreBase:
         if rising:
             if angleDiff > 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -474,13 +474,13 @@ class CierreBase:
             if angleDiff > 0:
                 if results[Constants.ACUMULADO] > 0:
                     if abs(angleDiff) >= closeWeekDiffNew:
-#                             print(f" SELL: {angleDiff}")
+                            print(f" SELL: {angleDiff}")
                             self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                             results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                             return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -513,13 +513,13 @@ class CierreBase:
         if rising:
             if angleDiff > 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff SELL POS : {angleDiff}")
+                    print(f"close anglediff SELL POS : {angleDiff}")
                     self.printFinLog("CLOSE_SELL_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -551,7 +551,7 @@ class CierreBase:
         if rising:
             if angleDiff > 0:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f" SELL: {angleDiff}")
+                        print(f" SELL: {angleDiff}")
                         self.printFinLog("CLOSE_SELL_EMA_WEEK_01", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -889,7 +889,7 @@ class CierreBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] = 0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -906,21 +906,21 @@ class CierreBase:
 
         if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
             if results[Constants.ACTION_COUNT] > 2:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum_middle01: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY 01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
         if results[Constants.IND_BLG] == Constants.IND_BLG_MED_BUY:
             if results[Constants.ACTION_COUNT] > 2:
                 if results[Constants.ACTION_ACUM] > 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY 01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     # if abs(results[Constants.ACTION_MIN_DIST]) >= (closeAcumValue):
                     # HAY GANANCIAS
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -931,7 +931,7 @@ class CierreBase:
                 if results[Constants.ACTION_COUNT] >= 3:
                     if results[Constants.ACUMULADO_ABS] > accumulate:  # muchas ganancias
                         if abs(results[Constants.ACTION_MIN_DIST]) >= accumulate:
-#                             print(
+                            print(
                                 f"CERRAMOS MERCADO name {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                             results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                             return
@@ -1062,7 +1062,7 @@ class CierreBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] = 0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -1536,7 +1536,7 @@ class CierreBase:
 
 
         if results[Constants.INDICATOR_EMA] == Constants.INDICATOR_EMA_SELL:
-#             print(f" datetime: {results[Constants.DATE].values[0]} isrising: {isRising} angleDiff: {angleDiff}")
+            print(f" datetime: {results[Constants.DATE].values[0]} isrising: {isRising} angleDiff: {angleDiff}")
             if not isRising:
                 # inversa
                 nada = ""
@@ -1668,13 +1668,13 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew/2:
-#                     print(f"close anglediff BUY NEG : {angleDiff}")
+                    print(f"close anglediff BUY NEG : {angleDiff}")
                     self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -1881,13 +1881,13 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew/2:
-#                     print(f"close anglediff BUY NEG : {angleDiff}")
+                    print(f"close anglediff BUY NEG : {angleDiff}")
                     self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -1932,13 +1932,13 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew/2:
-#                     print(f"close anglediff BUY NEG : {angleDiff}")
+                    print(f"close anglediff BUY NEG : {angleDiff}")
                     self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -1966,7 +1966,7 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -2003,13 +2003,13 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew/2:
-#                     print(f"close anglediff BUY NEG : {angleDiff}")
+                    print(f"close anglediff BUY NEG : {angleDiff}")
                     self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -2044,13 +2044,13 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff BUY NEG : {angleDiff}")
+                    print(f"close anglediff BUY NEG : {angleDiff}")
                     self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -2139,13 +2139,13 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff BUY NEG : {angleDiff}")
+                    print(f"close anglediff BUY NEG : {angleDiff}")
                     self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -2192,13 +2192,13 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if abs(angleDiff) >= closeWeekDiffNew:
-#                     print(f"close anglediff BUY NEG : {angleDiff}")
+                    print(f"close anglediff BUY NEG : {angleDiff}")
                     self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -2247,14 +2247,14 @@ class CierreBase:
         if not rising:
             if angleDiff > 0:
                 if abs(angleDiff) <= closeWeekDiffNew:
-#                     print(f"close anglediff BUY: {angleDiff}")
+                    print(f"close anglediff BUY: {angleDiff}")
                     self.printFinLog("CLOSE_BUY_EMA_WEEK_01", name, results, activeParam)
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if results[Constants.ACUMULADO] < 0:
                     if abs(angleDiff) >= closeWeekDiffNew:
-#                         print(f"close anglediff BUY NEG : {angleDiff}")
+                        print(f"close anglediff BUY NEG : {angleDiff}")
                         self.printFinLog("CLOSEBUY_EMA_WEEK_02", name, results, activeParam)
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -2552,7 +2552,7 @@ class CierreBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] = 0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -2570,14 +2570,14 @@ class CierreBase:
         if results[Constants.IND_BLG] == Constants.IND_BLG_MED_SELL:
             if results[Constants.ACTION_COUNT] > 6:
                 if results[Constants.ACTION_ACUM] < 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ISSELL 01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     if abs(results[Constants.ACTION_MAX_DIST]) >= (closeDifference):
                         # HAY GANANCIAS
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -2598,7 +2598,7 @@ class CierreBase:
             if results[Constants.ACTION_ACUM] > 0:
                 if results[Constants.ACTION_ACUM] > closeAcumValue:  # muchas ganancias
                     if abs(results[Constants.ACTION_MAX_DIST]) >= closeAcumValue:
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -2607,7 +2607,7 @@ class CierreBase:
         if results[Constants.ACTION_ACUM] <= 0:
             if results[Constants.ACTION_COUNT] >= 3:
                 if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -2616,7 +2616,7 @@ class CierreBase:
                     if results[Constants.ACTION_COUNT] >= 2:
                         if results[Constants.ANGLE] < angleDown:
                             if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                                 print(
+                                print(
                                     f"CERRAMOS MERCADO name {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_CLOSE_ANGLE_NEG_01 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                                 return
@@ -2627,7 +2627,7 @@ class CierreBase:
             # HA pASADO EL TOP HAY GANANCIAS
             if results[Constants.ACTION_COUNT] > 3:
                 # if abs(results[Constants.IND_BLG_UPPER_DST_PERCENT])>1:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MAXIMO_02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -2733,7 +2733,7 @@ class CierreBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] = 0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -2750,7 +2750,7 @@ class CierreBase:
 
         if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
             if results[Constants.ACTION_COUNT] > 2:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} BUY action_acum_middle01: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY 01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -2758,14 +2758,14 @@ class CierreBase:
         if results[Constants.IND_BLG] == Constants.IND_BLG_MED_SELL:
             if results[Constants.ACTION_COUNT] > 3:
                 if results[Constants.ACTION_ACUM] < 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ISSELL 01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     if abs(results[Constants.ACTION_MAX_DIST]) >= (closeDifference):
                         # HAY GANANCIAS
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -2775,7 +2775,7 @@ class CierreBase:
                 if results[Constants.ACTION_COUNT] >= 3:
                     if results[Constants.ACUMULADO_ABS] > accumulate:  # muchas ganancias
                         if abs(results[Constants.ACTION_MAX_DIST]) >= accumulate:
-#                             print(
+                            print(
                                 f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                             results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                             return
@@ -3775,7 +3775,7 @@ class CierreBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] = 0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -3793,14 +3793,14 @@ class CierreBase:
         if results[Constants.IND_BLG] == Constants.IND_BLG_MED_SELL:
             if results[Constants.ACTION_COUNT] > 5:
                 if results[Constants.ACTION_ACUM] < 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO BUY  name: {name}  action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ISSELL_01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     if abs(results[Constants.ACTION_MAX_DIST]) >= (closeAcumValue):
                         # HAY GANANCIAS
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO BUY name: {name}  action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -3819,7 +3819,7 @@ class CierreBase:
             if results[Constants.ACTION_ACUM] > 0:
                 if results[Constants.ACTION_ACUM] > closeAcumValue:  # muchas ganancias
                     if abs(results[Constants.ACTION_MAX_DIST]) >= closeAcumValue:
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name: {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -3828,7 +3828,7 @@ class CierreBase:
         if results[Constants.ACTION_ACUM] <= 0:
             if results[Constants.ACTION_COUNT] >= 2:
                 if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -3849,7 +3849,7 @@ class CierreBase:
             # HA pASADO EL TOP HAY GANANCIAS
             if results[Constants.ACTION_COUNT] > 3:
                 # if abs(results[Constants.IND_BLG_UPPER_DST_PERCENT])>1:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name}  {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MAXIMO_02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return

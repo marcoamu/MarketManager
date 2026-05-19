@@ -82,7 +82,7 @@ class EvaluatorIMA1_ANGLE_02(EvaluatorBase,AperturaBase,CierreBase):
             if intime:
                 self.evaluarApertura(results, activeParam)
             else:
-#                 print(f"FUERA DE HORARIO")
+                print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -101,7 +101,7 @@ class EvaluatorIMA1_ANGLE_02(EvaluatorBase,AperturaBase,CierreBase):
             nada = ""
             self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 
@@ -262,7 +262,7 @@ class EvaluatorIMA1_ANGLE_02(EvaluatorBase,AperturaBase,CierreBase):
                 difference_optimized = activeParam.difference + (activeParam.difference / 5)
         else:
             difference_optimized = activeParam.difference - (activeParam.difference / 4)
-#             print(f"estamos en WAIT no hay indicadores de diferencia")
+            print(f"estamos en WAIT no hay indicadores de diferencia")
 
         if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
             if results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_UP:
@@ -273,7 +273,7 @@ class EvaluatorIMA1_ANGLE_02(EvaluatorBase,AperturaBase,CierreBase):
                 if results[Constants.INDICATOR] == Constants.INDICATOR_SELL:
                     # intentar cerrar si sube y esta en sell ( no sellX)
                     if flujo_count > 2:
-#                         print(f"CORRECTION SELL UP COUNT")
+                        print(f"CORRECTION SELL UP COUNT")
                         unit_diff = activeParam.unit * (flujo_count) * 1.2
                         unit_diff = unit_diff * -1
             else:

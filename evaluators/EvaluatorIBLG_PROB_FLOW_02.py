@@ -69,7 +69,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
             if intime:
                 self.evaluarApertura(results, activeParam)
             else:
-#                 print(f"FUERA DE HORARIO")
+                print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             # self.evaluarFlujoBUY(results, activeParam)
             self.evaluarFlujoBUY_LONG(results, activeParam)
@@ -90,7 +90,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
             nada=""
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 
@@ -140,7 +140,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
 
         self.printDifference("evaluarAperturaDOWN", difference_optimized, self.closeAcumValue, self.closeDifference)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED evaluarAperturaDOWN {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         if results[Constants.CLOSE_NXT_UP] == 1:
@@ -155,7 +155,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                         # if results[Constants.INDICATOR_EMA] == Constants.INDICATOR_EMA_SELL:
                         if results[Constants.IND_BLG_UPPER_DST_PERCENT] > self.blgDistPercent:
                             results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                             print(
+                            print(
                                 f" INICIO MERCADO DOWN_BLG_NXTUP_BUY01 acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  percentSTD: {results[Constants.IND_REL_PERCENT_STD]}")
                             return
                         else:
@@ -187,7 +187,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                     # print(f" INICIO MERCADO DOWN_DOWN_SELL01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                     # if abs(results[Constants.EMA_DST]) >= self.emaMinDst:
                         results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                         print(f" INICIO MERCADO DOWN_DOWN_SELL01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
+                        print(f" INICIO MERCADO DOWN_DOWN_SELL01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
 
             else:
@@ -199,13 +199,13 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                                 #ESTA SUBIENDO pero estamos de bajada temporal cerramos proxmimo MIDDLE
                                 results[Constants.CLOSE_NXT_MIDDLE] = 1
                             results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                             print(f" INICIO MERCADO DOWN_DOWN_SELL02 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
+                            print(f" INICIO MERCADO DOWN_DOWN_SELL02 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
 
                         elif results[Constants.IND_BLG_LOWER_DST_PERCENT] <0:
                             # if abs(results[Constants.EMA_DST]) >= self.emaMinDst:
                                 results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                                 print(
+                                print(
                                     f" INICIO MERCADO DOWN_DOWN_SELL03 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
                         elif results[Constants.IND_BLG_LOWER_DST_PERCENT] < self.blgDistPercent or results[Constants.IND_BLG_LOWER_DST_PERCENT]==0:
@@ -216,13 +216,13 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                                     # BAJA
                                     if abs(results[Constants.ANGLE]) > self.angleDOWN:
                                         results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                                         print(
+                                        print(
                                             f" INICIO MERCADO DOWN_ANGLE_01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                                     else:
                                         if results[Constants.ANGLEm1] > 0:
                                             # esta bajando o haciendo el cambio
                                             results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                                             print(
+                                            print(
                                                 f" INICIO MERCADO DOWN_ANGLE_02 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                 else:
 
@@ -232,14 +232,14 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                         if results[Constants.IND_BLG_LOWER_DST_PERCENT] >= self.blgDistPercent or results[
                             Constants.IND_BLG_LOWER_DST_PERCENT] == 0:
                                 results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                                 print(
+                                print(
                                     f" INICIO MERCADO DOWN_DOWN_IMACOUNTER_01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
 
                         elif results[Constants.IND_BLG_LOWER_DST_PERCENT] < 0:
                             # if abs(results[Constants.EMA_DST]) >= self.emaMinDst:
                             results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                             print(
+                            print(
                                 f" INICIO MERCADO DOWN_DOWN_IMACOUNTER_02 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
                         elif results[Constants.IND_BLG_LOWER_DST_PERCENT] < self.blgDistPercent or results[
@@ -273,7 +273,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
 
         self.printDifference("evaluarAperturaUP", difference_optimized, self.closeAcumValue, self.closeDifference)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED evaluarAperturaUP {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         if results[Constants.CLOSE_NXT_UP] == 1:
@@ -312,7 +312,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                 if results[Constants.ACUMULADO_ABS] <= (difference_optimized  * self.multiplicadorOpen):
                     # if abs(results[Constants.EMA_DST]) >= self.emaMinDst:
                         results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                         print(f" INICIO MERCADO UP_UP_BUY01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
+                        print(f" INICIO MERCADO UP_UP_BUY01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
             else:
                 if results[Constants.FLUJO]==Constants.FLUJO_SUBE:
@@ -323,10 +323,10 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                                 #         Constants.ANGLE] == 0:
 
                                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                                     print(f" INICIO MERCADO UP_UP_BUY2 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
+                                    print(f" INICIO MERCADO UP_UP_BUY2 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                         elif results[Constants.IND_BLG_UPPER_DST_PERCENT] <0 :
                             results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                             print(
+                            print(
                                 f" INICIO MERCADO UP_UP_DSTNEG_BUY3 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
                         elif results[Constants.IND_BLG_UPPER_DST_PERCENT] < self.blgDistPercent or results[Constants.IND_BLG_UPPER_DST_PERCENT]==0:
@@ -336,13 +336,13 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                                 #SUBE
                                 if abs(results[Constants.ANGLE]) > self.angleUP:
                                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                                     print(
+                                    print(
                                                 f" INICIO MERCADO UP_UP_BUY_ANGLE_01 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                                 else:
                                     if results[Constants.ANGLEm1] <0:
                                         # esta subiendo o haciendo el cambio
                                         results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                                         print(
+                                        print(
                                             f" INICIO MERCADO UP_UP_BUY_ANGLE_02 {results[Constants.DATE].values[0]} Acum: {results[Constants.ACUMULADO_ABS]} medddiff {results[Constants.MEDSTDDIFF]} \tEMA_DST {abs(results[Constants.EMA_DST])}  \tWEEK_FLOW_DIFF {results[Constants.WEEK_FLOW_DIFF]}  angle: {results[Constants.ANGLE]} direction {results[Constants.DIRECTION]} INDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
                 else:
                     #BAJA
@@ -388,7 +388,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                 controlUP = None
                 if results[Constants.INDICATOR] == Constants.INDICATOR_BUY:
                     if flujo_count > 2:
-#                         print(f"CORRECTION BUY DOWN COUNT")
+                        print(f"CORRECTION BUY DOWN COUNT")
                         unit_diff = activeParam.unit * (flujo_count)
                         unit_diff = unit_diff * -1
             elif results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_DOWN:
@@ -411,7 +411,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
 
         self.printDifference("evaluarFlujoBUY_LONG", difference_optimized, self.closeAcumValue, self.closeDifference)
 
-#         print(
+        print(
                 f"DIFFERENCE_OPTIMIZED  evaluarFlujoBUY {difference_optimized} original {activeParam.difference} close difference {self.closeDifference} unit_diffb {unit_diff}")
         self.control_BUY_START_CLOSE_03(results, activeParam, self.closeAcumValue, self.closeDifference)
 
@@ -428,7 +428,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                 difference_optimized = activeParam.difference + (activeParam.difference / 5)
         else:
             difference_optimized = activeParam.difference - (activeParam.difference / 4)
-#             print(f"estamos en WAIT no hay indicadores de diferencia")
+            print(f"estamos en WAIT no hay indicadores de diferencia")
 
         if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
             if results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_UP:
@@ -439,7 +439,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
                 if results[Constants.INDICATOR] == Constants.INDICATOR_SELL:
                     # intentar cerrar si sube y esta en sell ( no sellX)
                     if flujo_count > 2:
-#                         print(f"CORRECTION SELL UP COUNT")
+                        print(f"CORRECTION SELL UP COUNT")
                         unit_diff = activeParam.unit * (flujo_count) * 1.2
                         unit_diff = unit_diff * -1
             else:
@@ -459,7 +459,7 @@ class EvaluatorIBLG_PROB_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
 
         self.printDifference("evaluarFlujoSELL_LONG", difference_optimized, self.closeAcumValue, self.closeDifference)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED  evaluarFlujoSELL {difference_optimized} original {activeParam.difference} closeAcumValue {self.closeAcumValue} close difference {self.closeDifference} unit_diff {unit_diff}")
 
         self.control_SELL_START_CLOSE_01(results, activeParam, self.closeAcumValue, self.closeDifference)

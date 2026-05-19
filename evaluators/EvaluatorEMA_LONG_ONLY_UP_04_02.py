@@ -94,7 +94,7 @@ class EvaluatorEMA_LONG_ONLY_UP_04_02(EvaluatorBase, AperturaBase, CierreBase):
         # CONTROL HORARIO
         currentTime = self.gettime(results)
         intime = False
-#         print(f'[EMA_LONG_04_02] EVALUATOR {self.name}  PARAM: {activeParam.name}')
+        print(f'[EMA_LONG_04_02] EVALUATOR {self.name}  PARAM: {activeParam.name}')
 
         if currentTime >= int(self.iniStart) and currentTime < int(self.iniEnd):
             intime = True
@@ -111,7 +111,7 @@ class EvaluatorEMA_LONG_ONLY_UP_04_02(EvaluatorBase, AperturaBase, CierreBase):
             if intime:
                 self.evaluarAperturaEMA(results, activeParam)
             else:
-#                 print(f"[EMA_LONG_04_02] FUERA DE HORARIO")
+                print(f"[EMA_LONG_04_02] FUERA DE HORARIO")
         elif current == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif current == Constants.ACTION_SELL:
@@ -134,7 +134,7 @@ class EvaluatorEMA_LONG_ONLY_UP_04_02(EvaluatorBase, AperturaBase, CierreBase):
             # En WAIT también evaluamos señales fuertes
             self.evaluarAperturaWAIT(results, activeParam, flujo_count)
         else:
-#             print(f"[EMA_LONG_04_02] EMA sin definir — esperando señal")
+            print(f"[EMA_LONG_04_02] EMA sin definir — esperando señal")
 
     # =========================================================================
     # APERTURA EN TENDENCIA ALCISTA (EMA BUY)
@@ -408,7 +408,7 @@ class EvaluatorEMA_LONG_ONLY_UP_04_02(EvaluatorBase, AperturaBase, CierreBase):
     # PROTECCIÓN: cierre inmediato de cualquier posición SELL no deseada
     # =========================================================================
     def _cerrar_sell_inmediato(self, results, activeParam):
-#         print(f"[EMA_LONG_04_02] SELL detected — closing immediately")
+        print(f"[EMA_LONG_04_02] SELL detected — closing immediately")
         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
 
     # =========================================================================

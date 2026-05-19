@@ -6,7 +6,7 @@ from datetime import datetime
 class EvaluatorBase:
 
     def __init__(self):
-#         print("iniciando")
+        print("iniciando")
 
 
 
@@ -38,7 +38,7 @@ class EvaluatorBase:
             message = f"{self.name}  fallo timedelta "
             self.telegram.enviarMensaje(message, self.telegram.tokenBot, self.errorTelegroup)
             self.addmessages(message, results)
-#             print(f"ERROR updateTimeZoneValues {str(e)}")
+            print(f"ERROR updateTimeZoneValues {str(e)}")
 
     def prepareInvierno(self):
         self.closeStart = 2140
@@ -160,7 +160,7 @@ class EvaluatorBase:
         # Calcular la diferencia en minutos y segundos con la hora exacta
         if minutos <= tolerancia_minutos and segundos == 0:
             res = True
-#             print(f"isHour current time hour: {current_time_h} minutes :{current_time_min}")
+            print(f"isHour current time hour: {current_time_h} minutes :{current_time_min}")
 
         return res
 
@@ -273,13 +273,13 @@ class EvaluatorBase:
                             if absmed > std:
                                 res = Constants.DIR_UP
         except Exception as error:
-#             print("Error evaluateProbFlow ", error)
+            print("Error evaluateProbFlow ", error)
         return res
 
 
 
     def printDifference(self, flujoName, difference_optimized, closeAcumValue, closeDifference, accumulate=0):
-#         print(
+        print(
             f" DIFFERENCE_OPTIMIZED flujo {flujoName} difference_optimized {difference_optimized} closeAcumValue {closeAcumValue} closeDifference {closeDifference}  accumulate {accumulate}")
 
     # def printInicioLog(self, name, results, activeparameters):

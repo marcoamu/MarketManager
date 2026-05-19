@@ -5,7 +5,7 @@ from datetime import datetime
 class EvaluatorBase:
 
     def __init__(self):
-#         print("iniciando")
+        print("iniciando")
 
     def updateTimeZoneValues(self, results=None):
         timedelta = None
@@ -35,7 +35,7 @@ class EvaluatorBase:
             message = f"{self.name}  fallo timedelta "
             self.telegram.enviarMensaje(message, self.telegram.tokenBot, self.errorTelegroup)
             self.addmessages(message, results)
-#             print(f"ERROR updateTimeZoneValues {str(e)}")
+            print(f"ERROR updateTimeZoneValues {str(e)}")
     def prepareInvierno(self):
         self.closeStart = 2140
         self.closeEnd = 2200
@@ -208,7 +208,7 @@ class EvaluatorBase:
                             if absmed > std:
                                 res = Constants.DIR_UP
         except Exception as error:
-#             print("Error evaluateProbFlow ", error)
+            print("Error evaluateProbFlow ", error)
         return res
 
     def control_SELL_START_CLOSE_01(self, results, activeParam, closeAcumValue, closeDifference):
@@ -217,7 +217,7 @@ class EvaluatorBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] =0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -235,14 +235,14 @@ class EvaluatorBase:
         if results[Constants.IND_BLG]== Constants.IND_BLG_MED_BUY:
             if results[Constants.ACTION_COUNT] > 2:
                 if results[Constants.ACTION_ACUM] > 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ISBUY 01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     # if abs(results[Constants.ACTION_MIN_DIST]) >= (closeAcumValue):
                         #HAY GANANCIAS
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -251,14 +251,14 @@ class EvaluatorBase:
         if results[Constants.ACTION_ACUM] > 0:
             if results[Constants.ACTION_COUNT]> 3:
                 if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST01 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
             else:
                 if results[Constants.ACTION_COUNT] >= 2:
                     if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name: {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -270,7 +270,7 @@ class EvaluatorBase:
                 #tiene ganancias
                 if abs(results[Constants.ACTION_ACUM]) > closeAcumValue:  # TIENE GANANCIAS
                     if abs(results[Constants.ACTION_MIN_DIST]) >= closeAcumValue:
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name: {name} SELL WINCLOSE action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -280,7 +280,7 @@ class EvaluatorBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] =0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -298,14 +298,14 @@ class EvaluatorBase:
         if results[Constants.IND_BLG] == Constants.IND_BLG_MED_SELL:
             if results[Constants.ACTION_COUNT] > 5:
                 if results[Constants.ACTION_ACUM] < 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ISSELL 01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     if abs(results[Constants.ACTION_MAX_DIST]) >= (closeAcumValue):
                         # HAY GANANCIAS
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO BUY name: {name} action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -324,7 +324,7 @@ class EvaluatorBase:
             if results[Constants.ACTION_ACUM] > 0:
                 if results[Constants.ACTION_ACUM] > closeAcumValue:  # muchas ganancias
                     if abs(results[Constants.ACTION_MAX_DIST]) >= closeAcumValue:
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name: {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -333,7 +333,7 @@ class EvaluatorBase:
         if results[Constants.ACTION_ACUM] <= 0:
             if results[Constants.ACTION_COUNT] > 3:
                 if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} acmun: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -354,7 +354,7 @@ class EvaluatorBase:
             # HA pASADO EL TOP HAY GANANCIAS
             if results[Constants.ACTION_COUNT] > 3:
                 # if abs(results[Constants.IND_BLG_UPPER_DST_PERCENT])>1:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MAXIMO_02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -366,7 +366,7 @@ class EvaluatorBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] =0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -384,14 +384,14 @@ class EvaluatorBase:
         if results[Constants.IND_BLG] == Constants.IND_BLG_MED_SELL:
             if results[Constants.ACTION_COUNT] > 6:
                 if results[Constants.ACTION_ACUM] < 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ISSELL 01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     if abs(results[Constants.ACTION_MAX_DIST]) >= (closeDifference):
                         # HAY GANANCIAS
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -412,7 +412,7 @@ class EvaluatorBase:
             if results[Constants.ACTION_ACUM] > 0:
                 if results[Constants.ACTION_ACUM] > closeAcumValue:  # muchas ganancias
                     if abs(results[Constants.ACTION_MAX_DIST]) >= closeAcumValue:
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -421,7 +421,7 @@ class EvaluatorBase:
         if results[Constants.ACTION_ACUM] <= 0:
             if results[Constants.ACTION_COUNT] >= 3:
                 if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -430,7 +430,7 @@ class EvaluatorBase:
                     if results[Constants.ACTION_COUNT] >= 2:
                         if results[Constants.ANGLE]< angleDown:
                             if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                                 print(
+                                print(
                                     f"CERRAMOS MERCADO name {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_CLOSE_ANGLE_NEG_01 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                                 return
@@ -441,7 +441,7 @@ class EvaluatorBase:
             # HA pASADO EL TOP HAY GANANCIAS
             if results[Constants.ACTION_COUNT] > 3:
                 # if abs(results[Constants.IND_BLG_UPPER_DST_PERCENT])>1:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name {name} {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MAXIMO_02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -452,7 +452,7 @@ class EvaluatorBase:
         if results[Constants.CLOSE_NXT_MIDDLE] == 1:
             if abs(results[Constants.IND_BLG_MIDDLE_DST_PERCENT]) <= activeParam.middleDstPercent:
                 results[Constants.CLOSE_NXT_MIDDLE] =0
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name} SELL action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} SELL_CLOSE_NXT_MIDDLE_01 profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -470,14 +470,14 @@ class EvaluatorBase:
         if results[Constants.IND_BLG] == Constants.IND_BLG_MED_SELL:
             if results[Constants.ACTION_COUNT] > 5:
                 if results[Constants.ACTION_ACUM] < 0:
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO BUY  name: {name}  action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ISSELL 01 profit:{results[Constants.ACTION_ACUM]} ")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
                 else:
                     if abs(results[Constants.ACTION_MAX_DIST]) >= (closeAcumValue):
                         # HAY GANANCIAS
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO BUY name: {name}  action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MID_PROFIT profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -496,7 +496,7 @@ class EvaluatorBase:
             if results[Constants.ACTION_ACUM] > 0:
                 if results[Constants.ACTION_ACUM] > closeAcumValue:  # muchas ganancias
                     if abs(results[Constants.ACTION_MAX_DIST]) >= closeAcumValue:
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO name: {name} BUY action_acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -505,7 +505,7 @@ class EvaluatorBase:
         if results[Constants.ACTION_ACUM] <= 0:
             if results[Constants.ACTION_COUNT] >= 2:
                 if abs(results[Constants.ACTION_ACUM]) >= (closeDifference):
-#                     print(
+                    print(
                         f"CERRAMOS MERCADO name: {name} acum: {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_ACTION_DIST02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                     results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                     return
@@ -526,17 +526,17 @@ class EvaluatorBase:
             # HA pASADO EL TOP HAY GANANCIAS
             if results[Constants.ACTION_COUNT] > 3:
                 # if abs(results[Constants.IND_BLG_UPPER_DST_PERCENT])>1:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO name: {name}  {results[Constants.ACTION_ACUM]} {results[Constants.DATE].values[0]} BUY_MAXIMO_02 {results[Constants.ACUMULADO]} profit:{closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
 
     def printDifference(self, flujoName, difference_optimized, closeAcumValue, closeDifference):
-#         print(
+        print(
             f" DIFFERENCE_OPTIMIZED flujo {flujoName} difference_optimized {difference_optimized} closeAcumValue {closeAcumValue} closeDifference {closeDifference}")
 
     def printInicioLog(self, name, results, activeparameters):
-#         print(
+        print(
             f" INICIO MERCADO {name} {results[Constants.DATE].values[0]} \tACUMULADO_ABS: {results[Constants.ACUMULADO_ABS]} \tWEEK_DIR_FLOW {results[Constants.WEEK_DIR_FLOW]} \tANGLE_EMA20: {results[Constants.ANGLE_EMA20]} \tANGLE: {results[Constants.ANGLE]}  \tANGLE_IMA1: {results[Constants.ANGLE_IMA1]} \tANGLE_IMA1_COUNTER: {results[Constants.ANGLE_IMA1_COUNTER]}  \tWEEK_DIR_BOT_DST {results[Constants.WEEK_DIR_BOT_DST]} \tIND_BLG_LOWER_DST_PERCENT {results[Constants.IND_BLG_LOWER_DST_PERCENT]} \tANGLE_EMA: {results[Constants.ANGLE_EMA]} \tWEEK_DIR_FLOW_DIFF {results[Constants.WEEK_DIR_FLOW_DIFF]} \tWEEK_DIR_FLOW_PREV {results[Constants.WEEK_DIR_FLOW_PREV]}  \tMEDSTDDIFF {results[Constants.MEDSTDDIFF]} \tINDICATOR_EMA: {results[Constants.INDICATOR_EMA]}  \tDIRECTION {results[Constants.DIRECTION]} \tINDICATOR_MED_MOMENT {results[Constants.INDICATOR_MED_MOMENT]}")
 
     def evaluateAngleUP(self, results, angleUp, reviewAngle = False):

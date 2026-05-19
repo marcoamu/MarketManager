@@ -77,7 +77,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_05_test01(EvaluatorBase,AperturaBase,CierreBas
             nada=""
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 
@@ -286,7 +286,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_05_test01(EvaluatorBase,AperturaBase,CierreBas
                 controlUP = None
                 if results[Constants.INDICATOR] == Constants.INDICATOR_BUY:
                     if flujo_count > 2:
-#                         print(f"CORRECTION BUY DOWN COUNT")
+                        print(f"CORRECTION BUY DOWN COUNT")
                         unit_diff = activeParam.unit * (flujo_count)
                         unit_diff = unit_diff * -1
             elif results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_DOWN:
@@ -326,7 +326,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_05_test01(EvaluatorBase,AperturaBase,CierreBas
                 difference_optimized = activeParam.difference + (activeParam.difference / 5)
         else:
             difference_optimized = activeParam.difference - (activeParam.difference / 4)
-#             print(f"estamos en WAIT no hay indicadores de diferencia")
+            print(f"estamos en WAIT no hay indicadores de diferencia")
 
         if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
             if results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_UP:
@@ -337,7 +337,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_05_test01(EvaluatorBase,AperturaBase,CierreBas
                 if results[Constants.INDICATOR] == Constants.INDICATOR_SELL:
                     # intentar cerrar si sube y esta en sell ( no sellX)
                     if flujo_count > 2:
-#                         print(f"CORRECTION SELL UP COUNT")
+                        print(f"CORRECTION SELL UP COUNT")
                         unit_diff = activeParam.unit * (flujo_count) * 1.2
                         unit_diff = unit_diff * -1
             else:

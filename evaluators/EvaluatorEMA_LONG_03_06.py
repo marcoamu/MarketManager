@@ -94,7 +94,7 @@ class EvaluatorEMA_LONG_03_06(EvaluatorBase,AperturaBase,CierreBase):
             # self.evaluarApertura(results, activeParam)
                 self.evaluarAperturaEMA(results, activeParam)
             else:
-#                 print(f"FUERA DE HORARIO")
+                print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -111,10 +111,10 @@ class EvaluatorEMA_LONG_03_06(EvaluatorBase,AperturaBase,CierreBase):
         elif results[Constants.INDICATOR_EMA] == Constants.INDICATOR_EMA_SELL:
             self.evaluarAperturaDOWN(results, activeParam, flujo_count)
         elif results[Constants.INDICATOR_EMA] == Constants.INDICATOR_EMA_WAIT:
-#             print("EMA WAIT")
+            print("EMA WAIT")
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 

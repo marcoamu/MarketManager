@@ -94,7 +94,7 @@ class EvaluatorEMA_IA_LONG_ONLY_UP_CROSS(EvaluatorBase,AperturaBase,CierreBase):
             # self.evaluarApertura(results, activeParam)
                 self.evaluarAperturaEMA(results, activeParam)
             else:
-#                 print(f"FUERA DE HORARIO")
+                print(f"FUERA DE HORARIO")
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
             self.evaluarFlujoBUY(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
@@ -125,10 +125,10 @@ class EvaluatorEMA_IA_LONG_ONLY_UP_CROSS(EvaluatorBase,AperturaBase,CierreBase):
             nada = ""
             # self.evaluarAperturaDOWN(results, activeParam, flujo_count)
         elif results[Constants.INDICATOR_EMA50] == Constants.INDICATOR_EMA_WAIT:
-#             print("EMA WAIT")
+            print("EMA WAIT")
             # self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
     def evaluarAperturaEMA_IA(self, results, activeParam):
 
@@ -183,7 +183,7 @@ class EvaluatorEMA_IA_LONG_ONLY_UP_CROSS(EvaluatorBase,AperturaBase,CierreBase):
             return
 
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
 
 
@@ -307,7 +307,7 @@ class EvaluatorEMA_IA_LONG_ONLY_UP_CROSS(EvaluatorBase,AperturaBase,CierreBase):
             if ema10_slope >= 0.003:
                 is_lateral = False
         if is_lateral:
-#             print(f"[{self.name}] Mercado lateral u operacion riesgosa detectada. Apertura UP omitida.")
+            print(f"[{self.name}] Mercado lateral u operacion riesgosa detectada. Apertura UP omitida.")
             return
         res, action, num = self.evaluateUpOpen_EMA_03(results, activeParam)
         if res:

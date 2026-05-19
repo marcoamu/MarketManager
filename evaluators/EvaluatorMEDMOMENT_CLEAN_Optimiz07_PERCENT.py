@@ -60,7 +60,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
             nada=""
             # self.evaluarAperturaUNDEF(results, activeParam, flujo_count)
         else:
-#             print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
+            print(f"ESTAMOS A LA ESPERA DE INDICADORES BUENOS")
 
     def evaluarAperturaCHANGEDifference(self, results, activeParam, flujo_count):
         difference_optimized = activeParam.difference
@@ -89,7 +89,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
         multiplicador = 2
         difference_optimized, unit_diff = self.evaluarAperturaCHANGEDifference(results, activeParam, flujo_count)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED evaluarAperturaCHANGE {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         if results[Constants.INDICATOR_MED_MOMENT_VALUE]>0:
@@ -99,7 +99,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                         if results[Constants.IND_REL_PERCENT_STD] == 0 or results[
                             Constants.IND_REL_PERCENT_STD] > self.percentMinDistance:
                             results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                             print(" INICIO MERCADO WAIT_UP_BUY02")
+                            print(" INICIO MERCADO WAIT_UP_BUY02")
 
         elif results[Constants.INDICATOR_MED_MOMENT_VALUE]<0:
             if results[Constants.FLUJO] == Constants.FLUJO_BAJA:
@@ -108,7 +108,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                         if results[Constants.IND_REL_PERCENT_STD] == 0 or results[
                             Constants.IND_REL_PERCENT_STD] > self.percentMinDistance:
                             results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                             print(" INICIO MERCADO WAIT_DON_SELL02")
+                            print(" INICIO MERCADO WAIT_DON_SELL02")
 
 
     def evaluarAperturaDOWNDifference(self, results, activeParam, flujo_count):
@@ -191,7 +191,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
 
         difference_optimized, unit_diff = self.evaluarAperturaDOWNDifference(results, activeParam, flujo_count)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED evaluarAperturaDOWN {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
 
@@ -200,7 +200,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                 if results[Constants.RELATIVE] == Constants.INDICATOR_RELATIVE_DOWN or results[
                     Constants.RELATIVE] == Constants.INDICATOR_RELATIVE_UP_CHANGE:
                     results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                     print(" INICIO MERCADO DOWN_DOWN_SELL01")
+                    print(" INICIO MERCADO DOWN_DOWN_SELL01")
 
         else:
             if abs(results[Constants.PREVIOUS_DIST]) <= results[Constants.PREVIOUS_DIST] and results[Constants.FLUJO_COUNT] <=self.previusOpenFlowCount:
@@ -209,7 +209,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                     if results[Constants.IND_REL_PERCENT_STD] == 0 or results[
                         Constants.IND_REL_PERCENT_STD] > self.percentMinDistance:
                         results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                         print(" INICIO MERCADO DOWN_DOWN_SELL02")
+                        print(" INICIO MERCADO DOWN_DOWN_SELL02")
 
 
 
@@ -220,7 +220,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
 
         difference_optimized, unit_diff = self.evaluarAperturaPREDOWNDifference(results, activeParam, flujo_count)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED evaluarAperturaPREDOWN {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         # INDICADORES
@@ -231,20 +231,20 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                     if self.enableControlOpen:
                         if results[Constants.ACUMULADO_ABS] <= (difference_optimized * self.multiplicadorOpen):
                             results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                             print(" INICIO MERCADO SELL PREDOWN01")
+                            print(" INICIO MERCADO SELL PREDOWN01")
                     else:
                         results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                         print(" INICIO MERCADO SELL PREDOWN01")
+                        print(" INICIO MERCADO SELL PREDOWN01")
             elif results[Constants.MARKET_TENDENCE] == Constants.MARKET_TENDENCE_UP:
                 if results[Constants.ACUMULADO_ABS] >= (difference_optimized * self.multiplicadorUP) or results[
                     Constants.ACTION_MAX_DIST] >= (difference_optimized * self.multiplicadorUP):
                     results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                     print(" INICIO MERCADO SELL PREDOWN02")
+                    print(" INICIO MERCADO SELL PREDOWN02")
             elif results[Constants.MARKET_TENDENCE] == Constants.MARKET_TENDENCE_UNDEF:
                 if results[Constants.ACUMULADO_ABS] >= (difference_optimized * self.multiplicadorUP) or results[
                     Constants.ACTION_MAX_DIST] >= (difference_optimized * self.multiplicadorUP):
                     results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                     print(" INICIO MERCADO SELL undefined02")
+                    print(" INICIO MERCADO SELL undefined02")
 
         # inversa COMPRA
         elif results[Constants.FLUJO] == Constants.FLUJO_SUBE:
@@ -252,7 +252,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                 if results[Constants.ACUMULADO_ABS] >= (difference_optimized * self.multiplicadorUP) or results[
                     Constants.ACTION_MAX_DIST] >= (difference_optimized * self.multiplicadorUP):
                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                     print(" INICIO MERCADO BUY INVERSA01")
+                    print(" INICIO MERCADO BUY INVERSA01")
 
 
 
@@ -307,7 +307,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
 
 
         difference_optimized, unit_diff = self.evaluarDifferencePREUP(results, activeParam, flujo_count)
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED evaluarAperturaPREUP {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         # EVALUADORES
@@ -319,20 +319,20 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                     if self.enableControlOpen:
                         if results[Constants.ACUMULADO_ABS] <= (difference_optimized * self.multiplicadorOpen):
                             results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                             print(" INICIO MERCADO BUYPREBUY01")
+                            print(" INICIO MERCADO BUYPREBUY01")
                     else:
                         results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                         print(" INICIO MERCADO BUYPREBUY01")
+                        print(" INICIO MERCADO BUYPREBUY01")
             elif results[Constants.MARKET_TENDENCE] == Constants.MARKET_TENDENCE_DOWN:
                 if results[Constants.ACUMULADO_ABS] >= (difference_optimized * self.multiplicadorUP) or results[
                     Constants.ACTION_MAX_DIST] >= (difference_optimized * self.multiplicadorUP):
                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                     print(" INICIO MERCADO PREBUY02")
+                    print(" INICIO MERCADO PREBUY02")
             elif results[Constants.MARKET_TENDENCE] == Constants.MARKET_TENDENCE_UNDEF:
                 if results[Constants.ACUMULADO_ABS] >= (difference_optimized * self.multiplicadorUP) or results[
                     Constants.ACTION_MAX_DIST] >= (difference_optimized* self.multiplicadorUP):
                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                     print(" INICIO MERCADO BUY UNDEFINED02")
+                    print(" INICIO MERCADO BUY UNDEFINED02")
 
         # EVALUADORES A LA INVERSA VENTA
         elif results[Constants.FLUJO] == Constants.FLUJO_BAJA:
@@ -342,10 +342,10 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                     if self.enableControlOpen:
                         if results[Constants.ACUMULADO_ABS] <= (difference_optimized * self.multiplicadorOpen):
                             results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                             print(" INICIO MERCADO SELL INVERSE1")
+                            print(" INICIO MERCADO SELL INVERSE1")
                     else:
                         results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-#                         print(" INICIO MERCADO SELL INVERSE1")
+                        print(" INICIO MERCADO SELL INVERSE1")
 
 
     def evaluarAperturaUP(self, results, activeParam, flujo_count):
@@ -354,7 +354,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
 
         difference_optimized, unit_diff = self.evaluarDifferenceUP(results, activeParam, flujo_count)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED evaluarAperturaUP {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         if self.enableControlOpen:
@@ -362,7 +362,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                 if results[Constants.RELATIVE] == Constants.INDICATOR_RELATIVE_UP or results[
                     Constants.RELATIVE] == Constants.INDICATOR_RELATIVE_DOWN_CHANGE:
                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                     print(" INICIO MERCADO UP_UP_BUY01")
+                    print(" INICIO MERCADO UP_UP_BUY01")
         else:
             if abs(results[Constants.PREVIOUS_DIST])<=self.previusOpenDistance and results[Constants.FLUJO_COUNT] <=self.previusOpenFlowCount:
                 if results[Constants.RELATIVE] == Constants.INDICATOR_RELATIVE_UP or results[
@@ -370,7 +370,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                     if results[Constants.IND_REL_PERCENT_STD] == 0 or results[
                         Constants.IND_REL_PERCENT_STD] > self.percentMinDistance:
                         results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-#                         print(" INICIO MERCADO UP_UP_BUY2")
+                        print(" INICIO MERCADO UP_UP_BUY2")
 
 
 
@@ -383,7 +383,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
             # FIX PARA CERRAR CUANTO ANTES SI BAJA Y HAY GANANCIAS
             if results[Constants.DIRECTION] == Constants.DIR_UP:
                 if flujo_count > 1:
-#                     print(f"CORRECTION BUY DOWN COUNT")
+                    print(f"CORRECTION BUY DOWN COUNT")
                     unit_diff = activeParam.unit * (flujo_count)*2.3
                     unit_diff = unit_diff * -1
             elif results[Constants.DIRECTION] == Constants.DIR_DOWN or results[Constants.DIRECTION] == Constants.DIR_CHANGE:
@@ -408,7 +408,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
 
         difference_optimized, unit_diff = self.evaluarDifferenceBUY(results, activeParam, flujo_count)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED  evaluarFlujoBUY {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
 
@@ -417,7 +417,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
             # es negativo
             # vericicar si bajo mas de lo esperado
             if abs(results[Constants.ACTION_ACUM]) >= self.closeAcumValue:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -425,7 +425,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
         # #CERRAMOS SI BAJO mucho
         if results[Constants.ACUMULADO] <= 0:
             if results[Constants.ACUMULADO_ABS] >= (self.closeAcumValue):
-#                 print(
+                print(
                     f"CERRAMOS MERCADO BUY_ACTION_DIST01 {results[Constants.ACUMULADO]} profit:{self.closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -435,7 +435,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
             if results[Constants.ACTION_ACUM] >= self.closeAcumValue*2:
                 if results[Constants.ACUMULADO] <= 0:
                     if results[Constants.ACUMULADO_ABS] >= (self.closeAcumValue/2):
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO BUY_ACTION_PROFIT_DIST01 {results[Constants.ACTION_ACUM]} profit:{self.closeAcumValue}")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
@@ -453,7 +453,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                 difference_optimized = activeParam.difference + (activeParam.difference / 5)
         else:
             difference_optimized = activeParam.difference - (activeParam.difference / 4)
-#             print(f"estamos en WAIT no hay indicadores de diferencia")
+            print(f"estamos en WAIT no hay indicadores de diferencia")
 
         if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
             if results[Constants.INDICATOR_TENDENCE] == Constants.INDICATOR_T_UP:
@@ -464,7 +464,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
                 if results[Constants.INDICATOR] == Constants.INDICATOR_SELL:
                     # intentar cerrar si sube y esta en sell ( no sellX)
                     if flujo_count > 2:
-#                         print(f"CORRECTION SELL UP COUNT")
+                        print(f"CORRECTION SELL UP COUNT")
                         unit_diff = activeParam.unit * (flujo_count) * 1.2
                         unit_diff = unit_diff * -1
             else:
@@ -484,7 +484,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
 
         difference_optimized, unit_diff = self.evaluarDifferenceSELL(results, activeParam, flujo_count)
 
-#         print(
+        print(
             f"DIFFERENCE_OPTIMIZED  evaluarFlujoSELL {difference_optimized} original {activeParam.difference} unit_diffb {unit_diff}")
 
         # cerramos si llega al minimo admisible de perdida
@@ -492,7 +492,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
             # es negativo
             # vericicar si bajo mas de lo esperado
             if abs(results[Constants.ACTION_ACUM]) >= self.closeAcumValue:
-#                 print(
+                print(
                     f"CERRAMOS MERCADO BUY_CLOSE_ACUM profit:{results[Constants.ACTION_ACUM]} ")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -500,7 +500,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
         # #CERRAMOS SI BAJO mucho
         if results[Constants.ACUMULADO] > 0:
             if results[Constants.ACUMULADO_ABS] >= (self.closeAcumValue):
-#                 print(
+                print(
                     f"CERRAMOS MERCADO BUY_ACTION_DIST01 {results[Constants.ACUMULADO]} profit:{self.closeAcumValue}")
                 results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                 return
@@ -510,7 +510,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz07_PERCENT(EvaluatorBase,AperturaBase,Cier
             if abs(results[Constants.ACTION_ACUM]) >= self.closeAcumValue * 2:
                 if results[Constants.ACUMULADO] > 0:
                     if results[Constants.ACUMULADO_ABS] >= (self.closeAcumValue / 2):
-#                         print(
+                        print(
                             f"CERRAMOS MERCADO BUY_ACTION_PROFIT_DIST01 {results[Constants.ACTION_ACUM]} profit:{self.closeAcumValue}")
                         results[Constants.NEW_ACTION] = Constants.ACTION_CLOSE
                         return
