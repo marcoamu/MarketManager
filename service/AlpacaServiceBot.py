@@ -1073,6 +1073,157 @@ class AlpacaServiceBot:
 
         return pnl_by_symbol
 
+
+    def get_asset_activity(self, symbol, date=None):
+        """
+        Extrae toda la actividad de trading de Alpaca para un activo específico en un día.
+        Incluye: aperturas, cierres, long, short, y PnL por cada operación.
+        
+        Returns dict con:
+          - opens: lista de ordenes de apertura
+          - closes: lista de ordenes de cierre  
+          - long_opens, long_closes, short_opens, short_closes: counts
+          - total_pnl: PnL neto realizado
+          - trades_detail: list of {side, qty, price, pnl} por cada orden
+        """
+        from datetime import datetime, date as date_type
+        from alpaca.trading.requests import GetOrdersRequest
+        from alpaca.trading.enums import OrderSide
+        
+        if date is None:
+            date = datetime.now().date()
+        elif isinstance(date, str):
+            date = datetime.fromisoformat(date).date()
+        
+        start = datetime.combine(date, datetime.min.time())
+        end = datetime.combine(date, datetime.max.time())
+        
+        request = GetOrdersRequest(
+            status="all",
+            after=start.isoformat(),
+            until=end.isoformat(),
+            limit=1000
+        )
+        orders = self.api.get_orders(request)
+        
+        symbol_orders = [o for o in orders if o.symbol == symbol]
+        
+        activity = {
+            "symbol": symbol,
+            "date": str(date),
+            "long_opens": 0, "long_closes": 0,
+            "short_opens": 0, "short_closes": 0,
+            "total_opens": 0, "total_closes": 0,
+            "total_pnl": 0.0,
+            "trades": [],
+            "orders": []
+        }
+        
+        long_stack = []
+        short_stack = []
+        
+        for o in symbol_orders:
+            if o.filled_at is None or float(o.filled_qty) == 0:
+                continue
+            
+            qty = abs(float(o.filled_qty))
+            price = float(o.filled_avg_price)
+            side = o.side.value
+            filled_at = o.filled_at.isoformat() if o.filled_at else ""
+            order_id = o.id
+            status = o.status.value
+            
+            trade_info = {
+                "order_id": str(order_id)[:8],
+                "side": side,
+                "qty": qty,
+                "price": price,
+                "filled_at": filled_at,
+                "status": status,
+                "pnl": 0.0,
+                "position_type": None
+            }
+            
+            if side == "buy":
+                temp_qty = qty
+                while temp_qty > 0 and short_stack:
+                    entry_price, entry_qty = short_stack[0]
+                    if entry_qty <= temp_qty:
+                        cover_qty = entry_qty
+                        pnl = (entry_price - price) * cover_qty
+                        trade_info["pnl"] += pnl
+                        trade_info["position_type"] = "SHORT_COVER"
+                        activity["short_closes"] += 1
+                        activity["total_closes"] += 1
+                        activity["total_pnl"] += pnl
+                        temp_qty -= entry_qty
+                        short_stack.pop(0)
+                    else:
+                        cover_qty = temp_qty
+                        pnl = (entry_price - price) * cover_qty
+                        trade_info["pnl"] += pnl
+                        trade_info["position_type"] = "SHORT_COVER_PARTIAL"
+                        activity["short_closes"] += 1
+                        activity["total_closes"] += 1
+                        activity["total_pnl"] += pnl
+                        short_stack[0] = (entry_price, entry_qty - cover_qty)
+                        temp_qty = 0
+                
+                if temp_qty > 0:
+                    long_stack.append((price, temp_qty))
+                    trade_info["position_type"] = "LONG_OPEN"
+                    activity["long_opens"] += 1
+                    activity["total_opens"] += 1
+                    
+            elif side == "sell":
+                temp_qty = qty
+                while temp_qty > 0 and long_stack:
+                    entry_price, entry_qty = long_stack[0]
+                    if entry_qty <= temp_qty:
+                        close_qty = entry_qty
+                        pnl = (price - entry_price) * close_qty
+                        trade_info["pnl"] += pnl
+                        trade_info["position_type"] = "LONG_CLOSE"
+                        activity["long_closes"] += 1
+                        activity["total_closes"] += 1
+                        activity["total_pnl"] += pnl
+                        temp_qty -= entry_qty
+                        long_stack.pop(0)
+                    else:
+                        close_qty = temp_qty
+                        pnl = (price - entry_price) * close_qty
+                        trade_info["pnl"] += pnl
+                        trade_info["position_type"] = "LONG_CLOSE_PARTIAL"
+                        activity["long_closes"] += 1
+                        activity["total_closes"] += 1
+                        activity["total_pnl"] += pnl
+                        long_stack[0] = (entry_price, entry_qty - close_qty)
+                        temp_qty = 0
+                
+                if temp_qty > 0:
+                    short_stack.append((price, temp_qty))
+                    trade_info["position_type"] = "SHORT_OPEN"
+                    activity["short_opens"] += 1
+                    activity["total_opens"] += 1
+            
+            activity["trades"].append(trade_info)
+        
+        activity["open_positions"] = {
+            "long": long_stack,
+            "short": short_stack
+        }
+        
+        activity["summary"] = (
+            f"{symbol} | {date} | "
+            f"Opens: {activity['total_opens']} (L:{activity['long_opens']} S:{activity['short_opens']}) | "
+            f"Closes: {activity['total_closes']} (L:{activity['long_closes']} S:{activity['short_closes']}) | "
+            f"PnL: ${activity['total_pnl']:.2f}"
+        )
+        
+        return activity
+
+
+
 def main():
     # actives.append(btc)
     # symbol2 = 'BTC/USD'
