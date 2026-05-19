@@ -27,6 +27,7 @@ from core.pure.math_utils import (
     calcular_angulo, calcular_minutos_entre_fechas, determineFlow,
     determineMedMomentFlow, determine_Direction_percent_Flow, calculatePercentFcst,
     getProMEDSTD_MID, determinePercentDistance, determinarRelativePercent,
+    calculate_rsi, mide_tiempo,
 )
 from core.pure.evaluation_utils import (
     isHour, postcalculation, _eval_init_parameters, _eval_bollinger_distances,
@@ -5588,50 +5589,7 @@ class MarketManager:
             results[Constants.STD_MOMENT] = 0
 
     def calculate_rsi(self, data, period=14):
-        """
-        Calcula el RSI (Relative Strength Index) para los datos proporcionados.
-        data: Lista de precios de cierre en orden ascendente de tiempo.
-        period: Periodo de tiempo para el calculo del RSI.
-        """
-
-        # Calcula los cambios de precio
-        deltas = [data[i] - data[i - 1] for i in range(1, len(data))]
-
-        # Inicializa las listas para los precios positivos y negativos
-        up_values = [delta if delta > 0 else 0 for delta in deltas]
-        down_values = [abs(delta) if delta < 0 else 0 for delta in deltas]
-
-        # Calcula el promedio de las ganancias y perdidas durante el periodo de tiempo
-        avg_gain = sum(up_values[:period]) / period
-        avg_loss = sum(down_values[:period]) / period
-        rsi = 0
-        # Calcula el RSI inicial
-        if avg_loss > 0:
-            rs = avg_gain / avg_loss
-            rsi = 100 - (100 / (1 + rs))
-
-        # Calcula el RSI para los periodos restantes
-        for i in range(period, len(data)):
-            delta = deltas[i - 1]
-
-            # Calcula los valores de ganancia y perdida
-            up = delta if delta > 0 else 0
-            down = abs(delta) if delta < 0 else 0
-
-            # Actualiza el promedio de ganancias y perdidas
-            avg_gain = (avg_gain * (period - 1) + up) / period
-            avg_loss = (avg_loss * (period - 1) + down) / period
-
-            # Calcula el RSI actual
-            rs = avg_gain / avg_loss
-            current_rsi = 100 - (100 / (1 + rs))
-
-            rsi = current_rsi
-
-        return rsi
-
-
-
+        return calculate_rsi(data, period)
     def extractResultsDataForAnalisys(self, results, isbuy, active, name = None, isStart = False, isnormal = False):
         res = {}
         fecha = results[Constants.DATE].values[0]
