@@ -12,7 +12,7 @@ class EvaluatorDistMarketTendence11(EvaluatorBase,AperturaBase,CierreBase):
     def evaluate(self, results, activeParam):
         results[Constants.EVAl_NAME] = self.name
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         # for result in results:
         results['ALERT'] = False
 

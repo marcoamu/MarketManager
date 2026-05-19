@@ -30,7 +30,7 @@ class EvaluatorDirectionMEDSTD01(EvaluatorBase,AperturaBase,CierreBase):
         self.evaluateChangeMarketTendence = False
         self.closeAcumValue = activeParam.closeAcumvalue
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

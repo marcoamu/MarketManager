@@ -37,7 +37,7 @@ class EvaluatorMEDMOMENT_CLEAN_Optimiz03_MEDDIFF(EvaluatorBase,AperturaBase,Cier
 
 
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

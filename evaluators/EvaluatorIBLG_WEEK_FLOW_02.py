@@ -57,7 +57,7 @@ class EvaluatorIBLG_WEEK_FLOW_02(EvaluatorBase,AperturaBase,CierreBase):
             intime = True
 
         intime = True
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             if intime:

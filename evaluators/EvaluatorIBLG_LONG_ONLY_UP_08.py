@@ -46,7 +46,7 @@ class EvaluatorIBLG_LONG_ONLY_UP_08(EvaluatorBase,AperturaBase,CierreBase):
         self.minFlowDiff = activeParam.minflowDiff
         self.closeDifference = activeParam.difference + (activeParam.difference * 0.20)
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

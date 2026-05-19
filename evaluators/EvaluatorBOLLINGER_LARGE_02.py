@@ -75,7 +75,7 @@ class EvaluatorBOLLINGER_LARGE_02(EvaluatorBase,AperturaBase,CierreBase):
         # SOLO EN LOS INTERVALOS definidos
         currentTime = self.gettime(results)
         intime = False
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if currentTime >= int(self.iniStart) and currentTime < int(self.iniEnd):
             intime = True
         if currentTime >= int(self.closeStart) and currentTime < int(self.closeEnd):

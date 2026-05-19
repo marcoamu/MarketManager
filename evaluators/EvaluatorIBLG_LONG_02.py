@@ -51,7 +51,7 @@ class EvaluatorIBLG_LONG_02(EvaluatorBase,AperturaBase,CierreBase):
 
         self.midMinDst = 0.08
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

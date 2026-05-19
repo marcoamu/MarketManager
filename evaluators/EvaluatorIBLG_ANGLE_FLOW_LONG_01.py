@@ -65,7 +65,7 @@ class EvaluatorIBLG_ANGLE_FLOW_LONG_01(EvaluatorBase,AperturaBase,CierreBase):
         if Constants.ONLY_START_END in results:
             if results[Constants.ONLY_START_END] == False:
                 intime = True
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             if intime:

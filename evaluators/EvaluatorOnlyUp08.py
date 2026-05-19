@@ -15,7 +15,7 @@ class EvaluatorOnlyUp08(EvaluatorBase,AperturaBase,CierreBase):
     def evaluate(self, results, activeParam):
         results[Constants.EVAl_NAME] = self.name
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         # for result in results:
         results['ALERT'] = False
 
@@ -34,7 +34,7 @@ class EvaluatorOnlyUp08(EvaluatorBase,AperturaBase,CierreBase):
         # valores
         flujo_count = results[Constants.FLUJO_COUNT]
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

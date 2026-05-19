@@ -44,7 +44,7 @@ class EvaluatorIBLG_ANGLE_ONLY_UP_00(EvaluatorBase,AperturaBase,CierreBase):
         self.minAngleIma1 = activeParam.minAngleIma1
         self.closeDifference = activeParam.difference + (activeParam.difference * 0.80)
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

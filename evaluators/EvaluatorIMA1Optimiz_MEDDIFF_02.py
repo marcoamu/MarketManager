@@ -41,7 +41,7 @@ class EvaluatorIMA1Optimiz_MEDDIFF_02(EvaluatorBase,AperturaBase,CierreBase):
         if self.closeAcumValue > activeParam.accumulate:
             self.closeAcumValue = activeParam.difference + (activeParam.difference * 0.20)
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

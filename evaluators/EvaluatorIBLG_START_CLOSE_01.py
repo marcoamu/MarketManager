@@ -56,7 +56,7 @@ class EvaluatorIBLG_START_CLOSE_01(EvaluatorBase,AperturaBase,CierreBase):
         if currentTime >= int(self.closeStart) and currentTime < int(self.closeEnd):
             intime = True
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             if intime:

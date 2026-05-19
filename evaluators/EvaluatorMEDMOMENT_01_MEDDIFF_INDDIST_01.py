@@ -41,7 +41,7 @@ class EvaluatorMEDMOMENT_01_MEDDIFF_INDDIST_01(EvaluatorBase,AperturaBase,Cierre
 
 
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

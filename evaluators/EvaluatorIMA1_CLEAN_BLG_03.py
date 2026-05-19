@@ -38,7 +38,7 @@ class EvaluatorIMA1_CLEAN_BLG_03(EvaluatorBase,AperturaBase,CierreBase):
         self.blgDistPercent = activeParam.blgDistPercent
         self.closeDifference = activeParam.difference + (activeParam.difference * 0.20)
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

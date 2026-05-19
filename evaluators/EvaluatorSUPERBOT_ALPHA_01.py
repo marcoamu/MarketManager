@@ -83,7 +83,7 @@ class EvaluatorSUPERBOT_ALPHA_01(EvaluatorBase, AperturaBase, CierreBase):
         # ─── CONTROL DE HORARIO ───────────────────────────────────────────────
         currentTime = self.gettime(results)
         intime = False
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if currentTime >= int(self.iniStart) and currentTime < int(self.iniEnd):
             intime = True
         if currentTime >= int(self.closeStart) and currentTime < int(self.closeEnd):

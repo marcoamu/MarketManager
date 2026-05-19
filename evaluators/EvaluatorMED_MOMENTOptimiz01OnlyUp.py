@@ -31,7 +31,7 @@ class EvaluatorMED_MOMENTOptimiz01OnlyUp(EvaluatorBase,AperturaBase,CierreBase):
         #valuador para estado change por market tendence = True  o por indicator = False
         self.evaluateChangeMarketTendence = True
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)

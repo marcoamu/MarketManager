@@ -40,7 +40,7 @@ class EvaluatorDIRECTION_CLEAN_Opt03_MEDDIFF_01(EvaluatorBase,AperturaBase,Cierr
 
         self.flujo_Count = 2#camtidad de acciones desde la compra o venta
 
-        print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
+        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
         if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
             Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             self.evaluarApertura(results, activeParam)
