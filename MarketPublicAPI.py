@@ -25,6 +25,7 @@ from typing import Optional, List, Dict, Any
 
 from service.MarketSQLManager import MarketSQLManager
 from service.AlpacaServiceBot import AlpacaServiceBot
+from alpaca.trading.requests import GetOrdersRequest
 from service.AlpacaServiceBot import AlpacaServiceBot as AlpacaBot
 
 # ─────────────────────────────────────────────
@@ -500,6 +501,184 @@ def set_daily_loss_limit(
             }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+
+
+# ══════════════════════════════════════════════════════════════
+# ACTIVITY / AUDIT ENDPOINTS
+# ══════════════════════════════════════════════════════════════
+
+@app.get(
+    "/activity/today",
+    summary="Actividad de hoy — todos los activos",
+    description="Devuelve actividad de trading del día para todos los activos con operaciones.",
+    tags=["Activity"],
+)
+def get_activity_today():
+    """Resumen de actividad del día para todos los activos."""
+    try:
+        date = datetime.date.today().strftime('%Y-%m-%d')
+        # Get all unique symbols from orders today
+        request = GetOrdersRequest(status="all", limit=1000)
+        orders = _alpaca.api.get_orders(request)
+        
+        today_start = datetime.datetime.combine(datetime.date.today(), datetime.datetime.min.time()).replace(tzinfo=datetime.timezone.utc)
+        today_orders = [o for o in orders if o.created_at and (o.created_at.replace(tzinfo=datetime.timezone.utc) if o.created_at.tzinfo is None else o.created_at) >= today_start]
+        
+        symbols = set()
+        for o in today_orders:
+            if o.filled_at and float(o.filled_qty) > 0:
+                symbols.add(o.symbol)
+        
+        if not symbols:
+            return {"date": date, "assets": [], "total_pnl": 0, "count": 0}
+        
+        results = []
+        total_pnl = 0
+        for symbol in sorted(symbols):
+            activity = _alpaca.get_asset_activity(symbol, date)
+            results.append({
+                "symbol": symbol,
+                "long_opens": activity["long_opens"],
+                "long_closes": activity["long_closes"],
+                "short_opens": activity["short_opens"],
+                "short_closes": activity["short_closes"],
+                "total_opens": activity["total_opens"],
+                "total_closes": activity["total_closes"],
+                "pnl": round(activity["total_pnl"], 2),
+                "trades": len(activity["trades"]),
+                "open_positions": activity["open_positions"],
+            })
+            total_pnl += activity["total_pnl"]
+        
+        results.sort(key=lambda x: x["pnl"], reverse=True)
+        
+        return {
+            "date": date,
+            "assets": results,
+            "total_pnl": round(total_pnl, 2),
+            "count": len(results),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/activity/by-asset/{symbol}",
+    summary="Actividad por activo y fecha",
+    description="Detalle completo de actividad de trading para un activo específico.",
+    tags=["Activity"],
+)
+def get_activity_by_asset(
+    symbol: str,
+    date: Optional[str] = Query(None, description="Fecha YYYY-MM-DD (default: hoy)"),
+):
+    """Detalle de actividad por activo."""
+    try:
+        if date is None:
+            date = datetime.date.today().strftime('%Y-%m-%d')
+        activity = _alpaca.get_asset_activity(symbol.upper(), date)
+        return activity
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/activity/range",
+    summary="Actividad en rango de fechas",
+    description="PnL por activo para un rango de días.",
+    tags=["Activity"],
+)
+def get_activity_range(
+    date_from: str = Query(..., description="Fecha inicio YYYY-MM-DD"),
+    date_to: Optional[str] = Query(None, description="Fecha fin YYYY-MM-DD (default: hoy)"),
+):
+    """Resumen de PnL por activo para un rango de fechas."""
+    try:
+        if date_to is None:
+            date_to = datetime.date.today().strftime('%Y-%m-%d')
+        
+        start = datetime.datetime.fromisoformat(date_from)
+        end = datetime.datetime.fromisoformat(date_to)
+        end = datetime.datetime.combine(end.date(), datetime.datetime.max.time())
+        
+        request = GetOrdersRequest(status="all", after=start.isoformat(), until=end.isoformat(), limit=1000)
+        orders = _alpaca.api.get_orders(request)
+        
+        symbols = set(o.symbol for o in orders if o.filled_at and float(o.filled_qty) > 0)
+        
+        results = []
+        for symbol in sorted(symbols):
+            activity = _alpaca.get_asset_activity(symbol.upper(), date_from)
+            
+            # Aggregate over days
+            daily_pnl = {}
+            for t in activity["trades"]:
+                if t["filled_at"]:
+                    d = t["filled_at"][:10]
+                    if d not in daily_pnl:
+                        daily_pnl[d] = 0
+                    daily_pnl[d] += t["pnl"]
+            
+            results.append({
+                "symbol": symbol,
+                "total_pnl": round(activity["total_pnl"], 2),
+                "total_opens": activity["total_opens"],
+                "total_closes": activity["total_closes"],
+                "daily_pnl": daily_pnl,
+            })
+        
+        results.sort(key=lambda x: x["total_pnl"], reverse=True)
+        
+        return {
+            "date_from": date_from,
+            "date_to": date_to,
+            "assets": results,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/activity/positions",
+    summary="Posiciones abiertas ahora",
+    description="Todas las posiciones abiertas en este momento con entry price y PnL flotante.",
+    tags=["Activity"],
+)
+def get_open_positions():
+    """Posiciones abiertas con PnL no realizado."""
+    try:
+        positions = _alpaca.api.get_all_positions()
+        
+        result = []
+        for p in positions:
+            qty = float(p.qty)
+            entry = float(p.avg_entry_price)
+            current = float(p.current_price)
+            pnl = (current - entry) * qty if qty > 0 else (entry - current) * abs(qty)
+            result.append({
+                "symbol": p.symbol,
+                "qty": qty,
+                "entry_price": entry,
+                "current_price": current,
+                "market_value": float(p.market_value),
+                "unrealized_pnl": round(pnl, 2),
+                "side": "long" if qty > 0 else "short",
+                "change_today": round(float(p.change_today or 0), 2),
+            })
+        
+        total_pnl = sum(r["unrealized_pnl"] for r in result)
+        result.sort(key=lambda x: x["unrealized_pnl"], reverse=True)
+        
+        return {
+            "positions": result,
+            "total_unrealized_pnl": round(total_pnl, 2),
+            "count": len(result),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 
 # ─────────────────────────────────────────────
