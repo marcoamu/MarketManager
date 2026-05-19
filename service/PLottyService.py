@@ -32,7 +32,7 @@ class PlottyService:
                 print("Error defaut LINUX Plotty")
                 self.env = "LINUX"
 
-        print(f"Active env : {self.env}")
+        # print(f"Active env : {self.env}")
 
         if "WINDOWS" in self.env:
             self.path = './img'

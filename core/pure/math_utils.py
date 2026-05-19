@@ -49,7 +49,7 @@ def calcular_minutos_entre_fechas(str, fecha1_str, fecha2_str):
 
 
 
-# @mide_tiempo
+# #@mide_tiempo
 
 
 def determineFlow(self, min, max, val):
@@ -360,7 +360,7 @@ def getProMEDSTD_MID(self, results):
     return res
 
 
-# @mide_tiempo
+# #@mide_tiempo
 
 
 def determinePercentDistance(self, percentMinMax, results, med, std, med_prev, std_prev):
@@ -488,7 +488,7 @@ def determinePercentDistance(self, percentMinMax, results, med, std, med_prev, s
 
     return res
 
-# @mide_tiempo
+# #@mide_tiempo
 
 
 def determinarRelativePercent(self, data, results, active):

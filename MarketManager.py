@@ -444,7 +444,7 @@ class MarketManager:
         except Exception as e:
             print(f"ERROR reviewControls {str(e)}")
 
-    @mide_tiempo
+    #@mide_tiempo
     def review_results(self, data, results, active):
         if data is not None:
             # print(f"review Results")
@@ -1926,7 +1926,7 @@ class MarketManager:
                         results[Constants.WEEK_FLOW_PREV_MED] = weekprevMed
 
                     angulo = np.arctan(valores[-1] - valores[0]) * (180 / np.pi)
-                    print(f"WEEK ANGLE: {angulo}")
+                    # print(f"WEEK ANGLE: {angulo}")
                     desviacion_estandar = np.std(cambios)
                     media = np.mean(cambios)
                     marketAngle = media
@@ -2037,7 +2037,7 @@ class MarketManager:
                         results[Constants.WEEK_FLOW_PREV_MED] = weekprevMed
 
                     angulo = np.arctan(valores[-1] - valores[0]) * (180 / np.pi)
-                    print(f"WEEK ANGLE: {angulo}")
+                    # print(f"WEEK ANGLE: {angulo}")
                     desviacion_estandar = np.std(cambios)
                     media = np.mean(cambios)
                     marketAngle = media
@@ -2610,7 +2610,7 @@ class MarketManager:
             messages = message
         results[Constants.MESSAGES] = messages
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def evaluateNewAction(self, results, active, isFastReview=False, isfcst=False):
         fastReview = isFastReview
 
@@ -3027,7 +3027,7 @@ class MarketManager:
         if abs(prev) < 2 and abs(prev)!=0:
             self.diffValues.append(abs(prev))
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def calculateBESTDISTANCE(self):
         # cambios = [valor - self.diffValues[-1] for valor in self.diffValues]
         print(f"{self.diffValues}")
@@ -3075,7 +3075,7 @@ class MarketManager:
             message = f"{self.name}  EXITO closeAndNewAction  {results[Constants.CURRENT_ACTION]} para {active.parameters.name}"
             self.telegram.enviarMensaje(message, self.telegram.tokenBot, self.errorTelegroup)
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def evaluateFcstPROB(self, results, active):
         try:
             currentTime = self.gettime(results)
@@ -3093,37 +3093,37 @@ class MarketManager:
                             if results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
                                 if active.parameters.continueFlow== False:
                                     # results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                    print(f"ACTIVO FCST 1530 CLOSE-BUY!!!")
+                                    # print(f"ACTIVO FCST 1530 CLOSE-BUY!!!")
                                     msg = f"{self.name} ACTIVO FCST 2150 CLOSE-BUY for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                     self.closeAndNewAction(results, active, Constants.ACTION_BUY)
 
                             elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
                                 # results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                print(f"ACTIVO FCST 2150 BUY!!!")
+                                # print(f"ACTIVO FCST 2150 BUY!!!")
                                 msg = f"{self.name} ACTIVO FCST 2150 CLOSE-BUY for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                 self.closeAndNewAction(results, active, Constants.ACTION_BUY)
                             elif Constants.ACTION_CLOSE in results[Constants.CURRENT_ACTION] or results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT:
                                 results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                print(f"ACTIVO FCST 2150 BUY!!!")
+                                # print(f"ACTIVO FCST 2150 BUY!!!")
                                 msg = f"{self.name} ACTIVO FCST 2150 BUY for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                 self.applyNewAction(results, active)
                         elif (probFlow == Constants.DIR_DOWN or probFlow == Constants.DIR_PRE_DOWN):
                             if active.parameters.name != 'BTCUSD' and active.parameters.name != 'ETHUSD':
                                 # down
                                 if results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
-                                    print(f"ACTIVO FCST 2150 SELL!!!")
+                                    # print(f"ACTIVO FCST 2150 SELL!!!")
                                     msg = f"{self.name} ACTIVO FCST 2150 CLOSE-SELL for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                     # results[Constants.NEW_ACTION] = Constants.ACTION_SELL
                                     self.closeAndNewAction(results, active, Constants.ACTION_SELL)
                                 elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
                                     if active.parameters.continueFlow == False:
-                                        print(f"ACTIVO FCST 1530 CLOSE-SELL!!!")
+                                        # print(f"ACTIVO FCST 1530 CLOSE-SELL!!!")
                                         msg = f"{self.name} ACTIVO FCST 2150 CLOSE-SELL for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                         self.closeAndNewAction(results, active, Constants.ACTION_SELL)
 
                                 elif Constants.ACTION_CLOSE in results[Constants.CURRENT_ACTION] or results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT:
                                     results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-                                    print(f"ACTIVO FCST 2150 SELL!!!")
+                                    # print(f"ACTIVO FCST 2150 SELL!!!")
                                     msg = f"{self.name} ACTIVO FCST 2150 SELL for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                     self.applyNewAction(results, active)
 
@@ -3137,20 +3137,20 @@ class MarketManager:
                             if results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
                                 if active.parameters.continueFlow == False:
                                     # results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                    print(f"ACTIVO FCST 1530 CLOSE-BUY!!!")
+                                    # print(f"ACTIVO FCST 1530 CLOSE-BUY!!!")
                                     msg = f"{self.name} ACTIVO FCST 1530 CLOSE-BUY for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                     self.closeAndNewAction(results, active, Constants.ACTION_BUY)
 
 
                             elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
                                 # results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                print(f"ACTIVO FCST 1530 CLOSE-BUY!!!")
+                                # print(f"ACTIVO FCST 1530 CLOSE-BUY!!!")
                                 msg = f"{self.name} ACTIVO FCST 1530 CLOSE-BUY for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                 self.closeAndNewAction(results, active, Constants.ACTION_BUY)
 
                             elif Constants.ACTION_CLOSE in results[Constants.CURRENT_ACTION]:
                                 results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                                print(f"ACTIVO FCST 1530 BUY!!!")
+                                # print(f"ACTIVO FCST 1530 BUY!!!")
                                 msg = f"{self.name} ACTIVO FCST 1530 BUY for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                 self.applyNewAction(results, active)
 
@@ -3158,19 +3158,19 @@ class MarketManager:
                             # down
                             if active.parameters.name != 'BTCUSD' and active.parameters.name != 'ETHUSD':
                                 if results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
-                                    print(f"ACTIVO FCST 1530 CLOSE-SELL!!!")
+                                    # print(f"ACTIVO FCST 1530 CLOSE-SELL!!!")
                                     msg = f"{self.name} ACTIVO FCST 1530 CLOSE-SELL for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                     self.closeAndNewAction(results, active, Constants.ACTION_SELL)
 
                                 elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
                                     if active.parameters.continueFlow == False:
-                                        print(f"ACTIVO FCST 1530 CLOSE-SELL!!!")
+                                        # print(f"ACTIVO FCST 1530 CLOSE-SELL!!!")
                                         msg = f"{self.name} ACTIVO FCST 1530 CLOSE-SELL for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                         self.closeAndNewAction(results, active, Constants.ACTION_SELL)
 
                                 elif Constants.ACTION_CLOSE in results[Constants.CURRENT_ACTION]:
                                     results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-                                    print(f"ACTIVO FCST 1530 SELL!!!")
+                                    # print(f"ACTIVO FCST 1530 SELL!!!")
                                     msg = f"{self.name} ACTIVO FCST 1530 SELL for {active.parameters.name} action: {results[Constants.IND_PROB_FLOW]}"
                                     self.applyNewAction(results, active)
 
@@ -3232,7 +3232,7 @@ class MarketManager:
 
         return res
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def calculateHourlyFlow(self, data, results, active):
         data2 = data
         if not isinstance(data2.index, pd.DatetimeIndex):
@@ -3603,7 +3603,7 @@ class MarketManager:
 
 
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def evaluateIndicators(self, data, results, active):
         ima1, ima2, ima3, ima4, ema_10, ema_20, ema_50, passiveDistance, elements_past, boolinger = self._eval_init_parameters(active)
         
@@ -4086,11 +4086,11 @@ class MarketManager:
         results[Constants.WEEK_DIR_FLOW] = Constants.WEEK_FLOW_UNDEF
         results[Constants.IND_PROB_FLOW] = Constants.DIR_WAIT
         results[Constants.RSI] = 0
-    # @mide_tiempo
+    # #@mide_tiempo
     def executeAnalisisHelper(self, results, data, active, start, end):
         self.analisisHelper.getWeekDirection(results, data, active, start, end)
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def executeAnalisisHelperMINMAXFlow(self, results, data, active):
         self.analisisHelper.getMinMaxFlow(results, data, active)
 
@@ -4161,7 +4161,7 @@ class MarketManager:
         #
         results[Constants.ACTION_TEST] = action_test
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def calculareWeekIndicator(self, results, active):
 
         end_date_time = datetime.datetime.strptime(results[Constants.DATE].values[0], "%Y-%m-%d %H:%M:%S.%f")
@@ -4538,7 +4538,7 @@ class MarketManager:
         return res
 
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def getPROBMEDSTD_NEWFlow(self, results, active):
         res = Constants.DIR_WAIT
         try:
@@ -4654,7 +4654,7 @@ class MarketManager:
 
         except Exception as error:
             print("Error calculatepercent ", error)
-    # @mide_tiempo
+    # #@mide_tiempo
     def calculateSpecialIndicators(self, results, active):
 
         message = None
@@ -4792,7 +4792,7 @@ class MarketManager:
         #
         #           )
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def calculatePredictionIndicator(self, data, results, active):
         # VALORES SOLO HOY
         todayDate = datetime.datetime.strptime(results[Constants.DATE].values[0], "%Y-%m-%d %H:%M:%S.%f")
@@ -4894,7 +4894,7 @@ class MarketManager:
         results[Constants.IND_MED_DAY] = midTpday
         results[Constants.VALUE_DIFFMED] = results[Constants.VALUE] - midTpday
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def calculatePrevRelativeValues(self, results, active):
         try:
             valores = list()
@@ -5177,7 +5177,7 @@ class MarketManager:
 
         return res
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def calculatePercentFcst(self, min, max, val):
 
         percent = 0
@@ -5906,7 +5906,7 @@ class MarketManager:
             results =self.search_prices_list_data_simulation(actives, subData)
 
         # self.sendResultsEndDay(sendResults=True)
-        self.calculateBESTDISTANCE()
+        # self.calculateBESTDISTANCE()
         eval_name = ""
         if Constants.EVAl_NAME in results:
             eval_name = results[Constants.EVAl_NAME]
@@ -6831,7 +6831,7 @@ def drawRelativeTendence():
                                        rsiData=None)
 
 
-@mide_tiempo
+#@mide_tiempo
 def simulateWeekDirection():
     useConfig = True
     isDBData = True
@@ -6870,7 +6870,7 @@ def simulateWeekDirection():
 
 
 
-@mide_tiempo
+#@mide_tiempo
 def simulateIndicatorDates():
     useConfig = True
     isDBData = True

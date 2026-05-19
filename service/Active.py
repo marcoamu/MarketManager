@@ -42,7 +42,7 @@ class Active:
 
                 print("Error defaut LINUX Active")
                 self.env = "LINUX"
-        print(f"Active env : {self.env}")
+        # print(f"Active env : {self.env}")
         if "WINDOWS" in self.env:
             self.path = './img'
         else:

@@ -37,7 +37,7 @@ def isHour(self, results):
 
     return res
 
-# @mide_tiempo
+# #@mide_tiempo
 
 
 def postcalculation(self, data, results, active):
@@ -165,7 +165,7 @@ def _eval_set_final_defaults(self, results):
     results[Constants.WEEK_DIR_FLOW] = Constants.WEEK_FLOW_UNDEF
     results[Constants.IND_PROB_FLOW] = Constants.DIR_WAIT
     results[Constants.RSI] = 0
-# @mide_tiempo
+# #@mide_tiempo
 
 
 def determinarIndicatorTendenceMomentBest(self, maNEW, ma4, results, active):

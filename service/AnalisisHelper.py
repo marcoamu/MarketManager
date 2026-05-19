@@ -841,7 +841,7 @@ class AnalisisHelper:
 
         except Exception as e:
             print(f"error evaluateActiveIndicators{str(e)}")
-    # @mide_tiempo
+    # #@mide_tiempo
     def getMinMaxFlow(self, results, data, active):
         res = ""
         try:
@@ -900,7 +900,7 @@ class AnalisisHelper:
         # self.determineMinMaxValues(results,data,active)
 
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def determineMinMaxValues(self, results, data, active):
         distance = active.parameters.MinMaxDistance + 1
         if len(data) >= distance:
@@ -960,7 +960,7 @@ class AnalisisHelper:
                 results[Constants.WEEK_DIR_BOT_DST_PREV] = prevPercent
                 # results[Constants.WEEK_DIR_BOT_DST] = evalPercent.iloc[-1]
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def determineMinMaxValuesLastXDays(self, results, data, active):
         distance = active.parameters.MinMaxDistance + 1
         month_media = 0
@@ -1015,7 +1015,7 @@ class AnalisisHelper:
         results[Constants.WEEK_DIR_BOT_DST_MED_NEW] = week_new_media
         results[Constants.WEEK_DIR_BOT_DST_MED_NEW_FLOW] = week_new_flow_value
 
-    # @mide_tiempo
+    # #@mide_tiempo
     def reevaluateFLowValue(self, results, data, active):
         flow = Constants.WEEK_FLOW_NOTINIT
         week_dir_flow = results[Constants.WEEK_DIR_FLOW]
