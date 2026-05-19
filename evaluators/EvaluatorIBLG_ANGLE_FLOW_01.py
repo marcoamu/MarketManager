@@ -3,36 +3,22 @@ from evaluators.EvaluatorBase import EvaluatorBase
 from evaluators.AperturaBase import AperturaBase
 from service.Constants import Constants
 
-
-class EvaluatorIBLG_ANGLE_FLOW_01(EvaluatorBase,AperturaBase,CierreBase):
-
-    #tiene EMA MIN DST
+class EvaluatorIBLG_ANGLE_FLOW_01(EvaluatorBase, AperturaBase, CierreBase):
 
     def __init__(self):
-        #se añade blg_mid_distance closenxt_middle
-        self.name = "EvaluatorIBLG_ANGLE_FLOW_01"
-        # self.name = "EvaluatorIBLG_MID_LONG_02"
+        self.name = 'EvaluatorIBLG_ANGLE_FLOW_01'
 
     def cambios(self):
-        nada =""
-        # 28-05-2024
-            #primera version
-
+        nada = ''
 
     def evaluate(self, results, activeParam):
         results[Constants.EVAl_NAME] = self.name
         self.updateTimeZoneValues(results)
-        # MULTIPLICADORES
-        #para cerrar cuanto antes se usa para cuando el valor es negativo mas pequeño cierra mas rapido
-        self.multiplicatorClose = activeParam.difference /2
-        #usado para abrir en tendencia inversa
-        self.multiplicadorUP= 1
+        self.multiplicatorClose = activeParam.difference / 2
+        self.multiplicadorUP = 1
         self.multiplicatorNXT = 1
-
-        #valuador para estado change por market tendence = True  o por indicator = False
         self.evaluateChangeMarketTendence = True
         self.closeAcumValue = activeParam.closeAcumvalue
-
         self.ima1minDistance = activeParam.ima1minDistance
         self.medstdminDiff = activeParam.medstdminDiff
         self.medstdmaxDiff = activeParam.medstdmaxDiff
@@ -40,150 +26,106 @@ class EvaluatorIBLG_ANGLE_FLOW_01(EvaluatorBase,AperturaBase,CierreBase):
         self.closeAcumValue = activeParam.bollingerClose
         self.closeProfit = activeParam.closeProfit
         self.blgDistPercent = activeParam.blgDistPercent
-        self.closeDifference = activeParam.difference + (activeParam.difference * 0.10)
-        self.accumulate= activeParam.accumulate
+        self.closeDifference = activeParam.difference + activeParam.difference * 0.1
+        self.accumulate = activeParam.accumulate
         self.angleUP = activeParam.angleUp
         self.angleDOWN = activeParam.angleDown
-
         self.midMinDst = 0.08
         self.emaMinDst = activeParam.emaMinDst
-
         results[Constants.EVAl_CLOSE_ACUM] = self.closeAcumValue
         results[Constants.EVAl_CLOSE_DIFF] = self.closeDifference
         results[Constants.EVAl_ACUM] = self.accumulate
-
-        #SOLO EN LOS INTERVALOS definidos
         currentTime = self.gettime(results)
         intime = False
         if currentTime >= int(self.iniStart) and currentTime < int(self.iniEnd):
             intime = True
         if currentTime >= int(self.closeStart) and currentTime < int(self.closeEnd):
             intime = True
-
         intime = True
-        #print(f'EVALUATOR  {self.name}   ACTIVO: {activeParam.name}')
-        if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
-            Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
+        if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             if intime:
                 self.evaluarApertura(results, activeParam)
             else:
-                print(f"FUERA DE HORARIO")
+                pass
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_BUY:
-            # self.evaluarFlujoBUY(results, activeParam)
             self.evaluarFlujoBUY_LONG(results, activeParam)
         elif results[Constants.CURRENT_ACTION] == Constants.ACTION_SELL:
-            # self.evaluarFlujoSELL(results, activeParam)
             self.evaluarFlujoSELL_LONG(results, activeParam)
 
     def evaluarApertura(self, results, activeParam):
-        #
-        # valores
         flujo_count = results[Constants.FLUJO_COUNT]
-        if "UP" in results[Constants.ANGLE_FLOW]:
+        if 'UP' in results[Constants.ANGLE_FLOW]:
             self.evaluarAperturaUP(results, activeParam, flujo_count)
-        elif "DOWN" in results[Constants.ANGLE_FLOW]:
+        elif 'DOWN' in results[Constants.ANGLE_FLOW]:
             self.evaluarAperturaDOWN(results, activeParam, flujo_count)
         else:
-            nada=""
+            nada = ''
             self.evaluarAperturaCHANGE(results, activeParam, flujo_count)
-
-
 
     def evaluarAperturaCHANGE(self, results, activeParam, flujo_count):
         difference_optimized = activeParam.difference
         unit_diff = 0
-        self.printDifference("evaluarAperturaCHANGE", difference_optimized, self.closeAcumValue, self.closeDifference)
-
-        if results[Constants.ANGLE]>0:
-            self.evaluarAperturaUP(results,activeParam,flujo_count)
+        self.printDifference('evaluarAperturaCHANGE', difference_optimized, self.closeAcumValue, self.closeDifference)
+        if results[Constants.ANGLE] > 0:
+            self.evaluarAperturaUP(results, activeParam, flujo_count)
         else:
             self.evaluarAperturaDOWN(results, activeParam, flujo_count)
 
     def evaluarAperturaDOWN(self, results, activeParam, flujo_count):
         difference_optimized = activeParam.difference
         unit_diff = 0
-
-        self.printDifference("evaluarAperturaDOWN", difference_optimized, self.closeAcumValue, self.closeDifference)
-
+        self.printDifference('evaluarAperturaDOWN', difference_optimized, self.closeAcumValue, self.closeDifference)
         if results[Constants.CLOSE_NXT_DOWN] == 1:
             if results[Constants.FLUJO] == Constants.FLUJO_BAJA:
-                if (results[Constants.ACUMULADO_ABS] >= (difference_optimized) or
-                        results[Constants.ACTION_MAX_DIST] >= (
-                                difference_optimized)):
+                if results[Constants.ACUMULADO_ABS] >= difference_optimized or results[Constants.ACTION_MAX_DIST] >= difference_optimized:
                     results[Constants.CLOSE_NXT_DOWN] = 0
-                    # results[Constants.CLOSE_NXT_UP] = 0
-
         if results[Constants.CLOSE_NXT_UP] == 1:
             if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
-                # results[Constants.CLOSE_NXT_UP] = 0
                 if self.evalNXT_UP_02(results, activeParam, difference_optimized):
                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                    name = "DOWN_BLG_NXTUP_BUY01"
+                    name = 'DOWN_BLG_NXTUP_BUY01'
                     self.printInicioLog(name, results, activeParam)
                     return
-
-
-        if self.evaluateDownOpen_01(results,activeParam):
+        if self.evaluateDownOpen_01(results, activeParam):
             results[Constants.NEW_ACTION] = Constants.ACTION_SELL
-            self.printInicioLog("SELL_DOWN_01", results, activeParam)
+            self.printInicioLog('SELL_DOWN_01', results, activeParam)
             return
-
-
-
-
-
 
     def evaluarAperturaUP(self, results, activeParam, flujo_count):
         difference_optimized = activeParam.difference
         unit_diff = 0
-
-        self.printDifference("evaluarAperturaUP", difference_optimized, self.closeAcumValue, self.closeDifference)
-
+        self.printDifference('evaluarAperturaUP', difference_optimized, self.closeAcumValue, self.closeDifference)
         if results[Constants.CLOSE_NXT_UP] == 1:
             if results[Constants.FLUJO] == Constants.FLUJO_SUBE:
                 if self.evalNXT_UP_01(results, activeParam, difference_optimized):
                     results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-                    name = "UP_BLG_NXTUP_BUY01"
+                    name = 'UP_BLG_NXTUP_BUY01'
                     self.printInicioLog(name, results, activeParam)
                     return
-
         if results[Constants.CLOSE_NXT_DOWN] == 1:
             if results[Constants.FLUJO] == Constants.FLUJO_BAJA:
-                if (results[Constants.ACUMULADO_ABS] >= (difference_optimized) or
-                        results[Constants.ACTION_MAX_DIST] >= (
-                                difference_optimized)):
+                if results[Constants.ACUMULADO_ABS] >= difference_optimized or results[Constants.ACTION_MAX_DIST] >= difference_optimized:
                     results[Constants.CLOSE_NXT_DOWN] = 0
-
-        res, option = self.evaluateUpOpen_02(results,activeParam)
-        if res :
+        res, option = self.evaluateUpOpen_02(results, activeParam)
+        if res:
             results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-            self.printInicioLog(f"BUY_UP_BUY0{option}", results, activeParam)
+            self.printInicioLog(f'BUY_UP_BUY0{option}', results, activeParam)
             return
-
         if self.evaluateForteUpOpen_01(results, activeParam):
             results[Constants.NEW_ACTION] = Constants.ACTION_BUY
-            self.printInicioLog("BUY_UP_FORTE_BUY01", results, activeParam)
+            self.printInicioLog('BUY_UP_FORTE_BUY01', results, activeParam)
             return
-
-
-
 
     def evaluarFlujoBUY_LONG(self, results, activeParam):
         difference_optimized = activeParam.difference
         unit_diff = 0
         flujo_count = results[Constants.FLUJO_COUNT]
-
-        self.printDifference("evaluarFlujoBUY_LONG", difference_optimized, self.closeAcumValue, self.closeDifference, self.accumulate)
-        self.control_BUY_BLG_MID_04(results, activeParam, self.closeAcumValue, self.closeDifference,self.accumulate)
-
-
+        self.printDifference('evaluarFlujoBUY_LONG', difference_optimized, self.closeAcumValue, self.closeDifference, self.accumulate)
+        self.control_BUY_BLG_MID_04(results, activeParam, self.closeAcumValue, self.closeDifference, self.accumulate)
 
     def evaluarFlujoSELL_LONG(self, results, activeParam):
         difference_optimized = activeParam.difference
         unit_diff = 0
-        # valores
         flujo_count = results[Constants.FLUJO_COUNT]
-
-        self.printDifference("evaluarFlujoSELL_LONG", difference_optimized, self.closeAcumValue, self.closeDifference, self.accumulate)
+        self.printDifference('evaluarFlujoSELL_LONG', difference_optimized, self.closeAcumValue, self.closeDifference, self.accumulate)
         self.control_SELL_BLG_MID_02(results, activeParam, self.closeAcumValue, self.closeDifference, self.accumulate)
-

@@ -5,13 +5,10 @@ import json
 import yaml
 from pathlib import Path
 from typing import Dict, Any, Optional, Type
-
 from .base.evaluator_base import EvaluatorBase
-
 
 class EvaluatorFactory:
     """Factory for creating evaluators from configuration files."""
-
     _strategies: Dict[str, Type[EvaluatorBase]] = {}
     _registry: Dict[str, Any] = {}
 
@@ -24,7 +21,7 @@ class EvaluatorFactory:
             strategy_class: Class inheriting from EvaluatorBase
         """
         if not issubclass(strategy_class, EvaluatorBase):
-            raise ValueError(f"Strategy {name} must inherit from EvaluatorBase")
+            raise ValueError(f'Strategy {name} must inherit from EvaluatorBase')
         cls._strategies[name] = strategy_class
 
     @classmethod
@@ -47,11 +44,8 @@ class EvaluatorFactory:
         """
         config = cls._load_config(config_path)
         base_strategy = config.get('base_strategy')
-
         if base_strategy not in cls._strategies:
-            raise ValueError(f"Strategy '{base_strategy}' not registered. "
-                           f"Available: {list(cls._strategies.keys())}")
-
+            raise ValueError(f"Strategy '{base_strategy}' not registered. Available: {list(cls._strategies.keys())}")
         strategy_class = cls._strategies[base_strategy]
         return strategy_class(config)
 
@@ -66,11 +60,8 @@ class EvaluatorFactory:
             Configured EvaluatorBase instance
         """
         base_strategy = config.get('base_strategy')
-
         if base_strategy not in cls._strategies:
-            raise ValueError(f"Strategy '{base_strategy}' not registered. "
-                           f"Available: {list(cls._strategies.keys())}")
-
+            raise ValueError(f"Strategy '{base_strategy}' not registered. Available: {list(cls._strategies.keys())}")
         strategy_class = cls._strategies[base_strategy]
         return strategy_class(config)
 
@@ -78,18 +69,15 @@ class EvaluatorFactory:
     def _load_config(cls, path: str) -> Dict[str, Any]:
         """Load configuration from file."""
         path = Path(path)
-
         if not path.exists():
-            raise FileNotFoundError(f"Config file not found: {path}")
-
+            raise FileNotFoundError(f'Config file not found: {path}')
         content = path.read_text()
-
         if path.suffix in ['.yaml', '.yml']:
             return yaml.safe_load(content)
         elif path.suffix == '.json':
             return json.loads(content)
         else:
-            raise ValueError(f"Unsupported config format: {path.suffix}")
+            raise ValueError(f'Unsupported config format: {path.suffix}')
 
     @classmethod
     def list_strategies(cls) -> list:
@@ -101,7 +89,6 @@ class EvaluatorFactory:
         """Get strategy class by name."""
         return cls._strategies.get(name)
 
-
 def register_evaluator(name: str):
     """Decorator to register an evaluator class.
 
@@ -110,6 +97,7 @@ def register_evaluator(name: str):
         class BollingerStrategy(EvaluatorBase):
             ...
     """
+
     def decorator(cls: Type[EvaluatorBase]):
         EvaluatorFactory.register(name, cls)
         return cls
