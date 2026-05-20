@@ -21,7 +21,7 @@ class ParamTSLA02(Parameters):
         self.ima3 = 12
         self.ima4 = 1
         self.weekend = False
-        self.operate = True
+        self.operate = False
         self.reevaluateAction = False
         self.hourOffset = 0
         self.minimunCloseAmount = 5

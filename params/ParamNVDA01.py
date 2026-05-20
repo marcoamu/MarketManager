@@ -64,7 +64,7 @@ class ParamNVDA01(Parameters):
         self.blgDistPercent = 10
         self.weekMEDMinLevel = 2
         self.minAngleIma1 = 20
-        self.ignoreProb = False
+        self.ignoreProb = True
         self.minAngleFlow = 20  # grados para indicar que el angulo esta cambiando y evaluar otro indicador
         self.minAngleFlowCounter = 3  # numero de secuencias seguidas de flujo
         self.maxAngleUp = 60  # si supera este angulo es que esta en esa direccion con seguridad

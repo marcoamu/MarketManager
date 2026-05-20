@@ -675,8 +675,8 @@ class ActiveHelper:
                 # actives.append(mcd)
         # #
         #         # ------------OK-----------------
-        #         actives.append(dis)
-                actives.append(nvda)
+                actives.append(dis)
+        #         actives.append(nvda)
         #         actives.append(tsla)
         #         actives.append(gld)
                 # ------------WAIT-----------------
@@ -1271,7 +1271,8 @@ class ActiveHelper:
         # evaluator = EvaluatorIBLG_START_CLOSE_03_01()
         # evaluator = EvaluatorIMA1_ANGLE_02()
         # evaluator = EvaluatorEMA_LONG_03_06_01()
-        evaluator = EvaluatorEMA_LONG_02_02()
+        # evaluator = EvaluatorEMA_LONG_02_02()
+        evaluator = EvaluatorBOLLINGER_03()
         # evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_05()
         # evaluator = EvaluatorIBLG_PROB_FLOW_02()
         # evaluator = EvaluatorBOLLINGER_08()
@@ -1975,18 +1976,9 @@ class ActiveHelper:
         param.name = "INTC"
         param.second_name = "INTC"
 
-        # evaluator = EvaluatorIMA1_ANGLE_02()
-        # evaluator = EvaluatorBOLLINGER_05_IMP_01()
-        # evaluator = EvaluatorEMA_LONG_03_01()
-        # evaluator = EvaluatorEMA_LONG_03()
-        # evaluator = EvaluatorRSI_01()
-        # evaluator = EvaluatorIMA1Optimiz_MEDDIFF_01()
+
         evaluator = EvaluatorMEDSTD_WEEK_Optimiz01()
-        # evaluator = EvaluatorEMA_IA_LONG_02()
-        # evaluator = EvaluatorIBLG_WEEK_FLOW_03()
-        # evaluator = EvaluatorIBLG_START_CLOSE_02()
-        # evaluator = EvaluatorIBLG_PROB_FLOW_02()
-        # evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_03()
+
 
         element = Active(param, evaluator)
 
@@ -2393,21 +2385,9 @@ class ActiveHelper:
 
         # evaluator = EvaluatorIBLG_START_CLOSE_03()
         # evaluator = EvaluatorEMA_LONG_02()
-        evaluator = EvaluatorEMA_LONG_02_01()
-        # evaluator = EvaluatorRSI_01()
-        # evaluator = EvaluatorEMA_LONG_03_01()
-        # evaluator = EvaluatorEMA_LONG_03_06()
-        # evaluator = EvaluatorEMA_LONG_03_06_02()
-        # evaluator = EvaluatorIBLG_START_CLOSE_03_01()
-        # evaluator = EvaluatorIBLG_LONG_08()
-        # evaluator = EvaluatorIMA1_ANGLE_02()
-        # evaluator = EvaluatorIMA1_ANGLE_02()
-        # evaluator = EvaluatorIBLG_WEEK_FLOW_03()
-        # evaluator = EvaluatorIBLG_ANGLE_FLOW_LONG_03()
+        # evaluator = EvaluatorEMA_LONG_02_01()
+        evaluator = EvaluatorPROBMEDSTD_MEDDIFF_BLG_01()
 
-        # evaluator = EvaluatorIBLG_START_CLOSE_02()
-        # evaluator = EvaluatorIBLG_WEEK_FLOW_03()
-        # evaluator = EvaluatorIBLG_PROB_FLOW_02()
 
 
 
