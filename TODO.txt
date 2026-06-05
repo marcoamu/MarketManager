@@ -1,0 +1,5 @@
+Circuit breaker: pendiente de implementar. Valor sugerido 100 USD. MarketManager no lo invoca automaticamente.
+
+---
+Actualizado: 2026-05-19
+Estado: PENDIENTE

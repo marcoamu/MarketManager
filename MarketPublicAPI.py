@@ -17,6 +17,7 @@ Swagger UI disponible en: http://localhost:8765/docs
 """
 
 import datetime
+import sqlite3
 import uvicorn
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -532,7 +533,17 @@ def get_activity_today():
                 symbols.add(o.symbol)
         
         if not symbols:
-            return {"date": date, "assets": [], "total_pnl": 0, "count": 0}
+            # Still include symbols with open positions even if no new trades today
+            try:
+                positions = _alpaca.api.get_all_positions()
+                for p in positions:
+                    qty = abs(float(p.qty))
+                    if qty > 0:
+                        symbols.add(p.symbol)
+            except:
+                pass
+            if not symbols:
+                return {"date": date, "assets": [], "total_pnl": 0, "count": 0}
         
         results = []
         total_pnl = 0
@@ -551,6 +562,25 @@ def get_activity_today():
                 "open_positions": activity["open_positions"],
             })
             total_pnl += activity["total_pnl"]
+        
+        # Add unrealized PnL from currently open positions (floating P&L)
+        try:
+            positions = _alpaca.api.get_all_positions()
+            unrealized_total = 0
+            for p in positions:
+                qty = abs(float(p.qty))
+                if qty > 0:
+                    entry = float(p.avg_entry_price)
+                    current = float(p.current_price)
+                    unrealized = (current - entry) * qty if float(p.qty) > 0 else (entry - current) * qty
+                    unrealized_total += unrealized
+                    for r in results:
+                        if r["symbol"] == p.symbol:
+                            r["pnl"] = round((r["pnl"] or 0) + unrealized, 2)
+                            break
+            total_pnl += unrealized_total
+        except:
+            pass
         
         results.sort(key=lambda x: x["pnl"], reverse=True)
         
@@ -603,38 +633,117 @@ def get_activity_range(
         end = datetime.datetime.fromisoformat(date_to)
         end = datetime.datetime.combine(end.date(), datetime.datetime.max.time())
         
+        # Limit range to 30 days to avoid saturating Alpaca API
+        days_diff = (end.date() - start.date()).days
+        if days_diff > 30:
+            return {
+                "error": f"Rango máximo de 30 días permitido. Rango solicitado: {days_diff} días.",
+                "date_from": date_from,
+                "date_to": date_to,
+                "assets": [],
+            }
+        
         request = GetOrdersRequest(status="all", after=start.isoformat(), until=end.isoformat(), limit=1000)
         orders = _alpaca.api.get_orders(request)
         
-        symbols = set(o.symbol for o in orders if o.filled_at and float(o.filled_qty) > 0)
+        # Group orders by symbol (single API call, no per-symbol calls)
+        from collections import defaultdict
+        symbol_orders = defaultdict(list)
+        for o in orders:
+            if o.filled_at and float(o.filled_qty) > 0:
+                symbol_orders[o.symbol].append(o)
         
         results = []
-        for symbol in sorted(symbols):
-            activity = _alpaca.get_asset_activity(symbol.upper(), date_from)
+        for symbol in sorted(symbol_orders.keys()):
+            orders_list = symbol_orders[symbol]
             
-            # Aggregate over days
-            daily_pnl = {}
-            for t in activity["trades"]:
-                if t["filled_at"]:
-                    d = t["filled_at"][:10]
-                    if d not in daily_pnl:
-                        daily_pnl[d] = 0
-                    daily_pnl[d] += t["pnl"]
+            long_stack = []
+            short_stack = []
+            daily_pnl = defaultdict(float)
+            total_opens = 0
+            total_closes = 0
+            
+            def get_filled_at(o):
+                return o.filled_at if o.filled_at else datetime.datetime.min.time()
+            
+            orders_list.sort(key=get_filled_at)
+            
+            for o in orders_list:
+                qty = abs(float(o.filled_qty))
+                price = float(o.filled_avg_price)
+                side = o.side.value
+                filled_at = o.filled_at.isoformat() if o.filled_at else ""
+                day = filled_at[:10]
+                
+                trade_pnl = 0.0
+                
+                if side == "buy":
+                    temp_qty = qty
+                    while temp_qty > 0 and short_stack:
+                        entry_price, entry_qty = short_stack[0]
+                        if entry_qty <= temp_qty:
+                            cover_qty = entry_qty
+                            pnl = (entry_price - price) * cover_qty
+                            trade_pnl += pnl
+                            daily_pnl[day] += pnl
+                            total_closes += 1
+                            temp_qty -= entry_qty
+                            short_stack.pop(0)
+                        else:
+                            cover_qty = temp_qty
+                            pnl = (entry_price - price) * cover_qty
+                            trade_pnl += pnl
+                            daily_pnl[day] += pnl
+                            total_closes += 1
+                            short_stack[0] = (entry_price, entry_qty - temp_qty)
+                            temp_qty = 0
+                    if temp_qty > 0:
+                        long_stack.append((price, temp_qty))
+                        total_opens += 1
+                        
+                elif side == "sell":
+                    temp_qty = qty
+                    while temp_qty > 0 and long_stack:
+                        entry_price, entry_qty = long_stack[0]
+                        if entry_qty <= temp_qty:
+                            cover_qty = entry_qty
+                            pnl = (price - entry_price) * cover_qty
+                            trade_pnl += pnl
+                            daily_pnl[day] += pnl
+                            total_closes += 1
+                            temp_qty -= entry_qty
+                            long_stack.pop(0)
+                        else:
+                            cover_qty = temp_qty
+                            pnl = (price - entry_price) * cover_qty
+                            trade_pnl += pnl
+                            daily_pnl[day] += pnl
+                            total_closes += 1
+                            long_stack[0] = (entry_price, entry_qty - temp_qty)
+                            temp_qty = 0
+                    if temp_qty > 0:
+                        short_stack.append((price, temp_qty))
+                        total_opens += 1
+            
+            total_pnl = sum(daily_pnl.values())
             
             results.append({
                 "symbol": symbol,
-                "total_pnl": round(activity["total_pnl"], 2),
-                "total_opens": activity["total_opens"],
-                "total_closes": activity["total_closes"],
-                "daily_pnl": daily_pnl,
+                "total_pnl": round(total_pnl, 2),
+                "total_opens": total_opens,
+                "total_closes": total_closes,
+                "daily_pnl": dict(daily_pnl),
             })
         
         results.sort(key=lambda x: x["total_pnl"], reverse=True)
+        
+        total_pnl = sum(r["total_pnl"] or 0 for r in results)
         
         return {
             "date_from": date_from,
             "date_to": date_to,
             "assets": results,
+            "total_pnl": round(total_pnl, 2),
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -693,3 +802,537 @@ if __name__ == "__main__":
         reload=False,
         log_level="info",
     )
+
+
+# ═══════════════════════════════════════════════════════════════
+# PERFORMANCE DB — Métricas desde la BD local (sin Alpaca)
+# ═══════════════════════════════════════════════════════════════
+
+@app.get(
+    "/db/performance/summary",
+    summary="Resumen P&L global por período",
+    description="PnL total realizado, operaciones y mejores/peores activos para hoy, 7, 14, 30 días y mes actual.",
+    tags=["Performance DB"],
+)
+def get_db_performance_summary():
+    """Resumen global de rendimiento calculado desde la BD local."""
+    try:
+        db_path = "/home/MarketManager/market.db"
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+
+        today = datetime.date.today()
+        periods = {
+            "today":    (today, today),
+            "1d":      (today - datetime.timedelta(days=1), today),
+            "2d":      (today - datetime.timedelta(days=2), today),
+            "3d":      (today - datetime.timedelta(days=3), today),
+            "7d":      (today - datetime.timedelta(days=7), today),
+            "14d":     (today - datetime.timedelta(days=14), today),
+            "30d":     (today - datetime.timedelta(days=30), today),
+        }
+
+        month_start = datetime.date(today.year, today.month, 1)
+        periods["month"] = (month_start, today)
+
+        close_actions = ("'CLOSE'", "'CLOSE-BUY'", "'CLOSE-SELL'")
+
+        results = {}
+        for label, (date_from, date_to) in periods.items():
+            cur.execute(f"""
+                SELECT
+                    COALESCE(SUM(REVENUE), 0) as total_pnl,
+                    COUNT(*) as total_ops,
+                    COUNT(DISTINCT NAME) as total_assets
+                FROM MARKET
+                WHERE ACTION IN ({','.join(close_actions)})
+                AND DATE(DATEVALUE) >= '{date_from}'
+                AND DATE(DATEVALUE) <= '{date_to}'
+            """)
+            row = cur.fetchone()
+            results[label] = {
+                "total_pnl": round(row[0] or 0, 2),
+                "total_ops": row[1] or 0,
+                "total_assets": row[2] or 0,
+            }
+
+        conn.close()
+        return results
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/performance/assets",
+    summary="PnL por activo y período",
+    description="PnL por cada activo para períodos selectedos: 1d, 7d, 30d, mes actual.",
+    tags=["Performance DB"],
+)
+def get_db_performance_assets(period: str = Query("30d", description="1d|7d|14d|30d|month")):
+    """PnL por activo para un período específico."""
+    try:
+        db_path = "/home/MarketManager/market.db"
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+
+        today = datetime.date.today()
+        if period == "today":
+            date_from = today
+        elif period == "1d":
+            date_from = today - datetime.timedelta(days=1)
+        elif period == "2d":
+            date_from = today - datetime.timedelta(days=2)
+        elif period == "3d":
+            date_from = today - datetime.timedelta(days=3)
+        elif period == "7d":
+            date_from = today - datetime.timedelta(days=7)
+        elif period == "14d":
+            date_from = today - datetime.timedelta(days=14)
+        elif period == "month":
+            date_from = datetime.date(today.year, today.month, 1)
+        else:
+            date_from = today - datetime.timedelta(days=30)
+
+        close_actions = ("'CLOSE'", "'CLOSE-BUY'", "'CLOSE-SELL'")
+
+        cur.execute(f"""
+            SELECT
+                NAME as symbol,
+                COALESCE(SUM(REVENUE), 0) as total_pnl,
+                COUNT(*) as total_ops,
+                MIN(DATEVALUE) as first_seen,
+                MAX(DATEVALUE) as last_seen
+            FROM MARKET
+            WHERE ACTION IN ({','.join(close_actions)})
+            AND DATE(DATEVALUE) >= '{date_from}'
+            AND DATE(DATEVALUE) <= '{today}'
+            GROUP BY NAME
+            ORDER BY total_pnl DESC
+        """)
+        rows = cur.fetchall()
+        conn.close()
+
+        assets = [{
+            "symbol": r[0],
+            "total_pnl": round(r[1] or 0, 2),
+            "total_ops": r[2] or 0,
+        } for r in rows]
+
+        return {
+            "period": period,
+            "date_from": str(date_from),
+            "date_to": str(today),
+            "total_pnl": round(sum(a["total_pnl"] for a in assets), 2),
+            "assets": assets,
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/performance/calendar/{symbol}",
+    summary="Calendario PnL por activo (heatmap)",
+    description="PnL diario de un activo para un mes concreto. Sirve para el heatmap del calendario.",
+    tags=["Performance DB"],
+)
+def get_db_performance_calendar(
+    symbol: str,
+    year: int = Query(None, description="Año YYYY (default: año actual)"),
+    month: int = Query(None, description="Mes 1-12 (default: mes actual)"),
+):
+    """Calendario de PnL diario para un activo y mes dados."""
+    try:
+        db_path = "/home/MarketManager/market.db"
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+
+        today = datetime.date.today()
+        if year is None:
+            year = today.year
+        if month is None:
+            month = today.month
+
+        date_from = datetime.date(year, month, 1)
+        if month == 12:
+            date_to = datetime.date(year + 1, 1, 1) - datetime.timedelta(days=1)
+        else:
+            date_to = datetime.date(year, month + 1, 1) - datetime.timedelta(days=1)
+
+        close_actions = ("'CLOSE'", "'CLOSE-BUY'", "'CLOSE-SELL'")
+
+        cur.execute(f"""
+            SELECT
+                DATE(DATEVALUE) as day,
+                COALESCE(SUM(REVENUE), 0) as pnl,
+                COUNT(*) as ops
+            FROM MARKET
+            WHERE NAME = ?
+            AND ACTION IN ({','.join(close_actions)})
+            AND DATE(DATEVALUE) >= '{date_from}'
+            AND DATE(DATEVALUE) <= '{date_to}'
+            GROUP BY DATE(DATEVALUE)
+            ORDER BY day
+        """, (symbol.upper(),))
+        rows = cur.fetchall()
+        conn.close()
+
+        days = []
+        for r in rows:
+            days.append({
+                "date": r[0],
+                "pnl": round(r[1], 2),
+                "ops": r[2],
+                "status": "positive" if r[1] > 0 else ("negative" if r[1] < 0 else "neutral"),
+            })
+
+        return {
+            "symbol": symbol.upper(),
+            "year": year,
+            "month": month,
+            "days": days,
+            "month_pnl": round(sum(d["pnl"] for d in days), 2),
+            "positive_days": sum(1 for d in days if d["pnl"] > 0),
+            "negative_days": sum(1 for d in days if d["pnl"] < 0),
+            "neutral_days": sum(1 for d in days if d["pnl"] == 0),
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/performance/intraday/{symbol}",
+    summary="PnL intradiario por activo para hoy",
+    description="PnL por cada operación de hoy para un activo, mostrando precio, hora y PnL individual.",
+    tags=["Performance DB"],
+)
+def get_db_performance_intraday(symbol: str):
+    """Detalle intradiario de operaciones para hoy."""
+    try:
+        db_path = "/home/MarketManager/market.db"
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+
+        today = datetime.date.today()
+
+        close_actions = ("'CLOSE'", "'CLOSE-BUY'", "'CLOSE-SELL'")
+
+        cur.execute(f"""
+            SELECT
+                DATEVALUE,
+                VALUE,
+                REVENUE,
+                PROFIT,
+                ACTION,
+                QTY,
+                DIRECTION
+            FROM MARKET
+            WHERE NAME = ?
+            AND DATE(DATEVALUE) = '{today}'
+            ORDER BY DATEVALUE
+        """, (symbol.upper(),))
+        rows = cur.fetchall()
+        conn.close()
+
+        trades = [{
+            "datetime": r[0],
+            "price": round(r[1], 4),
+            "revenue": round(r[2], 4),
+            "profit": round(r[3], 4),
+            "action": r[4],
+            "qty": r[5],
+            "direction": r[6],
+        } for r in rows]
+
+        return {
+            "symbol": symbol.upper(),
+            "date": str(today),
+            "trades": trades,
+            "total_pnl": round(sum(t["revenue"] for t in trades if t["action"] in ("CLOSE", "CLOSE-BUY", "CLOSE-SELL")), 2),
+            "total_ops": len(trades),
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/performance/monthly",
+    summary="PnL mensual histórico",
+    description="PnL total por cada mes para todos los activos combinados.",
+    tags=["Performance DB"],
+)
+def get_db_performance_monthly():
+    """PnL mensual acumulado de todos los activos."""
+    try:
+        db_path = "/home/MarketManager/market.db"
+        conn = sqlite3.connect(db_path)
+        cur = conn.cursor()
+
+        close_actions = ("'CLOSE'", "'CLOSE-BUY'", "'CLOSE-SELL'")
+
+        cur.execute(f"""
+            SELECT
+                strftime('%Y', DATEVALUE) as year,
+                strftime('%m', DATEVALUE) as month,
+                COALESCE(SUM(REVENUE), 0) as total_pnl,
+                COUNT(*) as total_ops,
+                COUNT(DISTINCT NAME) as total_assets
+            FROM MARKET
+            WHERE ACTION IN ({','.join(close_actions)})
+            GROUP BY year, month
+            ORDER BY year DESC, month DESC
+        """)
+        rows = cur.fetchall()
+        conn.close()
+
+        months = []
+        for r in rows:
+            months.append({
+                "year": int(r[0]),
+                "month": int(r[1]),
+                "month_name": datetime.date(int(r[0]), int(r[1]), 1).strftime("%B"),
+                "total_pnl": round(r[2], 2),
+                "total_ops": r[3] or 0,
+                "total_assets": r[4] or 0,
+            })
+
+        # Compute cumulative
+        cumulative = 0.0
+        for m in months:
+            cumulative += m["total_pnl"]
+            m["cumulative_pnl"] = round(cumulative, 2)
+
+        months.reverse()
+
+        return {"months": months}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ═══════════════════════════════════════════════════════════════
+# ANALYTICS — Detailed asset analysis, evaluator insights, signals
+# ═══════════════════════════════════════════════════════════════
+
+@app.get(
+    "/db/analytics/asset/{symbol}",
+    summary="Análisis completo de activo",
+    description="Todos los detalles de un activo: evaluadores usados, señales, histórico diario.",
+    tags=["Analytics"],
+)
+def get_analytics_asset(symbol: str):
+    """Análisis completo de un activo."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from analize_db import (
+            get_asset_evaluator_detail, get_asset_signal_history,
+            get_asset_daily_detail, get_asset_current_signals
+        )
+        symbol = symbol.upper()
+        return {
+            "symbol": symbol,
+            "current_signals": get_asset_current_signals(symbol),
+            "evaluators": get_asset_evaluator_detail(symbol),
+            "daily_detail": get_asset_daily_detail(symbol),
+            "recent_signals": get_asset_signal_history(symbol),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/analytics/evaluators",
+    summary="Ranking de evaluadores",
+    description="Ranking global de todos los evaluadores por PnL total, ops, assets y PnL promedio.",
+    tags=["Analytics"],
+)
+def get_analytics_evaluators():
+    """Ranking de evaluadores ordenado por performance."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from analize_db import get_global_evaluator_ranking
+        return {"evaluators": get_global_evaluator_ranking()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/analytics/worst",
+    summary="Activos en pérdida",
+    description="Todos los activos que están en rojo, agrupados por evaluador causante.",
+    tags=["Analytics"],
+)
+def get_analytics_worst():
+    """Assets en pérdida con detalle del evaluador asociado."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from analize_db import get_worst_assets_by_evaluator
+        return {"loss_assets": get_worst_assets_by_evaluator()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/analytics/portfolio",
+    summary="Resumen de todos los activos",
+    description="PnL mensual y total de todos los activos, mejor evaluador, número de evaluadores usados.",
+    tags=["Analytics"],
+)
+def get_analytics_portfolio():
+    """Portfolio completo con métricas clave por activo."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from analize_db import get_assets_with_pnl_summary
+        assets = get_assets_with_pnl_summary()
+        total_month = sum(a['month_pnl'] for a in assets)
+        total_all = sum(a['total_pnl'] for a in assets)
+        return {
+            "assets": assets,
+            "total_month_pnl": round(total_month, 2),
+            "total_all_pnl": round(total_all, 2),
+            "positive_month": sum(1 for a in assets if a['month_pnl'] > 0),
+            "negative_month": sum(1 for a in assets if a['month_pnl'] < 0),
+            "positive_all": sum(1 for a in assets if a['total_pnl'] > 0),
+            "negative_all": sum(1 for a in assets if a['total_pnl'] < 0),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/analytics/asset/{symbol}/signals",
+    summary="Señales actuales de activo",
+    description="Último estado de todas las señales (tendencia, ángulo, momentum, forecast) de un activo.",
+    tags=["Analytics"],
+)
+def get_analytics_asset_signals(symbol: str):
+    """Señales actuales de un activo para diagnosis."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from analize_db import get_asset_current_signals
+        sigs = get_asset_current_signals(symbol.upper())
+        return {"symbol": symbol.upper(), "signals": sigs}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ═══════════════════════════════════════════════════════════════
+# DOCUMENTATION — Evaluators, Indicators, Assets, System Docs
+# ═══════════════════════════════════════════════════════════════
+
+@app.get(
+    "/db/docs/evaluators",
+    summary="Documentación de evaluadores",
+    description="Documentación completa de todos los evaluadores con stats, grades y detalle por activo.",
+    tags=["Documentation"],
+)
+def get_docs_evaluators():
+    """Documentación de todos los evaluadores usados en la BD."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from docs_generator import get_evaluator_docs
+        return {"evaluators": get_evaluator_docs()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/docs/indicators",
+    summary="Documentación de indicadores",
+    description="Definiciones, valores posibles y significado de cada indicador del sistema.",
+    tags=["Documentation"],
+)
+def get_docs_indicators():
+    """Documentación completa de indicadores."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from docs_generator import get_indicator_stats, INDICATOR_DEFINITIONS
+        stats = get_indicator_stats()
+        return {
+            "definitions": INDICATOR_DEFINITIONS,
+            "usage_stats": stats,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/docs/assets",
+    summary="Documentación de activos",
+    description="Todos los activos con stats, rango de precios y mejor evaluador.",
+    tags=["Documentation"],
+)
+def get_docs_assets():
+    """Documentación de todos los activos."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from docs_generator import get_assets_docs
+        return {"assets": get_assets_docs()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get(
+    "/db/docs/system",
+    summary="Documentación del sistema",
+    description="Arquitectura, tablas, endpoints y configuración del sistema MarketManager.",
+    tags=["Documentation"],
+)
+def get_docs_system():
+    """Documentación general del sistema."""
+    try:
+        import sys
+        sys.path.insert(0, '/home/MarketManager')
+        from docs_generator import get_active_params_docs
+        params = get_active_params_docs()
+        return {
+            "project": "MarketManager",
+            "version": "1.0.0",
+            "database": "/home/MarketManager/market.db",
+            "total_tables": 7,
+            "tables": {
+                "MARKET": "Datos de mercado — 97k+ filas con señales, acciones, evaluadores, PnL",
+                "MARKET_DATA": "Datos OHLCV diarios por activo (vacío en prod)",
+                "CONTROL": "Valores de control por activo — umbrales SUBE/BAJA",
+                "CONTROLTIME": "Control de timing — intervalos y predictores",
+                "CONTROLMINMAX": "Precios históricos min/max por activo",
+                "indicator_snapshots": "Snapshots de indicadores (vacío en prod)",
+                "sqlite_sequence": "Metadatos internos de SQLite",
+            },
+            "active_params": params,
+            "endpoints": {
+                "performance": {
+                    "/db/performance/summary": "PnL por período: hoy, 1d, 2d, 3d, 7d, 14d, 30d, mes",
+                    "/db/performance/assets": "PnL por activo y período seleccionado",
+                    "/db/performance/calendar/{symbol}": "Calendario PnL diario por activo y mes",
+                    "/db/performance/intraday/{symbol}": "Detalle de operaciones intradiarias",
+                    "/db/performance/monthly": "PnL mensual histórico acumulado",
+                },
+                "analytics": {
+                    "/db/analytics/asset/{symbol}": "Análisis completo: evaluadores, señales, diario",
+                    "/db/analytics/evaluators": "Ranking de evaluadores con stats",
+                    "/db/analytics/worst": "Activos en pérdida por evaluador",
+                    "/db/analytics/portfolio": "Resumen portfolio: PnL mes/total por activo",
+                    "/db/analytics/asset/{symbol}/signals": "Señales actuales de un activo",
+                },
+                "docs": {
+                    "/db/docs/evaluators": "Documentación completa de evaluadores",
+                    "/db/docs/indicators": "Definiciones de indicadores",
+                    "/db/docs/assets": "Documentación de activos",
+                    "/db/docs/system": "Arquitectura y schema del sistema",
+                }
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

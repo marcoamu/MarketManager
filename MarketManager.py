@@ -6686,8 +6686,8 @@ def drawActiveDatesSelected(skipDayControl = False):
     draw = True
     disableprob = True
     disableCloseEndRevenue = False
-    start = '2026-04-01'
-    end = '2026-04-25'
+    start = '2026-05-18'
+    end = '2026-05-19'
     marketService = MarketManager(simulation=simulation, isDBData=isDBData, useConfig=useConfig, start=start, end=end,
                                   showLog=False, disableInitPROB=disableprob,
                                   disableCloseEndRevenue=disableCloseEndRevenue)
@@ -6924,9 +6924,9 @@ def simulateIndicatorDates():
     # # end = '2025-04-04'
     # end = '2025-03-31'
 
-    start = '2026-05-14'
+    start = '2026-05-17'
     # end = '2025-04-11'
-    end = '2026-05-18'
+    end = '2026-05-20'
 
     # start = '2025-01-17'
     # end = '2025-01-21'
@@ -6943,7 +6943,7 @@ def simulateIndicatorDates():
     # active = activeHelper.prepareTSLA02()
     # active = activeHelper.prepareKO3()
     # active = activeHelper.prepareAMZN4()
-    active = activeHelper.prepareINTC()
+    # active = activeHelper.prepareINTC()
     # active = activeHelper.prepareMSFT04()
     # active = activeHelper.prepareNFLX5()
     # active = activeHelper.prepareGOOG5()
@@ -6952,7 +6952,7 @@ def simulateIndicatorDates():
     # active = activeHelper.prepareETH2()
     # active = activeHelper.prepareAAPL7()
     # active = activeHelper.prepareGLD()
-    # active = activeHelper.prepareDIS08()
+    active = activeHelper.prepareDIS08()
     # active = activeHelper.prepareNVDA06()
     # active = activeHelper.prepareVTI02()
     # active = activeHelper.prepareBABA02()
@@ -6985,8 +6985,8 @@ def simulateEvaluatorsForActiveDates():
     # start = '2023-10-13'
     # end = '2023-10-19'
 
-    start = '2026-04-20'
-    end = '2026-04-25'
+    start = '2026-05-01'
+    end = '2026-05-19'
 
 
     marketService = MarketManager(simulation=simulation, isDBData=isDBData, useConfig=useConfig, start=start, end=end,
@@ -6997,7 +6997,7 @@ def simulateEvaluatorsForActiveDates():
     # active = activeHelper.prepareTSLA02()
     # active = activeHelper.prepareKO3()
     # active = activeHelper.prepareAMZN4()
-    active = activeHelper.prepareINTC()
+    # active = activeHelper.prepareINTC()
     # active = activeHelper.prepareMSFT04()
     # active = activeHelper.prepareNFLX5()
     # active = activeHelper.prepareGOOG5()
@@ -7005,7 +7005,7 @@ def simulateEvaluatorsForActiveDates():
     # active = activeHelper.prepareETH2()
     # active = activeHelper.prepareAAPL7()
     # active = activeHelper.prepareDIS08()
-    # active = activeHelper.prepareNVDA06()
+    active = activeHelper.prepareNVDA06()
     # active = activeHelper.prepareVTI02()
     # active = activeHelper.prepareBABA02()
     # active = activeHelper.prepareMETA02()
@@ -7023,8 +7023,9 @@ def simulateEvaluatorsForActiveDates():
     # activesList = activeHelper.prepareActivesEvaluators3(active)
     #para optimizar tiene los mejores evaluadores
     # activesList = activeHelper.prepareActivesEvaluators4(active)
+    activesList = activeHelper.prepareActivesEvaluators4Old(active)
     # activesList = activeHelper.prepareActivesEvaluatorsONLYUP(active)
-    activesList = activeHelper.prepareActivesEvaluatorsONLYUPNEW(active)
+    # activesList = activeHelper.prepareActivesEvaluatorsONLYUPNEW(active)
     for x in activesList:
         resValues = {}
         # marketService = MarketManager(simulation=simulation, isDBData=isDBData, useConfig=useConfig, start=start,
@@ -7343,7 +7344,7 @@ def main():
     else:
         skipDayControl = True
             # RealMode()
-        # RealModeLocal(skipDayControl)
+        RealModeLocal(skipDayControl)
         # drawActive()
         # drawActiveDates(skipDayControl)
         # drawActiveDatesSelected(skipDayControl)
@@ -7354,7 +7355,7 @@ def main():
         # simulateWeekDirection()
         # RealMode()
 
-        simulateIndicatorDates()
+        # simulateIndicatorDates()
         # simulateEvaluatorsForActiveDates()
         # simulate_Star_Close_ForActiveDates()
         # simulate_EMA_parameters_ForActiveDates()

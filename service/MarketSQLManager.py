@@ -164,10 +164,12 @@ class MarketSQLManager:
 
     def getLastValueWithName(self, name):
         sqliteConnection = None
+        res = []
         try:
             sqliteConnection = sqlite3.connect(self.db)
             cursor = sqliteConnection.cursor()
             # print("Connected to SQLite")
+
 
             # get developer detail
             sqlite_select_query = """SELECT ID, NAME, max(DATEVALUE), VALUE, LASTVALUE, LASTDIF, ACUMULATE, TENDENCE, 
@@ -179,7 +181,6 @@ class MarketSQLManager:
             from MARKET where name = ? """
             cursor.execute(sqlite_select_query, (name,))
             records = cursor.fetchall()
-            res = list()
             for row in records:
                 result = {}
                 id = row[0]
@@ -1696,8 +1697,8 @@ class MarketSQLManager:
         return res
 
     def getALLActivesControlTime(self):
+        res = []
         try:
-            sqliteConnection = sqlite3.connect(self.db)
             sqliteConnection = sqlite3.connect(self.db)
             cursor = sqliteConnection.cursor()
             # print("Connected to SQLite")
@@ -1706,7 +1707,6 @@ class MarketSQLManager:
             sqlite_select_query = """SELECT ID, ACTIVE, INTERVAL, COUNTER, INITIAL from CONTROLTIME"""
             cursor.execute(sqlite_select_query,())
             records = cursor.fetchall()
-            res = list()
             for row in records:
                 result = {}
                 id = row[0]
