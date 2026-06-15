@@ -1,108 +1,58 @@
 #!/usr/bin/env python3
 """
-Control Optimizer v2 - Usa atributos configurables del evaluador
-================================================================
-Usage:
-    python3 run_control_optimizer.py EvaluatorEMA_LONG_03
-    python3 run_control_optimizer.py EvaluatorEMA_LONG_03 --days 30 --asset AAPL
-    python3 run_control_optimizer.py EvaluatorEMA_LONG_03 --buy-controls control_BUY_EMA_02 control_BUY_EMA_03
-    python3 run_control_optimizer.py EvaluatorEMA_LONG_03 --sell-controls control_SELL_EMA_01 control_SELL_BLG_01
+Control Optimizer - Encuentra la mejor combinación de controles BUY/SELL
+========================================================================
+TODO: hacer que sea más general, no solo para un evaluador específico
 """
 
 import sys
 import os
 import importlib.util
 import json
-import argparse
 from datetime import datetime, timedelta
-from multiprocessing import Pool
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # ============================================================
-# CONFIGURACIÓN
-# ============================================================
-START_STR = "2026-06-08"
-END_STR = "2026-06-15"
-
-ASSET = "INTC"
-DAYS = 15
-SAVE_JSON = True
-from datetime import datetime
-
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-JSON_PATH = f"f:/WORK/2026/MarketManager/OUT/evaluator_ranking_{ASSET}_{DAYS}d_{timestamp}.json"
-PARALLEL = True
-WORKERS = 8
-
-# ============================================================
-# CONTROLES DISPONIBLES (recolectados de CierreBase.py)
+# CONFIGURACIÓN - Modifica estos valores en código
 # ============================================================
 
-CONTROL_BUY_CONTROLS = [
-    "control_BUY_BLG_01",
-    "control_BUY_BLG_02", 
-    "control_BUY_BLG_03",
+ASSET = "AAPL"
+DAYS = 60
+START_STR = ""  # Si está vacío usa los últimos DAYS
+END_STR = ""
+
+# Evaluador a probar (debe tener control_buy y control_sell configurables)
+EVALUATOR_NAME = "EvaluatorEMA_LONG_03"
+
+# Lista de controles BUY a probar (reducida para no hacer 1000+ combinaciones)
+BUY_CONTROLS = [
     "control_BUY_EMA_01",
     "control_BUY_EMA_02",
     "control_BUY_EMA_03",
-    "control_BUY_EMA_04",
+    "control_BUY_BLG_01",
+    "control_BUY_BLG_02",
     "control_BUY_EMA_OUP_01",
     "control_BUY_EMA_OUP_02",
-    "control_BUY_EMA_OUP_03",
-    "control_BUY_EMA_OUP_04",
     "control_BUY_WEEK_01",
-    "control_BUY_WEEK_02",
-    "control_BUY_WEEK_03",
-    "control_BUY_WEEK_04",
-    "control_BUY_WEEK_NEW_DIFF_01",
-    "control_BUY_WEEK_NEW_DIFF_02",
-    "control_BUY_WEEK_NEW_DIFF_03",
-    "control_BUY_RSI_01",
-    "control_BUY_START_CLOSE_01",
-    "control_BUY_START_CLOSE_03",
-    "control_BUY_START_CLOSE_04",
-    "control_BUY_START_CLOSE_05",
-    "control_BUY_BLG_MID_01",
-    "control_BUY_BLG_MID_02",
-    "control_BUY_BLG_MID_03",
-    "control_BUY_BLG_MID_04",
-    "control_BUY_BLG_LONG_01",
-    "control_BUY_BLG_LONG_02",
-    "control_BUY_IMA1_01",
-    "control_BUY_IMA_02",
-    "control_BUY_LONG_ONLYUP_01",
-    "control_BUY_LONG_ONLYUP_02",
-    "control_BUY_LONG_ONLYUP_05",
 ]
 
-CONTROL_SELL_CONTROLS = [
+# Lista de controles SELL a probar
+SELL_CONTROLS = [
+    "control_SELL_EMA_01",
+    "control_SELL_EMA_02",
     "control_SELL_BLG_01",
     "control_SELL_BLG_02",
     "control_SELL_BLG_03",
-    "control_SELL_EMA_01",
-    "control_SELL_EMA_02",
     "control_SELL_EMA_WEEK_01",
     "control_SELL_EMA_WEEK_02",
     "control_SELL_EMA_WEEK_03",
-    "control_SELL_EMA_WEEK_04",
-    "control_SELL_EMA_WEEK_05",
-    "control_SELL_EMA_WEEK_NEW_FLOW_01",
-    "control_SELL_EMA_WEEK_NEW_FLOW_02",
-    "control_SELL_EMA_WEEK_NEW_FLOW_03",
-    "control_SELL_EMA_WEEK_NEW_FLOW_04",
-    "control_SELL_RSI_01",
-    "control_SELL_START_CLOSE_01",
-    "control_SELL_START_CLOSE_02",
-    "control_SELL_BLG_MID_01",
-    "control_SELL_BLG_MID_02",
-    "control_SELL_BLG_LONG_01",
-    "control_SELL_BLG_LONG_02",
-    "control_SELL_BLG_LONG_03",
-    "control_SELL_BLG_LONG_04",
-    "control_SELL_IMA1_01",
-    "control_SELL_IMA1_02",
 ]
+
+PARALLEL = False
+WORKERS = 8
+SAVE_JSON = True
+JSON_PATH = "/tmp/control_optimizer_results.json"
 
 
 def run_evaluator_with_controls(args):
@@ -122,10 +72,10 @@ def run_evaluator_with_controls(args):
             return {
                 'control_buy': control_buy_name,
                 'control_sell': control_sell_name,
-                'error': 'Evaluador no tiene controles configurables (control_buy/control_sell)'
+                'error': 'Evaluador no tiene controles configurables'
             }
         
-        # Verificar que los controles existan en CierreBase
+        # Verificar que los controles existan
         if not hasattr(evaluator, control_buy_name):
             return {
                 'control_buy': control_buy_name,
@@ -143,7 +93,7 @@ def run_evaluator_with_controls(args):
         evaluator.control_buy = control_buy_name
         evaluator.control_sell = control_sell_name
         
-        # Crear MarketManager y ejecutar
+        # Crear MarketManager
         ms = mm.MarketManager(
             simulation=True,
             isDBData=True,
@@ -153,7 +103,7 @@ def run_evaluator_with_controls(args):
             disableCloseEndRevenue=True,
         )
         
-        # Obtener el activo base (parameters)
+        # Obtener el activo
         activeHelper = mm.ActiveHelper(simulation=True, isDBData=True)
         prepare_map = {
             'AAPL': 'prepareAAPL', 'TSLA': 'prepareTSLA', 'INTC': 'prepareINTC',
@@ -174,7 +124,7 @@ def run_evaluator_with_controls(args):
         prepare_fn = getattr(activeHelper, prepare_map[asset])
         parameters = prepare_fn()
         
-        # Crear el Active con nuestros parámetros y evaluador configurado
+        # Crear el Active con el evaluador configurado
         active_item = mm.Active(parameters, evaluator)
         
         # Ejecutar simulación
@@ -193,7 +143,6 @@ def run_evaluator_with_controls(args):
         }
         
     except Exception as e:
-        import traceback
         return {
             'control_buy': control_buy_name,
             'control_sell': control_sell_name,
@@ -205,18 +154,7 @@ def run_evaluator_with_controls(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Control Optimizer para MarketManager (v2)')
-    parser.add_argument('evaluator', help='Nombre del evaluador (ej: EvaluatorEMA_LONG_03)')
-    parser.add_argument('--days', type=int, default=DAYS, help=f'Días de simulación (default: {DAYS})')
-    parser.add_argument('--asset', default=ASSET, help=f'Asset a simular (default: {ASSET})')
-    parser.add_argument('--buy-controls', nargs='+', help='Lista de controles BUY a probar')
-    parser.add_argument('--sell-controls', nargs='+', help='Lista de controles SELL a probar')
-    parser.add_argument('--top', type=int, default=20, help='Top N resultados a mostrar')
-    parser.add_argument('--parallel', action='store_true', help='Ejecutar en paralelo')
-    parser.add_argument('--workers', type=int, default=WORKERS, help=f'Workers para paralelo (default: {WORKERS})')
-    parser.add_argument('--output', default=JSON_PATH, help=f'Archivo de salida JSON (default: {JSON_PATH})')
-
-
+    # Calcular fechas
     if not START_STR or not END_STR:
         end = datetime.now()
         start = end - timedelta(days=DAYS)
@@ -225,57 +163,49 @@ def main():
     else:
         start_str = START_STR
         end_str = END_STR
-        
-    args = parser.parse_args()
     
-    # Calcular fechas
-    end = datetime.now()
-    start = end - timedelta(days=args.days)
-    start_str = start.strftime('%Y-%m-%d')
-    end_str = end.strftime('%Y-%m-%d')
+    print("=" * 90)
+    print(" CONTROL OPTIMIZER - Encuentra la mejor combinación BUY/SELL")
+    print("=" * 90)
+    print(f"  Evaluador: {EVALUATOR_NAME}")
+    print(f"  Asset: {ASSET}")
+    print(f"  Período: {start_str} → {end_str} ({DAYS} días)")
+    print(f"  Controles BUY: {len(BUY_CONTROLS)} → {BUY_CONTROLS}")
+    print(f"  Controles SELL: {len(SELL_CONTROLS)} → {SELL_CONTROLS}")
+    print(f"  Combinaciones: {len(BUY_CONTROLS) * len(SELL_CONTROLS)}")
+    print("=" * 90)
+    print()
     
-    # Cargar el evaluador dinámicamente
+    # Cargar el evaluador
     evaluators_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "evaluators")
     sys.path.insert(0, evaluators_dir)
     
     try:
-        evaluator_module = importlib.import_module(args.evaluator)
-        evaluator_class = getattr(evaluator_module, args.evaluator)
+        evaluator_module = importlib.import_module(EVALUATOR_NAME)
+        evaluator_class = getattr(evaluator_module, EVALUATOR_NAME)
     except (ImportError, AttributeError) as e:
-        print(f"ERROR: No se pudo cargar el evaluador {args.evaluator}: {e}")
+        print(f"ERROR: No se pudo cargar el evaluador {EVALUATOR_NAME}: {e}")
         return
     
-    # Determinar controles a probar
-    buy_controls = args.buy_controls if args.buy_controls else CONTROL_BUY_CONTROLS
-    sell_controls = args.sell_controls if args.sell_controls else CONTROL_SELL_CONTROLS
-    
-    print(f"=== Control Optimizer v2 ===")
-    print(f"Evaluador: {args.evaluator}")
-    print(f"Asset: {args.asset}")
-    print(f"Días: {args.days} ({start_str} → {end_str})")
-    print(f"Controles BUY: {len(buy_controls)}")
-    print(f"Controles SELL: {len(sell_controls)}")
-    print(f"Combinaciones totales: {len(buy_controls) * len(sell_controls)}")
-    print(f"Paralelo: {args.parallel} ({args.workers} workers)" if args.parallel else "")
-    print()
-    
     # Generar todas las combinaciones
-    combinations = [(b, s) for b in buy_controls for s in sell_controls]
-    print(f"Generando {len(combinations)} combinaciones...")
+    combinations = [(b, s) for b in BUY_CONTROLS for s in SELL_CONTROLS]
+    print(f"Probando {len(combinations)} combinaciones...")
+    print()
     
     mm_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "MarketManager.py")
     
     # Preparar tareas
     tasks = [
-        (evaluator_class, b, s, start_str, end_str, mm_path, args.asset)
+        (evaluator_class, b, s, start_str, end_str, mm_path, ASSET)
         for b, s in combinations
     ]
     
     results = []
     
-    if args.parallel:
-        print(f"Ejecutando en paralelo ({args.workers} workers)...")
-        with Pool(args.workers) as pool:
+    if PARALLEL:
+        from multiprocessing import Pool
+        print(f"Ejecutando en paralelo ({WORKERS} workers)...")
+        with Pool(WORKERS) as pool:
             results = pool.map(run_evaluator_with_controls, tasks)
     else:
         print("Ejecutando secuencial...")
@@ -283,69 +213,102 @@ def main():
             r = run_evaluator_with_controls(task)
             results.append(r)
             status = "✅" if 'error' not in r else "❌"
-            print(f"  [{i+1}/{len(tasks)}] {status} {task[1]} + {task[2]}: total={r.get('total', 0):.2f}")
+            pct = (i+1) * 100 // len(tasks)
+            print(f"  [{i+1:2d}/{len(tasks)}] {status} {pct:3d}% | {task[1]} + {task[2]}: total={r.get('total', 0):.2f}")
     
     # Ordenar por total descendente
     results.sort(key=lambda x: x.get('total', 0), reverse=True)
     
-    # Filtrar errores
+    # Filtrar
     errors = [r for r in results if 'error' in r]
     valid_results = [r for r in results if 'error' not in r]
     
+    # ============================================================
+    # RESULTADOS
+    # ============================================================
     print()
-    print("=" * 100)
-    print(f"=== TOP {args.top} COMBINACIONES ===")
-    print("=" * 100)
-    print(f"{'Rank':<5} {'Control BUY':<28} {'Control SELL':<28} {'Total':>10} {'Buy':>10} {'Sell':>10}")
-    print("-" * 100)
+    print("=" * 90)
+    print(" 🥇 TOP 10 MEJORES COMBINACIONES")
+    print("=" * 90)
+    print(f" {'Rank':<5} {'BUY Control':<25} {'SELL Control':<25} {'Total':>10} {'Buy':>10} {'Sell':>10}")
+    print("-" * 90)
     
-    for i, r in enumerate(valid_results[:args.top], 1):
-        print(f"{i:<5} {r['control_buy']:<28} {r['control_sell']:<28} {r['total']:>10.2f} {r['buy']:>10.2f} {r['sell']:>10.2f}")
+    for i, r in enumerate(valid_results[:10], 1):
+        print(f" {i:<5} {r['control_buy']:<25} {r['control_sell']:<25} {r['total']:>10.2f} {r['buy']:>10.2f} {r['sell']:>10.2f}")
     
-    if len(valid_results) > args.top:
-        print(f"  ... y {len(valid_results) - args.top} más")
+    print()
+    print("=" * 90)
+    print(" 🏁 TOP 10 PEORES COMBINACIONES")
+    print("=" * 90)
+    print(f" {'Rank':<5} {'BUY Control':<25} {'SELL Control':<25} {'Total':>10} {'Buy':>10} {'Sell':>10}")
+    print("-" * 90)
+    
+    for i, r in enumerate(valid_results[-10:][::-1], 1):
+        print(f" {i:<5} {r['control_buy']:<25} {r['control_sell']:<25} {r['total']:>10.2f} {r['buy']:>10.2f} {r['sell']:>10.2f}")
     
     if errors:
         print()
-        print(f"=== ERRORES ({len(errors)}) ===")
-        for e in errors[:10]:
-            print(f"  {e['control_buy']} + {e['control_sell']}: {e.get('error', 'Unknown')}")
+        print(f"⚠️  Errores: {len(errors)}")
+        for e in errors[:5]:
+            print(f"    {e['control_buy']} + {e['control_sell']}: {e.get('error', 'Unknown')}")
     
-    # Guardar JSON
-    if SAVE_JSON:
-        output_data = {
-            'evaluator': args.evaluator,
-            'asset': args.asset,
-            'days': args.days,
-            'start_date': start_str,
-            'end_date': end_str,
-            'total_combinations': len(combinations),
-            'buy_controls_tested': buy_controls,
-            'sell_controls_tested': sell_controls,
-            'results': valid_results,
-            'errors': errors,
-            'timestamp': datetime.now().isoformat()
-        }
-        with open(args.output, 'w') as f:
-            json.dump(output_data, f, indent=2)
-        print()
-        print(f"✅ JSON guardado: {args.output}")
-    
-    # Resumen
+    # ============================================================
+    # RESUMEN
+    # ============================================================
     print()
-    print("=== RESUMEN ===")
-    print(f"Total combinaciones probadas: {len(valid_results)}")
+    print("=" * 90)
+    print(" 📊 RESUMEN")
+    print("=" * 90)
+    
     if valid_results:
         totals = [r['total'] for r in valid_results]
         winners = [r for r in valid_results if r['total'] > 0]
         losers = [r for r in valid_results if r['total'] < 0]
-        print(f"Ganadores (>0): {len(winners)}")
-        print(f"Perdedores (<0): {len(losers)}")
-        print(f"Promedio: {sum(totals)/len(totals):.2f}")
+        
+        print(f"  Combinaciones probadas: {len(valid_results)}")
+        print(f"  Ganadores (>0): {len(winners)} ({len(winners)*100//len(valid_results)}%)")
+        print(f"  Perdedores (<0): {len(losers)} ({len(losers)*100//len(valid_results)}%)")
+        print(f"  Media: {sum(totals)/len(totals):.2f}")
+        print()
+        
         best = valid_results[0]
         worst = valid_results[-1]
-        print(f"Mejor: {best['total']:.2f} ({best['control_buy']} + {best['control_sell']})")
-        print(f"Peor: {worst['total']:.2f} ({worst['control_buy']} + {worst['control_sell']})")
+        
+        print(f"  🏆 MEJOR: {best['total']:.2f}")
+        print(f"     BUY:  {best['control_buy']}")
+        print(f"     SELL: {best['control_sell']}")
+        print()
+        print(f"  💩 PEOR: {worst['total']:.2f}")
+        print(f"     BUY:  {worst['control_buy']}")
+        print(f"     SELL: {worst['control_sell']}")
+    
+    # Guardar JSON
+    if SAVE_JSON:
+        output_data = {
+            'evaluator': EVALUATOR_NAME,
+            'asset': ASSET,
+            'days': DAYS,
+            'start_date': start_str,
+            'end_date': end_str,
+            'buy_controls_tested': BUY_CONTROLS,
+            'sell_controls_tested': SELL_CONTROLS,
+            'results': valid_results,
+            'errors': errors,
+            'timestamp': datetime.now().isoformat(),
+            'best_combination': {
+                'control_buy': valid_results[0]['control_buy'],
+                'control_sell': valid_results[0]['control_sell'],
+                'total': valid_results[0]['total'],
+                'buy': valid_results[0]['buy'],
+                'sell': valid_results[0]['sell'],
+            } if valid_results else None
+        }
+        with open(JSON_PATH, 'w') as f:
+            json.dump(output_data, f, indent=2)
+        print()
+        print(f"  💾 JSON guardado: {JSON_PATH}")
+    
+    print("=" * 90)
 
 
 if __name__ == "__main__":
