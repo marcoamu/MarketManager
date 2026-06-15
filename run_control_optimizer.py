@@ -11,7 +11,11 @@ import importlib.util
 import json
 from datetime import datetime, timedelta
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Cambiar al directorio del script para que las importaciones funcionen bien
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+os.chdir(SCRIPT_DIR)
+sys.path.insert(0, SCRIPT_DIR)
+
 
 # ============================================================
 # CONFIGURACIÓN - Modifica estos valores en código
@@ -60,9 +64,10 @@ def run_evaluator_with_controls(args):
     evaluator_class, control_buy_name, control_sell_name, start_str, end_str, mm_path, asset = args
 
     try:
-        spec = importlib.util.spec_from_file_location("MarketManager", mm_path)
-        mm = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mm)
+        # Importar MarketManager directamente (ya hicimos chdir al inicio)
+        import MarketManager as mm_module
+        import importlib
+        mm = mm_module
 
         # Crear instancia del evaluador
         evaluator = evaluator_class()
