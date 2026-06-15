@@ -7,6 +7,27 @@ class EvaluatorBase:
     def __init__(self):
         pass
 
+    def _call_control(self, control_name, results, activeParam, closeAcumValue, closeDifference):
+        """
+        Llama dinámicamente a un control por su nombre.
+        Si el control no existe, retorna sin acción.
+        """
+        if hasattr(self, control_name):
+            method = getattr(self, control_name)
+            # Los controles pueden tener diferente aridad
+            import inspect
+            sig = inspect.signature(method)
+            params_count = len(sig.parameters)
+
+            if params_count == 4:
+                method(results, activeParam, closeAcumValue, closeDifference)
+            elif params_count == 5:
+                method(results, activeParam, closeAcumValue, closeDifference, self.accumulate)
+            else:
+                method(results, activeParam, closeAcumValue, closeDifference)
+        else:
+            pass  # Control no existe, no hace nada
+
     def updateTimeZoneValues(self, results=None):
         timedelta = None
         try:

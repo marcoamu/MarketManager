@@ -3,21 +3,22 @@ from evaluators.EvaluatorBase import EvaluatorBase
 from evaluators.AperturaBase import AperturaBase
 from service.Constants import Constants
 
+
 class EvaluatorEMA_LONG_03(EvaluatorBase, AperturaBase, CierreBase):
     """
     Evaluador EMA_LONG_03 con CONTROLES CONFIGURABLES.
-    
+
     Para cambiar el control BUY/SELL, simplemente modifica las propiedades:
         evaluator.control_buy = 'control_BUY_EMA_03'
         evaluator.control_sell = 'control_SELL_BLG_01'
-    
+
     Los controles disponibles están en CierreBase.py:
     - BUY: control_BUY_EMA_01, control_BUY_EMA_02, control_BUY_EMA_03, control_BUY_EMA_04,
            control_BUY_BLG_01, control_BUY_BLG_02, control_BUY_BLG_03,
            control_BUY_EMA_OUP_01, control_BUY_EMA_OUP_02, control_BUY_EMA_OUP_03, control_BUY_EMA_OUP_04,
            control_BUY_WEEK_01, control_BUY_WEEK_02, control_BUY_WEEK_03, control_BUY_WEEK_04,
            control_BUY_WEEK_NEW_DIFF_01, control_BUY_WEEK_NEW_DIFF_02, control_BUY_WEEK_NEW_DIFF_03,
-           control_BUY_RSI_01, control_BUY_START_CLOSE_01, control_BUY_START_CLOSE_03, 
+           control_BUY_RSI_01, control_BUY_START_CLOSE_01, control_BUY_START_CLOSE_03,
            control_BUY_START_CLOSE_04, control_BUY_START_CLOSE_05,
            control_BUY_BLG_MID_01, control_BUY_BLG_MID_02, control_BUY_BLG_MID_03, control_BUY_BLG_MID_04,
            control_BUY_BLG_LONG_01, control_BUY_BLG_LONG_02,
@@ -40,29 +41,10 @@ class EvaluatorEMA_LONG_03(EvaluatorBase, AperturaBase, CierreBase):
         self.name = 'EvaluatorEMA_LONG_03'
         # === CONTROLES CONFIGURABLES ===
         # Cambia estos valores para probar diferentes controles
-        self.control_buy = 'control_BUY_EMA_02'   # Control para cerrar BUY
+        self.control_buy = 'control_BUY_EMA_02'  # Control para cerrar BUY
         self.control_sell = 'control_SELL_EMA_01'  # Control para cerrar SELL
 
-    def _call_control(self, control_name, results, activeParam, closeAcumValue, closeDifference):
-        """
-        Llama dinámicamente a un control por su nombre.
-        Si el control no existe, retorna sin acción.
-        """
-        if hasattr(self, control_name):
-            method = getattr(self, control_name)
-            # Los controles pueden tener diferente aridad
-            import inspect
-            sig = inspect.signature(method)
-            params_count = len(sig.parameters)
-            
-            if params_count == 4:
-                method(results, activeParam, closeAcumValue, closeDifference)
-            elif params_count == 5:
-                method(results, activeParam, closeAcumValue, closeDifference, self.accumulate)
-            else:
-                method(results, activeParam, closeAcumValue, closeDifference)
-        else:
-            pass  # Control no existe, no hace nada
+
 
     def evaluate(self, results, activeParam):
         results[Constants.EVAl_NAME] = self.name
@@ -98,7 +80,8 @@ class EvaluatorEMA_LONG_03(EvaluatorBase, AperturaBase, CierreBase):
         if Constants.ONLY_START_END in results:
             if results[Constants.ONLY_START_END] == False:
                 intime = True
-        if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
+        if results[Constants.CURRENT_ACTION] == Constants.ACTION_WAIT or results[
+            Constants.CURRENT_ACTION] == Constants.ACTION_CLOSE:
             if intime:
                 self.evaluarAperturaEMA(results, activeParam)
             else:
@@ -211,7 +194,8 @@ class EvaluatorEMA_LONG_03(EvaluatorBase, AperturaBase, CierreBase):
         difference_optimized = activeParam.difference
         unit_diff = 0
         flujo_count = results[Constants.FLUJO_COUNT]
-        self.printDifference('evaluarFlujoBUY', difference_optimized, self.closeAcumValue, self.closeDifference, self.accumulate)
+        self.printDifference('evaluarFlujoBUY', difference_optimized, self.closeAcumValue, self.closeDifference,
+                             self.accumulate)
         self._call_control(self.control_buy, results, activeParam, self.closeAcumValue, self.closeDifference)
 
     def evaluarFlujoSELL(self, results, activeParam):
@@ -219,5 +203,6 @@ class EvaluatorEMA_LONG_03(EvaluatorBase, AperturaBase, CierreBase):
         difference_optimized = activeParam.difference
         unit_diff = 0
         flujo_count = results[Constants.FLUJO_COUNT]
-        self.printDifference('evaluarFlujoSELL', difference_optimized, self.closeAcumValue, self.closeDifference, self.accumulate)
+        self.printDifference('evaluarFlujoSELL', difference_optimized, self.closeAcumValue, self.closeDifference,
+                             self.accumulate)
         self._call_control(self.control_sell, results, activeParam, self.closeAcumValue, self.closeDifference)

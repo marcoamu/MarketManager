@@ -22,12 +22,17 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # ============================================================
 # CONFIGURACIÓN
 # ============================================================
+START_STR = "2026-06-08"
+END_STR = "2026-06-15"
 
-ASSET = "AAPL"
+ASSET = "INTC"
 DAYS = 15
 SAVE_JSON = True
-JSON_PATH = "/tmp/control_optimizer_results.json"
-PARALLEL = False
+from datetime import datetime
+
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+JSON_PATH = f"f:/WORK/2026/MarketManager/OUT/evaluator_ranking_{ASSET}_{DAYS}d_{timestamp}.json"
+PARALLEL = True
 WORKERS = 8
 
 # ============================================================
@@ -210,7 +215,17 @@ def main():
     parser.add_argument('--parallel', action='store_true', help='Ejecutar en paralelo')
     parser.add_argument('--workers', type=int, default=WORKERS, help=f'Workers para paralelo (default: {WORKERS})')
     parser.add_argument('--output', default=JSON_PATH, help=f'Archivo de salida JSON (default: {JSON_PATH})')
-    
+
+
+    if not START_STR or not END_STR:
+        end = datetime.now()
+        start = end - timedelta(days=DAYS)
+        start_str = start.strftime('%Y-%m-%d')
+        end_str = end.strftime('%Y-%m-%d')
+    else:
+        start_str = START_STR
+        end_str = END_STR
+        
     args = parser.parse_args()
     
     # Calcular fechas
